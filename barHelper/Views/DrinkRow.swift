@@ -28,6 +28,7 @@ struct DrinkRow: View {
 		VStack{
 			HStack{
 				Text(drink.name ?? "NoName")
+					.padding()
 					.font(.title)
 				Spacer()
 			}
