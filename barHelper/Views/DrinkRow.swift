@@ -12,8 +12,14 @@ struct ComponentList: View {
 	var body: some View {
 		VStack{
 			ForEach(components, id: \.self) { component in
+				let liqIndex = liqs.firstIndex(where: {$0.id == component.liqID ?? 0})
+				let liqName = liqs[liqIndex ?? 0].name ?? "NoName"
+				let liqAmount = String(component.amount ?? 0)
 				HStack{
-					Text(String(component.liqID ?? 0) + " - " + String(component.amount ?? 0) + "ml")
+					Text(liqName)
+					Text(" - ")
+					Text(liqAmount)
+					Text("ml")
 					Spacer()
 				}
 			}
