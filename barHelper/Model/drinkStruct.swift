@@ -6,22 +6,27 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Drink: Identifiable, Hashable, Codable {
-	var id: Int?
-	var name: String?
-	var description: String?
-	var recipe: [Component]?
+	var id: Int
+	var name: String
+	var description: String
+	var recipe: [Component]
+	
+	var image: Image {
+		Image(String(id))
+	}
 }
 
 
 struct Component: Hashable, Codable {
-	var liqID: Int?
-	var amount: Int?
+	var liqID: Int
+	var amount: Int
 }
 
 struct Liq: Codable, Hashable {
-	var id: Int?
-	var name: String?
+	var id: Int
+	var name: String
 }
 

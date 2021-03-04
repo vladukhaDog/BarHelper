@@ -12,9 +12,9 @@ struct ComponentList: View {
 	var body: some View {
 		VStack{
 			ForEach(components, id: \.self) { component in
-				let liqIndex = liqs.firstIndex(where: {$0.id == component.liqID ?? 0})
-				let liqName = liqs[liqIndex ?? 0].name ?? "NoName"
-				let liqAmount = String(component.amount ?? 0)
+				let liqIndex = liqs.firstIndex(where: {$0.id == component.liqID })
+				let liqName = liqs[liqIndex ?? 0].name
+				let liqAmount = String(component.amount )
 				HStack{
 					Text(liqName)
 					Text(" - ")
@@ -33,12 +33,12 @@ struct DrinkRow: View {
     var body: some View {
 		VStack{
 			HStack{
-				Text(drink.name ?? "NoName")
+				Text(drink.name)
 					.padding()
 					.font(.title)
 				Spacer()
 			}
-			ComponentList(components: drink.recipe!)
+			ComponentList(components: drink.recipe)
 		}
 		
     }
