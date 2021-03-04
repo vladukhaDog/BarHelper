@@ -65,7 +65,6 @@
 				61DEA35425F1129300A4D44A /* barHelperApp.swift */,
 				61DEA37525F1260C00A4D44A /* Views */,
 				61DEA37425F125F800A4D44A /* Model */,
-				61DEA36E25F1187D00A4D44A /* drinksData.json */,
 				61DEA35825F1129500A4D44A /* Assets.xcassets */,
 				61DEA35D25F1129500A4D44A /* Info.plist */,
 				61DEA35A25F1129500A4D44A /* Preview Content */,
@@ -84,6 +83,7 @@
 		61DEA37425F125F800A4D44A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				61DEA36E25F1187D00A4D44A /* drinksData.json */,
 				61DEA36425F113D900A4D44A /* drinkStruct.swift */,
 				61DEA36B25F1183700A4D44A /* loader.swift */,
 			);
