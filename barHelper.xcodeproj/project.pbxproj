@@ -11,6 +11,9 @@
 		61DEA35725F1129300A4D44A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DEA35625F1129300A4D44A /* ContentView.swift */; };
 		61DEA35925F1129500A4D44A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61DEA35825F1129500A4D44A /* Assets.xcassets */; };
 		61DEA35C25F1129500A4D44A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61DEA35B25F1129500A4D44A /* Preview Assets.xcassets */; };
+		61DEA36525F113D900A4D44A /* drinkStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DEA36425F113D900A4D44A /* drinkStruct.swift */; };
+		61DEA36C25F1183700A4D44A /* loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DEA36B25F1183700A4D44A /* loader.swift */; };
+		61DEA36F25F1187D00A4D44A /* drinksData.json in Resources */ = {isa = PBXBuildFile; fileRef = 61DEA36E25F1187D00A4D44A /* drinksData.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +23,9 @@
 		61DEA35825F1129500A4D44A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		61DEA35B25F1129500A4D44A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		61DEA35D25F1129500A4D44A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		61DEA36425F113D900A4D44A /* drinkStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = drinkStruct.swift; sourceTree = "<group>"; };
+		61DEA36B25F1183700A4D44A /* loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loader.swift; sourceTree = "<group>"; };
+		61DEA36E25F1187D00A4D44A /* drinksData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = drinksData.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +60,9 @@
 			children = (
 				61DEA35425F1129300A4D44A /* barHelperApp.swift */,
 				61DEA35625F1129300A4D44A /* ContentView.swift */,
+				61DEA36425F113D900A4D44A /* drinkStruct.swift */,
+				61DEA36B25F1183700A4D44A /* loader.swift */,
+				61DEA36E25F1187D00A4D44A /* drinksData.json */,
 				61DEA35825F1129500A4D44A /* Assets.xcassets */,
 				61DEA35D25F1129500A4D44A /* Info.plist */,
 				61DEA35A25F1129500A4D44A /* Preview Content */,
@@ -127,6 +136,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				61DEA35C25F1129500A4D44A /* Preview Assets.xcassets in Resources */,
+				61DEA36F25F1187D00A4D44A /* drinksData.json in Resources */,
 				61DEA35925F1129500A4D44A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -139,6 +149,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				61DEA35725F1129300A4D44A /* ContentView.swift in Sources */,
+				61DEA36525F113D900A4D44A /* drinkStruct.swift in Sources */,
+				61DEA36C25F1183700A4D44A /* loader.swift in Sources */,
 				61DEA35525F1129300A4D44A /* barHelperApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -197,7 +209,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -252,7 +264,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -277,6 +289,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = vladukha.barHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -299,6 +312,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = vladukha.barHelper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
