@@ -1,0 +1,40 @@
+[
+   {
+	  "id":1001,
+	  "recipe":[
+		 {
+			"liqID":1,
+			"amount":45
+		 },
+		 {
+			"liqID":2,
+			"amount":30
+		 }
+	  ],
+	  "name":"whiskey sour",
+	  "description":"ну кислый висскос"
+   },
+   {
+	  "id":1002,
+	  "recipe":[
+		 {
+			"liqID":1,
+			"amount":45
+		 },
+		 {
+			"liqID":2,
+			"amount":30
+		 },
+		 {
+			"liqID":1,
+			"amount":45
+		 },
+		 {
+			"liqID":2,
+			"amount":30
+		 }
+	  ],
+	  "name":"2whiskey sour2",
+	  "description":"2ну кислый висскос"
+   }
+]
