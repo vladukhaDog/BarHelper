@@ -58,7 +58,7 @@ struct DrinkRow: View {
 		ZStack{
 			drink.image
 				.resizable()
-				.frame(width: 300, height: 300)
+				.frame(width: 310, height: 280)
 				.cornerRadius(10)
 				.overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 4))
 				.shadow(radius: 7)
