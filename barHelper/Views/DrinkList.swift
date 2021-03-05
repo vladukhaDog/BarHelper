@@ -20,9 +20,9 @@ struct DrinkList: View {
 			NavigationView {
 				
 				List(FilteredDrinks) { drink in
-					//NavigationLink() {
+					NavigationLink(destination: DrinkDetal(drink: drink)) {
 					DrinkRow(drink: drink)
-					//}
+					}
 				}
 				.navigationTitle("Cocktails")
 				
