@@ -10,8 +10,9 @@ import SwiftUI
 struct ComponentList: View {
 	var components : [Component]
 	var body: some View {
+		let MaxIngrAmount = 6
 		VStack{
-			if (components.count < 5)
+			if (components.count < MaxIngrAmount)
 			{
 				ForEach(components, id: \.self) { component in
 					let liqIndex = liqs.firstIndex(where: {$0.id == component.liqID })
@@ -28,7 +29,7 @@ struct ComponentList: View {
 			}
 			else
 			{
-				ForEach(0..<5) { index in
+				ForEach(0..<MaxIngrAmount) { index in
 					let component = components[index]
 					let liqIndex = liqs.firstIndex(where: {$0.id == component.liqID })
 					let liqName = liqs[liqIndex ?? 0].name
@@ -58,7 +59,7 @@ struct DrinkRow: View {
 		ZStack{
 			drink.image
 				.resizable()
-				.frame(width: 310, height: 280)
+				.aspectRatio(contentMode: .fit)
 				.cornerRadius(10)
 				.overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.white, lineWidth: 4))
 				.shadow(radius: 7)
