@@ -14,8 +14,14 @@ struct DrinkList: View {
 			(search.isEmpty || drink.name.lowercased().contains(search.lowercased()))
 		}
 	}
+	@Environment(\.colorScheme) var colorScheme
     var body: some View {
 		NavigationView {
+			ZStack{
+				if(colorScheme == .dark)
+				{BackgroundView(Schemes: .dark)}
+				else
+				{BackgroundView(Schemes: .light)}
 			ScrollView(.vertical) {
 					HStack{
 						TextField("Поиск напитка", text: $search)
@@ -41,6 +47,7 @@ struct DrinkList: View {
 				}
 				.navigationBarTitle("")
 				.navigationBarHidden(true)
+			}
 		}
     }
 }

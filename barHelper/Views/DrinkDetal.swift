@@ -17,27 +17,37 @@ struct DrinkDetal: View {
 			else
 			{BackgroundView(Schemes: .light)}
         VStack{
+			HStack{
 				drink.image
 					.resizable()
 					.scaledToFit()
 					.cornerRadius(10)
-			
-			Text(drink.description)
-				.font(.title2)
-			ForEach(drink.recipe, id: \.self) { component in
-				//let component = components[index]
-				let liqIndex = liqs.firstIndex(where: {$0.id == component.liqID })
-				let liqName = liqs[liqIndex ?? 0].name
-				let liqAmount = String(component.amount )
-				HStack{
-					Text(liqName)
-					Text(" - ")
-					Text(liqAmount)
-					Text("ml")
-					Spacer()
+				ScrollView{
+					Text(drink.description)
+						.font(.title2)
+					
 				}
-				.modifier(TextW())
 			}
+			Text("Ингредиенты")
+			Divider()
+			ScrollView(){
+				ForEach(drink.recipe, id: \.self) { component in
+					let liqIndex = liqs.firstIndex(where: {$0.id == component.liqID })
+					let liqName = liqs[liqIndex ?? 0].name
+					let liqAmount = String(component.amount )
+					HStack{
+						Text(liqName)
+						Text(" - ")
+						Text(liqAmount)
+						Text("ml")
+						Spacer()
+					}
+					.padding(.leading)
+					.modifier(TextW())
+					Divider()
+				}
+			}
+			
 			Spacer()
 		}
 		.padding()
