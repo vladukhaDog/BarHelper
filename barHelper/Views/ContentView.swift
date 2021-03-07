@@ -14,8 +14,13 @@ struct ContentView: View {
 		TabView {
 			DrinkList()
 				.tabItem {
-					Image(systemName: "person.fill")
-					Text("Drinks")
+					Image(systemName: "list.bullet.rectangle")
+					Text("Коктейли")
+				}
+			LiqSearch()
+				.tabItem {
+					Image(systemName: "doc.text.magnifyingglass")
+					Text("Поиск")
 				}
 			
 		}
