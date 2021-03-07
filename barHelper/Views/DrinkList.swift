@@ -15,20 +15,8 @@ struct DrinkList: View {
 		}
 	}
     var body: some View {
-		ZStack{
-			
-			NavigationView {
-				
-				List(FilteredDrinks) { drink in
-					NavigationLink(destination: DrinkDetal(drink: drink)) {
-					DrinkRow(drink: drink)
-					}
-				}
-				.navigationTitle("Cocktails")
-				
-			}
-			VStack
-			{
+		NavigationView {
+			VStack{
 				HStack{
 					TextField("Поиск напитка", text: $search)
 						.padding(.trailing)
@@ -42,10 +30,16 @@ struct DrinkList: View {
 						.onTapGesture{
 							//clearing search
 							search = ""
-					   }
-						
+						}
+					
 				}
-				Spacer()
+				List(FilteredDrinks) { drink in
+					NavigationLink(destination: DrinkDetal(drink: drink)) {
+						DrinkRow(drink: drink)
+					}
+				}
+				.navigationBarTitle("")
+				.navigationBarHidden(true)
 			}
 		}
     }
