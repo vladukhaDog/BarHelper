@@ -16,31 +16,31 @@ struct DrinkList: View {
 	}
     var body: some View {
 		NavigationView {
-			VStack{
-				HStack{
-					TextField("Поиск напитка", text: $search)
-						.padding(.trailing)
-						.padding(.leading)
-						.textFieldStyle(RoundedBorderTextFieldStyle())
-					Image(systemName: "xmark")
-						.resizable()
-						.frame(width: 15, height: 15)
-						.padding()
-						.foregroundColor(search.count > 0 ? .red : .gray)
-						.onTapGesture{
-							//clearing search
-							search = ""
+			ScrollView(.vertical) {
+					HStack{
+						TextField("Поиск напитка", text: $search)
+							.padding(.trailing)
+							.padding(.leading)
+							.textFieldStyle(RoundedBorderTextFieldStyle())
+						Image(systemName: "xmark")
+							.resizable()
+							.frame(width: 15, height: 15)
+							.padding()
+							.foregroundColor(search.count > 0 ? .red : .gray)
+							.onTapGesture{
+								//clearing search
+								search = ""
+							}
+						
+					}
+					ForEach(FilteredDrinks, id: \.self) { drink in
+						NavigationLink(destination: DrinkDetal(drink: drink)) {
+							DrinkRow(drink: drink)
 						}
-					
-				}
-				List(FilteredDrinks) { drink in
-					NavigationLink(destination: DrinkDetal(drink: drink)) {
-						DrinkRow(drink: drink)
 					}
 				}
 				.navigationBarTitle("")
 				.navigationBarHidden(true)
-			}
 		}
     }
 }
