@@ -34,7 +34,6 @@ struct DrinkList: View {
 							.padding()
 							.foregroundColor(search.count > 0 ? .red : .gray)
 							.onTapGesture{
-								//clearing search
 								search = ""
 							}
 						

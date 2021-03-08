@@ -16,12 +16,22 @@ struct LiqSearch: View {
 		if (!self.components.contains(comp))
 		{
 			self.components.append(comp)
+			self.availableLiqs.remove(at: availableLiqs.firstIndex(of: comp)!)
+			self.selectedLiq = selectedLiq + 1
 		}
 		
 	}
-	
+	@State var availableLiqs = liqs
 	@State var components: [Liq] = []
 	@State var selectedLiq = 1
+	@State var search = ""
+	
+	var FilteredLiqs : [Liq]{
+		availableLiqs.filter{ liq in
+			(search.isEmpty || liq.name.lowercased().contains(search.lowercased()))
+		}
+	}
+	
 	@Environment(\.colorScheme) var colorScheme
 	
     var body: some View {
@@ -33,8 +43,24 @@ struct LiqSearch: View {
 				{BackgroundView(Schemes: .light)}
 				
 				VStack{
+					HStack{
+						TextField("Поиск напитка", text: $search)
+							.padding(.trailing)
+							.padding(.leading)
+							.textFieldStyle(RoundedBorderTextFieldStyle())
+							
+						Image(systemName: "xmark")
+							.resizable()
+							.frame(width: 15, height: 15)
+							.padding()
+							.foregroundColor(search.count > 0 ? .red : .gray)
+							.onTapGesture{
+								search = ""
+							}
+					}
+					
 					Picker("Cums", selection: $selectedLiq) {
-						ForEach(liqs, id: \.self) {
+						ForEach(FilteredLiqs, id: \.self) {
 							Text($0.name).tag($0.id)
 						}
 						.pickerStyle(SegmentedPickerStyle())
@@ -48,7 +74,7 @@ struct LiqSearch: View {
 						}
 					ScrollView(){
 						ForEach(components, id: \.self) { component in
-							componentsRow(component: component, components: $components)
+							componentsRow(component: component, components: $availableLiqs)
 								Divider()
 						}
 					}
