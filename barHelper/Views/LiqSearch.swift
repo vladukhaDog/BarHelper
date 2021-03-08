@@ -48,7 +48,14 @@ struct LiqSearch: View {
 							.padding(.trailing)
 							.padding(.leading)
 							.textFieldStyle(RoundedBorderTextFieldStyle())
-							
+							.onChange(of: search, perform: {_ in
+								let FilterIndex = FilteredLiqs.first
+								if (FilterIndex != nil)
+								{
+									selectedLiq = FilterIndex!.id
+								}
+								
+							})
 						Image(systemName: "xmark")
 							.resizable()
 							.frame(width: 15, height: 15)
@@ -74,7 +81,8 @@ struct LiqSearch: View {
 						}
 					ScrollView(){
 						ForEach(components, id: \.self) { component in
-							componentsRow(component: component, components: $availableLiqs)
+							componentsRow(component: component, components: $components)
+							/// TODO фиксануть вот тут хуйню, чтобы работало блять
 								Divider()
 						}
 					}

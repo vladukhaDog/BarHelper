@@ -10,6 +10,8 @@ import SwiftUI
 struct componentsRow: View {
 	@State var component: Liq
 	@Binding var components: [Liq]
+	@Binding var availableLiqs: [Liq]
+	
 	var body: some View {
 		HStack{
 			let liqIndex = liqs.firstIndex(where: {$0.id == component.id })
@@ -29,7 +31,8 @@ struct componentsRow: View {
 	private func delete() {
 		
 		print(components)
-		components.removeAll(where: {$0.id == self.component.id})
+		self.components.removeAll(where: {$0.id == self.component.id})
+		//self.availableLiqs.apen
 		print(components)
 	}
 }
