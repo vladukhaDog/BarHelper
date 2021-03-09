@@ -34,7 +34,7 @@ struct LiqSearch: View {
 	
 	@Environment(\.colorScheme) var colorScheme
 	
-    var body: some View {
+	var body: some View {
 		NavigationView {
 			ZStack{
 				if(colorScheme == .dark)
@@ -66,12 +66,14 @@ struct LiqSearch: View {
 							}
 					}
 					
+					
 					Picker("Cums", selection: $selectedLiq) {
 						ForEach(FilteredLiqs, id: \.self) {
 							Text($0.name).tag($0.id)
 						}
 						.pickerStyle(SegmentedPickerStyle())
 					}
+					.padding(-25)
 					Image(systemName: "plus.circle")
 						.resizable()
 						.frame(width: 40, height: 40)
@@ -79,11 +81,11 @@ struct LiqSearch: View {
 						.onTapGesture{
 							self.add()
 						}
+					
 					ScrollView(){
 						ForEach(components, id: \.self) { component in
 							componentsRow(component: component, components: $components, availableLiqs: $availableLiqs)
-							/// TODO фиксануть вот тут хуйню, чтобы работало блять
-								Divider()
+							Divider()
 						}
 					}
 					.padding()
@@ -91,10 +93,13 @@ struct LiqSearch: View {
 						Text("find me")
 							.padding()
 					}
-					Spacer()
+					
 				}
 			}
+			.navigationBarTitle("")
+			.navigationBarHidden(true)
 		}
-    }
+		
+	}
 }
 

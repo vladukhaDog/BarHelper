@@ -12,11 +12,6 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
 		TabView {
-			DrinkList()
-				.tabItem {
-					Image(systemName: "list.bullet.rectangle")
-					Text("Коктейли")
-				}
 			LiqSearch()
 				.tabItem {
 					Image(systemName: "doc.text.magnifyingglass")
