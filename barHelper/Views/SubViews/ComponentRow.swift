@@ -29,10 +29,31 @@ struct componentsRow: View {
 	}
 	
 	private func delete() {
-		
-		print(components)
+		//remove liquor from selected list
 		self.components.removeAll(where: {$0.id == self.component.id})
-		//self.availableLiqs.apen
-		print(components)
+		
+		var IndexInsert = 0
+		//finding a place to insert liquor back in array of availables to filter
+		
+		if availableLiqs.isEmpty {
+			self.availableLiqs.append(component)
+		}else {
+			
+			for checkLiq in availableLiqs {
+				if (component.id < checkLiq.id)
+				{
+					//next element has bigger id - insert component before it
+					self.availableLiqs.insert(component, at: IndexInsert)
+					break
+				}else if (component.id > checkLiq.id)
+				{
+					if (checkLiq == availableLiqs.last){
+						//if element is last id
+						self.availableLiqs.append(component)
+					}
+					IndexInsert = IndexInsert + 1
+				}
+			}
+		}
 	}
 }

@@ -98,10 +98,10 @@
 		618E372E25F509DF00DCF013 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
-				61DEA37125F1240D00A4D44A /* DrinkRow.swift */,
-				61A8880025F292BB00E7B32F /* DrinkDetal.swift */,
 				61A8880325F2961000E7B32F /* BackGroundView.swift */,
 				618E373325F512DE00DCF013 /* ComponentRow.swift */,
+				61A8880025F292BB00E7B32F /* DrinkDetal.swift */,
+				61DEA37125F1240D00A4D44A /* DrinkRow.swift */,
 				618E373625F5182E00DCF013 /* SearchList.swift */,
 			);
 			path = SubViews;

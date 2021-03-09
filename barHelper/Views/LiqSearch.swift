@@ -81,7 +81,7 @@ struct LiqSearch: View {
 						}
 					ScrollView(){
 						ForEach(components, id: \.self) { component in
-							componentsRow(component: component, components: $components)
+							componentsRow(component: component, components: $components, availableLiqs: $availableLiqs)
 							/// TODO фиксануть вот тут хуйню, чтобы работало блять
 								Divider()
 						}
