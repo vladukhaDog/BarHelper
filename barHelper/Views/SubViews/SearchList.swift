@@ -8,22 +8,23 @@
 import SwiftUI
 
 struct SearchResult: View {
-	var componentsFilter : [Liq]
+	//var componentsFilter : [Liq]
 	
 	
 	
-	var FilteredDrinks : [Drink]{
-		drinks.filter{ drink in
-			let SetComponents = Set(componentsFilter)
-			var liqList : [Liq] = []
-			for rec in drink.recipe {
-				let ind = liqs.firstIndex(where: {$0.id == rec.liqID}) ?? 1
-				liqList.append(liqs[ind])
-			}
-			return (SetComponents.isSubset(of: Set(liqList)))
-			//(SetComponents.isSubset(of: ))
-		}
-	}
+	var FilteredDrinks : [Drink]
+	//{
+	//	drinks.filter{ drink in
+	//		let SetComponents = Set(componentsFilter)
+	//		var liqList : [Liq] = []
+	//		for rec in drink.recipe {
+	//			let ind = liqs.firstIndex(where: {$0.id == rec.liqID}) ?? 1
+	//			liqList.append(liqs[ind])
+	//		}
+	//		return (SetComponents.isSubset(of: Set(liqList)))
+	//		//(SetComponents.isSubset(of: ))
+	//	}
+	//}
 	
 	@State var search = ""
 	@Environment(\.colorScheme) var colorScheme

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		614BC69825FE5B80008663CF /* CyberpunkWaifus.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 614BC69725FE5B80008663CF /* CyberpunkWaifus.ttf */; };
 		618E373125F5128500DCF013 /* LiqSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618E373025F5128500DCF013 /* LiqSearch.swift */; };
 		618E373425F512DE00DCF013 /* ComponentRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618E373325F512DE00DCF013 /* ComponentRow.swift */; };
 		618E373725F5182E00DCF013 /* SearchList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618E373625F5182E00DCF013 /* SearchList.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		614BC69725FE5B80008663CF /* CyberpunkWaifus.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = CyberpunkWaifus.ttf; path = ../../../ASSETSBAR/CyberpunkWaifus.ttf; sourceTree = "<group>"; };
 		618E373025F5128500DCF013 /* LiqSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiqSearch.swift; sourceTree = "<group>"; };
 		618E373325F512DE00DCF013 /* ComponentRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentRow.swift; sourceTree = "<group>"; };
 		618E373625F5182E00DCF013 /* SearchList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchList.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				61DEA37525F1260C00A4D44A /* Views */,
 				61DEA37425F125F800A4D44A /* Model */,
 				61DEA35825F1129500A4D44A /* Assets.xcassets */,
+				614BC69725FE5B80008663CF /* CyberpunkWaifus.ttf */,
 				61DEA35D25F1129500A4D44A /* Info.plist */,
 				61DEA35A25F1129500A4D44A /* Preview Content */,
 			);
@@ -271,6 +274,7 @@
 				61A887F525F282BC00E7B32F /* 1016.jpg in Resources */,
 				61DEA36F25F1187D00A4D44A /* drinksData.json in Resources */,
 				61A887EE25F282BC00E7B32F /* 1010.jpg in Resources */,
+				614BC69825FE5B80008663CF /* CyberpunkWaifus.ttf in Resources */,
 				61DEA35925F1129500A4D44A /* Assets.xcassets in Resources */,
 				61A887F025F282BC00E7B32F /* 1005.jpg in Resources */,
 				61A887FA25F282BC00E7B32F /* 1015.jpg in Resources */,

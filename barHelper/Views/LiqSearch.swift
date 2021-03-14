@@ -21,6 +21,12 @@ struct LiqSearch: View {
 		}
 		
 	}
+	
+	func Reset()
+	{
+		
+	}
+	
 	@State var availableLiqs = liqs
 	@State var components: [Liq] = []
 	@State var selectedLiq = 1
@@ -32,7 +38,29 @@ struct LiqSearch: View {
 		}
 	}
 	
+	var FilteredDrinks : [Drink]{
+		drinks.filter{ drink in
+			let SetComponents = Set(components)
+			var liqList : [Liq] = []
+			for rec in drink.recipe {
+				let ind = liqs.firstIndex(where: {$0.id == rec.liqID}) ?? 1
+				liqList.append(liqs[ind])
+			}
+			if !SearchAll {
+				return (SetComponents.isSubset(of: Set(liqList)))
+			}else{
+				for component in SetComponents {
+					if liqList.contains(component) {
+						return true
+					}
+				}
+				return false
+			}
+		}
+	}
+	
 	@Environment(\.colorScheme) var colorScheme
+	@State var SearchAll = false
 	
 	var body: some View {
 		NavigationView {
@@ -89,17 +117,37 @@ struct LiqSearch: View {
 						}
 					}
 					.padding()
-					NavigationLink(destination: SearchResult(componentsFilter: components)) {
-						Text("find me")
-							.padding()
-					}
-					
+					Toggle("Коктейли хотя бы с одним из компонентов", isOn: $SearchAll)
+						VallButton(ImageName: "reset", TextString: "Reset")
+							.onTapGesture {
+								Reset()
+							}
+						NavigationLink(destination: SearchResult(FilteredDrinks: FilteredDrinks)) {
+							VallButton(ImageName: "greenMix", TextString: "Mix")
+						}
 				}
 			}
 			.navigationBarTitle("")
 			.navigationBarHidden(true)
 		}
 		
+	}
+}
+
+
+struct VallButton: View {
+	var ImageName : String
+	var TextString : String
+	var body: some View {
+		ZStack{
+			Image(ImageName)
+				.resizable()
+			Text(TextString)
+				.font(Font.custom("CyberpunkWaifus", size: 33))
+				.foregroundColor(.black)
+				.padding()
+			
+		}
 	}
 }
 
