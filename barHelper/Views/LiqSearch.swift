@@ -120,10 +120,12 @@ struct LiqSearch: View {
 					.padding()
 					Toggle("Коктейли хотя бы с одним из компонентов", isOn: $SearchAll)
 					HStack{
-						VallButton(ImageName: "reset", TextString: "Reset")
-							.onTapGesture {
-								Reset()
-							}
+						Button {
+							Reset()
+						} label: {
+							VallButton(ImageName: "reset", TextString: "Reset")
+						}
+						
 						NavigationLink(destination: SearchResult(FilteredDrinks: FilteredDrinks)) {
 							VallButton(ImageName: "greenMix", TextString: "Mix")
 						}
