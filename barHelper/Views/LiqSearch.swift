@@ -98,6 +98,7 @@ struct LiqSearch: View {
 					Picker("Cums", selection: $selectedLiq) {
 						ForEach(FilteredLiqs, id: \.self) {
 							Text($0.name).tag($0.id)
+								.font(Font.custom("PixelRu", size: 20))
 						}
 						.pickerStyle(SegmentedPickerStyle())
 					}
@@ -118,6 +119,7 @@ struct LiqSearch: View {
 					}
 					.padding()
 					Toggle("Коктейли хотя бы с одним из компонентов", isOn: $SearchAll)
+					HStack{
 						VallButton(ImageName: "reset", TextString: "Reset")
 							.onTapGesture {
 								Reset()
@@ -125,6 +127,8 @@ struct LiqSearch: View {
 						NavigationLink(destination: SearchResult(FilteredDrinks: FilteredDrinks)) {
 							VallButton(ImageName: "greenMix", TextString: "Mix")
 						}
+					}
+					.padding()
 				}
 			}
 			.navigationBarTitle("")
@@ -142,6 +146,7 @@ struct VallButton: View {
 		ZStack{
 			Image(ImageName)
 				.resizable()
+				.frame(width: 167.0, height: 57.0)
 			Text(TextString)
 				.font(Font.custom("CyberpunkWaifus", size: 33))
 				.foregroundColor(.black)
