@@ -26,7 +26,6 @@ struct LiqSearch: View {
 	{
 		availableLiqs = liqs
 		components = []
-		selectedLiq = 1
 		search = ""
 	}
 	
@@ -64,6 +63,9 @@ struct LiqSearch: View {
 	
 	@Environment(\.colorScheme) var colorScheme
 	@State var SearchAll = false
+	private var axes: Axis.Set {
+			return []
+		}
 	
 	var body: some View {
 		NavigationView {
@@ -73,7 +75,7 @@ struct LiqSearch: View {
 				else
 				{BackgroundView(Schemes: .light)}
 				
-				VStack{
+				ScrollView(axes, showsIndicators: false){
 					HStack{
 						TextField("Поиск напитка", text: $search)
 							.padding(.trailing)
@@ -131,7 +133,13 @@ struct LiqSearch: View {
 						}
 						
 						NavigationLink(destination: SearchResult(FilteredDrinks: FilteredDrinks)) {
-							VallButton(ImageName: "greenMix", TextString: "Mix")
+							if (components.isEmpty)
+							{
+								VallButton(ImageName: "redMix", TextString: "Mix")
+							}else
+							{
+								VallButton(ImageName: "greenMix", TextString: "Mix")
+							}
 						}
 					}
 					.padding()
@@ -140,7 +148,6 @@ struct LiqSearch: View {
 			.navigationBarTitle("")
 			.navigationBarHidden(true)
 		}
-		
 	}
 }
 
