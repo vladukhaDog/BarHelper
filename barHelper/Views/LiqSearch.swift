@@ -24,7 +24,10 @@ struct LiqSearch: View {
 	
 	func Reset()
 	{
-		
+		availableLiqs = liqs
+		components = []
+		selectedLiq = 1
+		search = ""
 	}
 	
 	@State var availableLiqs = liqs
@@ -118,7 +121,8 @@ struct LiqSearch: View {
 						}
 					}
 					.padding()
-					Toggle("Коктейли хотя бы с одним из компонентов", isOn: $SearchAll)
+					Toggle("Все ингредиенты в коктейле", isOn: $SearchAll)
+						.padding()
 					HStack{
 						Button {
 							Reset()
@@ -148,7 +152,8 @@ struct VallButton: View {
 		ZStack{
 			Image(ImageName)
 				.resizable()
-				.frame(width: 167.0, height: 57.0)
+				.scaledToFit()
+				//.frame(width: 167.0, height: 57.0)
 			Text(TextString)
 				.font(Font.custom("CyberpunkWaifus", size: 33))
 				.foregroundColor(.black)

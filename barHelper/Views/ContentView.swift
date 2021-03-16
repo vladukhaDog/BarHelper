@@ -11,14 +11,15 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-		TabView {
-			LiqSearch()
-				.tabItem {
-					Image(systemName: "doc.text.magnifyingglass")
-					Text("Поиск")
-				}
-			
-		}
+		LiqSearch()
+		//TabView {
+		//	LiqSearch()
+		//		.tabItem {
+		//			Image(systemName: "doc.text.magnifyingglass")
+		//			Text("Поиск")
+		//		}
+		//
+		//}
     }
 }
 
