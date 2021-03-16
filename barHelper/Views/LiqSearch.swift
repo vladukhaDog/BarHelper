@@ -103,18 +103,22 @@ struct LiqSearch: View {
 					Picker("Cums", selection: $selectedLiq) {
 						ForEach(FilteredLiqs, id: \.self) {
 							Text($0.name).tag($0.id)
-								.font(Font.custom("PixelRu", size: 20))
 						}
 						.pickerStyle(SegmentedPickerStyle())
 					}
 					.padding(-25)
-					Image(systemName: "plus.circle")
-						.resizable()
-						.frame(width: 40, height: 40)
-						.foregroundColor(.blue)
-						.onTapGesture{
-							self.add()
-						}
+					HStack{
+						Toggle("Все ингредиенты в коктейле", isOn: $SearchAll)
+							.padding()
+						Image(systemName: "plus.circle")
+							.resizable()
+							.frame(width: 40, height: 40)
+							.foregroundColor(.blue)
+							.onTapGesture{
+								self.add()
+							}
+						
+					}
 					
 					ScrollView(){
 						ForEach(components, id: \.self) { component in
@@ -123,8 +127,7 @@ struct LiqSearch: View {
 						}
 					}
 					.padding()
-					Toggle("Все ингредиенты в коктейле", isOn: $SearchAll)
-						.padding()
+					
 					HStack{
 						Button {
 							Reset()
@@ -133,13 +136,7 @@ struct LiqSearch: View {
 						}
 						
 						NavigationLink(destination: SearchResult(FilteredDrinks: FilteredDrinks)) {
-							if (components.isEmpty)
-							{
-								VallButton(ImageName: "redMix", TextString: "Mix")
-							}else
-							{
-								VallButton(ImageName: "greenMix", TextString: "Mix")
-							}
+							VallButton(ImageName: "greenMix", TextString: "Mix", RedButton: components.isEmpty)
 						}
 					}
 					.padding()
@@ -155,12 +152,19 @@ struct LiqSearch: View {
 struct VallButton: View {
 	var ImageName : String
 	var TextString : String
+	var RedButton : Bool?
 	var body: some View {
 		ZStack{
-			Image(ImageName)
-				.resizable()
-				.scaledToFit()
-				//.frame(width: 167.0, height: 57.0)
+			if (RedButton ?? false)
+			{
+				Image("redMix")
+					.resizable()
+					.scaledToFit()
+			}else{
+				Image(ImageName)
+					.resizable()
+					.scaledToFit()
+			}
 			Text(TextString)
 				.font(Font.custom("CyberpunkWaifus", size: 33))
 				.foregroundColor(.black)
