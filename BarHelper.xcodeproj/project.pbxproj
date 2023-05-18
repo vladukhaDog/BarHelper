@@ -101,6 +101,33 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		612E26F02A166ECD001F5539 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				6121B33E2A116FE20029E65D /* SearchView.swift */,
+				6121B3402A117E1B0029E65D /* SearchViewModel.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		612E26F12A166ED7001F5539 /* UIElements */ = {
+			isa = PBXGroup;
+			children = (
+				61F91E162A0D3FBA00D320D8 /* CBButtonView.swift */,
+				61F91E192A0E826400D320D8 /* PlusView.swift */,
+			);
+			path = UIElements;
+			sourceTree = "<group>";
+		};
+		612E26F22A166EDD001F5539 /* DBManager */ = {
+			isa = PBXGroup;
+			children = (
+				61E33FE02A085B49009B9725 /* BarHelper.xcdatamodeld */,
+				61E340052A0AB2A7009B9725 /* DBManager.swift */,
+			);
+			path = DBManager;
+			sourceTree = "<group>";
+		};
 		61E33FC92A085B47009B9725 = {
 			isa = PBXGroup;
 			children = (
@@ -122,19 +149,16 @@
 			children = (
 				61E33FD52A085B47009B9725 /* BarHelperApp.swift */,
 				61E33FD72A085B47009B9725 /* ContentView.swift */,
-				6121B33E2A116FE20029E65D /* SearchView.swift */,
-				6121B3402A117E1B0029E65D /* SearchViewModel.swift */,
+				612E26F02A166ECD001F5539 /* Search */,
 				6121B33C2A116F3A0029E65D /* Ingredients */,
 				61E340142A0AE241009B9725 /* CookingTypesView */,
 				61F91E1D2A116EEF00D320D8 /* Cocktails */,
 				6121B33D2A116F8D0029E65D /* Extensions */,
-				61F91E162A0D3FBA00D320D8 /* CBButtonView.swift */,
-				61F91E192A0E826400D320D8 /* PlusView.swift */,
+				612E26F12A166ED7001F5539 /* UIElements */,
+				612E26F22A166EDD001F5539 /* DBManager */,
 				61E33FD92A085B49009B9725 /* Assets.xcassets */,
 				61E3401E2A0D0D4E009B9725 /* CyberpunkWaifus.ttf */,
 				61E33FE32A085B49009B9725 /* Info.plist */,
-				61E33FE02A085B49009B9725 /* BarHelper.xcdatamodeld */,
-				61E340052A0AB2A7009B9725 /* DBManager.swift */,
 				61E33FDB2A085B49009B9725 /* Preview Content */,
 			);
 			path = BarHelper;
