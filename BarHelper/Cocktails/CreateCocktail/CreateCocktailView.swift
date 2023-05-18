@@ -1,0 +1,278 @@
+//
+//  CreateCocktailView.swift
+//  BarHelper
+//
+//  Created by Владислав Пермяков on 09.05.2023.
+//
+
+import SwiftUI
+
+
+
+struct CreateCocktailView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @StateObject private var vm: CreateCocktailsViewModel
+    @State private var showSheet = false
+    init(editCocktail: DBCocktail? = nil, didEditCocktail: ((DBCocktail) -> ())? = nil){
+        self._vm = .init(wrappedValue: .init(editCocktail: editCocktail, didEditCocktail: didEditCocktail))
+    }
+    
+    let columns = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    
+    var body: some View {
+        ScrollView{
+            VStack{
+                imageView
+                typeSelector
+                nameTextField
+                descriptionTextField
+                addedIngredients
+                confirmButton
+            }
+            .padding(.horizontal)
+        }
+        .backgroundWithoutSafeSpace(.darkPurple)
+        .navigationTitle(vm.toEditCocktail == nil ? "New Cocktail" : "Edit Cocktail")
+        .sheet(isPresented: $showSheet) {
+            ImagePicker(sourceType: .photoLibrary, selectedImage: .init(get: {
+                UIImage()
+            }, set: { image in
+                vm.image = image
+            }))
+        }
+    }
+    
+    private var nameTextField: some View{
+        TextField("", text: $vm.name, prompt: Text("Cocktail Name"))
+            .font(.CBTitle)
+            .foregroundColor(.white)
+            .tint(.white)
+            .padding(5)
+            .background(Color.darkPurple)
+            .depthBorder()
+    }
+    
+    private var descriptionTextField: some View{
+        TextEditor(text: $vm.description)
+            .scrollContentBackground(.hidden)
+            .font(.smallTitle)
+            .foregroundColor(.white)
+            .tint(.white)
+            .overlay(alignment: .topLeading, content: {
+                if vm.description.isEmpty{
+                    Text("Description")
+                        .font(.smallTitle)
+                        .foregroundColor(.white)
+                        .padding(3)
+                        .padding(.top, 6)
+                        .opacity(0.3)
+                        .allowsHitTesting(false)
+                }
+            })
+            .padding(5)
+            .background(Color.darkPurple)
+            .depthBorder()
+    }
+    
+    private var confirmButton: some View{
+        Group{
+            if vm.toEditCocktail == nil{
+                CBButtonView(color: .green,
+                             text: "Add Cocktail",
+                             enabled: (!vm.name.isEmpty &&
+                                       !vm.recipe.isEmpty
+                                      )) {
+                    vm.add()
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            }else{
+                CBButtonView(color: .green,
+                             text: "Save Cocktail",
+                             enabled: true) {
+                    vm.save()
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            }
+        }
+    }
+    
+    private var imageView: some View{
+        VStack{
+            HStack{
+                ForEach((1..<9)){ number in
+                    Image(number.description)
+                        .resizable()
+                        .scaledToFit()
+                        .onTapGesture {
+                            vm.imagePlaceholer = number.description
+                            if vm.image != nil{
+                                vm.image = nil
+                            }
+                        }
+                }
+            }
+            .frame(height: 80)
+            HStack{
+                Spacer()
+                Group{
+                    if let image = vm.image{
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFit()
+                    }else{
+                        Image(vm.imagePlaceholer)
+                            .resizable()
+                            .scaledToFit()
+                    }
+                }
+                .frame(maxWidth: 150, maxHeight: 150)
+                .clipShape(Rectangle())
+                .onTapGesture {
+                    self.showSheet.toggle()
+                }
+                .onLongPressGesture {
+                    self.vm.image = UIPasteboard.general.image
+                }
+                Spacer()
+            }
+        }
+        .padding()
+        .background(Color.black)
+        .padding(4)
+        .depthBorder()
+    }
+    
+    private var addedIngredients: some View{
+        VStack{
+            HStack{
+                Text("Ingredients:")
+                    .font(.smallTitle)
+                    .foregroundColor(.white)
+                Spacer()
+                NavigationLink {
+                    IngredientsView(selectedIngredients: .init(get: {
+                        vm.recipe.map({$0.key})
+                    }, set: { array in
+                        var newRecipe: [DBIngredient: Int] = [:]
+                        for item in array{
+                            newRecipe[item] = self.vm.recipe[item] ?? 0
+                        }
+                        self.vm.recipe = newRecipe
+                    }))
+                } label: {
+                    PlusView()
+                        .frame(height: 40)
+                }
+                
+            }
+            ForEach(vm.recipe.sorted(by: { l, r in
+                (l.key.name ?? "") < (r.key.name ?? "")
+            }), id: \.key.id){ingredient, value in
+                HStack{
+                    
+                    HStack{
+                        Text(ingredient.metric ?? "")
+                            .font(.normal)
+                            .foregroundColor(.white.opacity(0.5))
+                        Spacer()
+                        Text(ingredient.name ?? "")
+                            .font(.smallTitle)
+                            .foregroundColor(.white)
+                            .minimumScaleFactor(0.1)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 40)
+                    .overlay(HStack{
+                        TextField("", text: .init(get: {
+                            value.description
+                        }, set: { newVal in
+                            vm.recipe[ingredient] = Int(newVal) ?? 0
+                        }) )
+                        .keyboardType(.numberPad)
+                        .font(.normal)
+                        .foregroundColor(.pinkPurple)
+                        .tint(.pinkPurple)
+                        .padding(5)
+                        .depthBorder()
+                        .frame(width: 40)
+                        Spacer()
+                        Button {
+                            //                            withAnimation {
+                            self.vm.recipe.removeValue(forKey: ingredient)
+                            //                            }
+                        } label: {
+                            Rectangle()
+                                .fill(Color.pinkPurple)
+                                .frame(width: 20, height: 2)
+                        }
+                    })
+                    .padding(14)
+                    .border(Color.pinkPurple, width: 2)
+                    
+                    
+                }
+            }
+        }
+        .padding(8)
+        .background(Color.black)
+        .padding(5)
+        .depthBorder()
+    }
+    
+ 
+    
+    private var typeSelector: some View{
+        LazyVGrid(columns: columns){
+            ForEach(vm.types, id: \.id){type in
+                Button {
+                    withAnimation() {
+                        self.vm.cookType = type
+                    }
+                } label: {
+                    HStack{
+                        Text(type.name ?? "type")
+                            .font(.smallTitle)
+                            .foregroundColor(.white.opacity(vm.cookType == type ? 1 : 0.4))
+                    }
+                    .padding(.vertical, 5)
+                }
+            }
+        }
+        .padding(5)
+        .background(Color.black)
+        .padding(4)
+        .depthBorder()
+    }
+}
+
+
+
+struct CreateCocktailView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView{
+            CreateCocktailView()
+            
+        }
+        .preferredColorScheme(.dark)
+    }
+}
+
+
+//ForEach(vm.cocktails, id: \.id){cocktail in
+//    VStack{
+//        Text(cocktail.name ?? "aa")
+//        if let recipeSet = cocktail.recipe, let recipe = (recipeSet as? Set<DBIngredientRecord>){
+//            ForEach(recipe.sorted(by: { l, r in
+//                (l.ingredient?.name ?? "") > (r.ingredient?.name ?? "")
+//            })){ ingredient in
+//                HStack{
+//                    Text(ingredient.ingredient?.name ?? "name")
+//                    Text(ingredient.ingredientValue.description)
+//                }
+//            }
+//        }
+//    }
+//}
