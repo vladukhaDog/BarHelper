@@ -13,12 +13,13 @@ class CocktailsViewModel: ObservableObject{
     @Published var up = false
     @Published var search = ""
     @Published var cocktails: [DBCocktail] = []
-    
+    @Published var searchEnabled = true
     private var cancellable = Set<AnyCancellable>()
     
     init(_ cocktails: [DBCocktail]?){
         if let cocktails{
             self.cocktails = cocktails
+            self.searchEnabled = false
         }else{
             Task{
                 await fetchCocktails()

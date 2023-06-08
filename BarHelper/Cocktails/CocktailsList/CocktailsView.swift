@@ -14,25 +14,10 @@ struct CocktailsView: View {
     }
     var body: some View {
         VStack{
-            HStack{
-                TextField("Search", text: $vm.search)
-                    .font(.smallTitle)
-                    .foregroundColor(.white)
-                    .tint(.white)
-                    .padding(5)
-                    .depthBorder()
-                if !vm.search.isEmpty{
-                    Button {
-                        vm.search = ""
-                    } label: {
-                        Text("Clear")
-                            .foregroundColor(.white)
-                            .font(.normal)
-                    }
-
-                }
+            if vm.searchEnabled{
+                searchField
+                    .transition(.push(from: .top))
             }
-            .padding(.horizontal)
             ScrollView{
                 LazyVStack{
                     ForEach(vm.cocktails){cocktail in
@@ -51,6 +36,28 @@ struct CocktailsView: View {
         }
         .backgroundWithoutSafeSpace(.darkPurple)
         .navigationTitle("Cocktails")
+    }
+    
+    private var searchField: some View{
+        HStack{
+            TextField("Search", text: $vm.search)
+                .font(.smallTitle)
+                .foregroundColor(.white)
+                .tint(.white)
+                .padding(5)
+                .depthBorder()
+            if !vm.search.isEmpty{
+                Button {
+                    vm.search = ""
+                } label: {
+                    Text("Clear")
+                        .foregroundColor(.white)
+                        .font(.normal)
+                }
+
+            }
+        }
+        .padding(.horizontal)
     }
 }
 
