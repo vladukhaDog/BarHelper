@@ -26,6 +26,7 @@ class CocktailsViewModel: ObservableObject{
         }
         $search
             .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
+            .dropFirst()
             .sink { newSearch in
             Task{
                 let searchText: String? = newSearch.isEmpty ? nil : newSearch
