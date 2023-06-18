@@ -27,7 +27,6 @@ class IngredientsViewModel: ObservableObject{
             await fetchIngredients()
         }
         $search
-            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
             .sink { newSearch in
             Task{
                 let searchText: String? = newSearch.isEmpty ? nil : newSearch
