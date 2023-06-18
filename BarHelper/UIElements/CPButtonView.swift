@@ -9,7 +9,7 @@ import SwiftUI
 
 
 
-struct CBButtonView: View {
+struct CPButtonView: View {
     let color: Color
     let text: String
     let enabled: Bool
@@ -113,9 +113,9 @@ struct CBButtonView: View {
 struct CBButtonView_Previews: PreviewProvider {
     static var previews: some View {
         VStack{
-            CBButtonView(color: .green, text: "Test", enabled: true, action: {})
+            CPButtonView(color: .green, text: "Test", enabled: true, action: {})
                 .frame(width: 100)
-            CBButtonView(color: .red, text: "Test", enabled: false, action: {})
+            CPButtonView(color: .red, text: "Test", enabled: false, action: {})
         }
         .backgroundWithoutSafeSpace(.darkPurple)
     }

@@ -80,7 +80,7 @@ struct CreateCocktailView: View {
     private var confirmButton: some View{
         Group{
             if vm.toEditCocktail == nil{
-                CBButtonView(color: .green,
+                CPButtonView(color: .green,
                              text: "Add Cocktail",
                              enabled: (!vm.name.isEmpty &&
                                        !vm.recipe.isEmpty
@@ -89,7 +89,7 @@ struct CreateCocktailView: View {
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }else{
-                CBButtonView(color: .green,
+                CPButtonView(color: .green,
                              text: "Save Cocktail",
                              enabled: true) {
                     vm.save()

@@ -36,7 +36,7 @@ class DBManager: ObservableObject{
         return newbackgroundContext
     }()
     
-    func addIngredient(name: String, metric: String) async {
+    func addIngredient(name: String, metric: String, parentIngredient: DBIngredient? = nil) async {
         await withCheckedContinuation({ continuation in
             self.backgroundContext.performAndWait{
                 let request = DBIngredient.fetchRequest()
@@ -46,6 +46,9 @@ class DBManager: ObservableObject{
                 let items = (try? self.backgroundContext.fetch(request)) ?? []
                 if items.isEmpty{
                     let newIngredient = DBIngredient(context: self.backgroundContext)
+                    if let parentIngredient{
+                        newIngredient.parentIngredient = parentIngredient
+                    }
                     newIngredient.id = .init()
                     newIngredient.name = name
                     newIngredient.metric = metric
@@ -73,9 +76,15 @@ class DBManager: ObservableObject{
                 
                 let request = DBIngredient.fetchRequest()
                 request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+                var predicates: [NSPredicate] = []
                 if let search{
-                    request.predicate = NSPredicate(format: "name CONTAINS[c] %@", search.lowercased())
+                    predicates.append(NSCompoundPredicate.init(type: .or, subpredicates: [
+                        NSPredicate(format: "name CONTAINS[c] %@", search.lowercased()),
+                        NSPredicate(format: "ANY alternatives.name CONTAINS[c] %@", search.lowercased()),
+                    ]))
                 }
+                predicates.append(NSPredicate(format: "parentIngredient == nil"))
+                request.predicate = NSCompoundPredicate.init(type: .and, subpredicates: predicates)
                 do{
                     let items = try self.backgroundContext.fetch(request)
                     continuation.resume(returning: items)
@@ -217,7 +226,6 @@ class DBManager: ObservableObject{
             self.backgroundContext.performAndWait{
                 
                 let request = DBCocktail.fetchRequest()
-//                request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
                 if let search{
                     request.predicate = NSPredicate(format: "name CONTAINS[c] %@", search.lowercased())
                 }

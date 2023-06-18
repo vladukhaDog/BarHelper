@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		6121B33F2A116FE20029E65D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6121B33E2A116FE20029E65D /* SearchView.swift */; };
 		6121B3412A117E1B0029E65D /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6121B3402A117E1B0029E65D /* SearchViewModel.swift */; };
+		61CFFFD42A3F6868002D87B8 /* EditIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CFFFD32A3F6868002D87B8 /* EditIngredientsView.swift */; };
+		61CFFFD62A3F6CF0002D87B8 /* TrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CFFFD52A3F6CF0002D87B8 /* TrashView.swift */; };
 		61E33FD62A085B47009B9725 /* BarHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD52A085B47009B9725 /* BarHelperApp.swift */; };
 		61E33FD82A085B47009B9725 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD72A085B47009B9725 /* ContentView.swift */; };
 		61E33FDA2A085B49009B9725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61E33FD92A085B49009B9725 /* Assets.xcassets */; };
@@ -32,7 +34,7 @@
 		61F91E102A0D34A800D320D8 /* Keyboard + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F91E0F2A0D34A800D320D8 /* Keyboard + extension.swift */; };
 		61F91E132A0D373200D320D8 /* CreateIngredientViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F91E122A0D373200D320D8 /* CreateIngredientViewModel.swift */; };
 		61F91E152A0D3E7D00D320D8 /* CreateIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F91E142A0D3E7D00D320D8 /* CreateIngredientView.swift */; };
-		61F91E172A0D3FBA00D320D8 /* CBButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F91E162A0D3FBA00D320D8 /* CBButtonView.swift */; };
+		61F91E172A0D3FBA00D320D8 /* CPButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F91E162A0D3FBA00D320D8 /* CPButtonView.swift */; };
 		61F91E1A2A0E826400D320D8 /* PlusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F91E192A0E826400D320D8 /* PlusView.swift */; };
 		61F91E1C2A11594E00D320D8 /* CocktailCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F91E1B2A11594E00D320D8 /* CocktailCellView.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +42,8 @@
 /* Begin PBXFileReference section */
 		6121B33E2A116FE20029E65D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		6121B3402A117E1B0029E65D /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		61CFFFD32A3F6868002D87B8 /* EditIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIngredientsView.swift; sourceTree = "<group>"; };
+		61CFFFD52A3F6CF0002D87B8 /* TrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashView.swift; sourceTree = "<group>"; };
 		61E33FD22A085B47009B9725 /* BarHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E33FD52A085B47009B9725 /* BarHelperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarHelperApp.swift; sourceTree = "<group>"; };
 		61E33FD72A085B47009B9725 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -65,7 +69,7 @@
 		61F91E0F2A0D34A800D320D8 /* Keyboard + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keyboard + extension.swift"; sourceTree = "<group>"; };
 		61F91E122A0D373200D320D8 /* CreateIngredientViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIngredientViewModel.swift; sourceTree = "<group>"; };
 		61F91E142A0D3E7D00D320D8 /* CreateIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIngredientView.swift; sourceTree = "<group>"; };
-		61F91E162A0D3FBA00D320D8 /* CBButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CBButtonView.swift; sourceTree = "<group>"; };
+		61F91E162A0D3FBA00D320D8 /* CPButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPButtonView.swift; sourceTree = "<group>"; };
 		61F91E192A0E826400D320D8 /* PlusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusView.swift; sourceTree = "<group>"; };
 		61F91E1B2A11594E00D320D8 /* CocktailCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +88,7 @@
 		6121B33C2A116F3A0029E65D /* Ingredients */ = {
 			isa = PBXGroup;
 			children = (
+				61CFFFD32A3F6868002D87B8 /* EditIngredientsView.swift */,
 				61F91E182A0D6A6B00D320D8 /* CreateIngredients */,
 				61E340132A0AE239009B9725 /* IngredientsView */,
 			);
@@ -113,8 +118,9 @@
 		612E26F12A166ED7001F5539 /* UIElements */ = {
 			isa = PBXGroup;
 			children = (
-				61F91E162A0D3FBA00D320D8 /* CBButtonView.swift */,
+				61F91E162A0D3FBA00D320D8 /* CPButtonView.swift */,
 				61F91E192A0E826400D320D8 /* PlusView.swift */,
+				61CFFFD52A3F6CF0002D87B8 /* TrashView.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -311,10 +317,11 @@
 				61E340282A0D1DBC009B9725 /* View + extension.swift in Sources */,
 				61E340102A0ADF37009B9725 /* CookingTypesView.swift in Sources */,
 				61E33FD82A085B47009B9725 /* ContentView.swift in Sources */,
-				61F91E172A0D3FBA00D320D8 /* CBButtonView.swift in Sources */,
+				61F91E172A0D3FBA00D320D8 /* CPButtonView.swift in Sources */,
 				61E340122A0ADF3F009B9725 /* CookingTypesViewModel.swift in Sources */,
 				61F91E1C2A11594E00D320D8 /* CocktailCellView.swift in Sources */,
 				61E340192A0B9187009B9725 /* CocktailsView.swift in Sources */,
+				61CFFFD42A3F6868002D87B8 /* EditIngredientsView.swift in Sources */,
 				61E3401D2A0C0F4B009B9725 /* CocktailView.swift in Sources */,
 				61F91E1A2A0E826400D320D8 /* PlusView.swift in Sources */,
 				61E340162A0AE31D009B9725 /* CreateCocktailsViewModel.swift in Sources */,
@@ -324,6 +331,7 @@
 				6121B3412A117E1B0029E65D /* SearchViewModel.swift in Sources */,
 				61E33FD62A085B47009B9725 /* BarHelperApp.swift in Sources */,
 				61E33FE22A085B49009B9725 /* BarHelper.xcdatamodeld in Sources */,
+				61CFFFD62A3F6CF0002D87B8 /* TrashView.swift in Sources */,
 				61E3400E2A0AD94A009B9725 /* IngredientsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

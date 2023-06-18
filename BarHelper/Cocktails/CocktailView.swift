@@ -43,15 +43,16 @@ struct CocktailView: View {
     }
     
     var body: some View {
-        VStack{
-
-
-            imageView
-            text
-            recipe
-            buttons
+        ScrollView{
+            VStack{
+                imageView
+                text
+                recipe
+                buttons
+            }
+            .padding(.horizontal, 10)
         }
-        .padding(.horizontal, 10)
+        .scrollBounceBehavior(.basedOnSize)
         .id(up)
         .backgroundWithoutSafeSpace(.darkPurple)
     }
@@ -65,12 +66,12 @@ struct CocktailView: View {
             }
             .hidden()
             if self.deleteCocktail != nil{
-                CBButtonView(color: .red, text: "Delete", enabled: true) {
+                CPButtonView(color: .red, text: "Delete", enabled: true) {
                     self.deleteCocktail?(cocktail)
                     self.presentationMode.wrappedValue.dismiss()
                 }
             }
-            CBButtonView(color: .orange, text: "Edit", enabled: true) {
+            CPButtonView(color: .orange, text: "Edit", enabled: true) {
                 nav.toggle()
             }
         }
@@ -113,34 +114,7 @@ struct CocktailView: View {
                 }
                 VStack{
                     ForEach(recipeSorted){ingredient in
-                        HStack{
-                            Text(ingredient.ingredient?.name ?? "Booze")
-                                .font(.smallTitle)
-                                .multilineTextAlignment(.leading)
-                            Spacer()
-                                .overlay(
-                                    Line()
-                                        .stroke(
-                                            Color.white,
-                                            style: StrokeStyle(
-                                                lineWidth: 2,
-                                                lineCap: .square,
-                                                lineJoin: .miter,
-                                                miterLimit: 0,
-                                                dash: [2, 10],
-                                                dashPhase: 0
-                                            )
-                                        )
-                                        .frame(height: 2)
-                                        .padding(.horizontal, 8)
-                                )
-                            Text(ingredient.ingredientValue.description)
-                                .font(.smallTitle)
-                                .multilineTextAlignment(.trailing)
-                            Text(ingredient.ingredient?.metric ?? "ml")
-                                .font(.normal)
-                        }
-                        .foregroundColor(.white)
+                        RecipeIngredientCell(ingredient: ingredient)
                     }
                 }
                 .padding()
@@ -195,5 +169,93 @@ struct CocktailView_Previews: PreviewProvider {
         ingredientRecord.ingredientValue = 30
         cocktail.addToRecipe(ingredientRecord)
         return NavigationView{CocktailView(cocktail: cocktail)}.preferredColorScheme(.dark)
+    }
+}
+
+
+struct RecipeIngredientCell: View{
+    let ingredient: DBIngredientRecord
+    @State private var showingAlternatives = false
+    @Namespace private var animation
+    var body: some View{
+        VStack(alignment: .leading){
+            Button {
+                withAnimation {
+                    showingAlternatives.toggle()
+                }
+            } label: {
+                HStack{
+                    if !showingAlternatives{
+                        if ingredient.ingredient?.parentIngredient != nil || (ingredient.ingredient?.alternatives?.count ?? 0) > 0{
+                            Text("*")
+                                .font(.smallTitle)
+                        }
+                        Text(ingredient.ingredient?.name ?? "Booze")
+                            .font(.smallTitle)
+                            .multilineTextAlignment(.leading)
+                            
+                                            .minimumScaleFactor(0.99)
+                            .matchedGeometryEffect(id: "UsedIngredient", in: animation)
+                    }
+                    Spacer()
+                        .overlay(
+                            Line()
+                                .stroke(
+                                    Color.white,
+                                    style: StrokeStyle(
+                                        lineWidth: 2,
+                                        lineCap: .square,
+                                        lineJoin: .miter,
+                                        miterLimit: 0,
+                                        dash: [2, 10],
+                                        dashPhase: 0
+                                    )
+                                )
+                                .frame(height: 2)
+                                .padding(.horizontal, 8)
+                        )
+                    Text(ingredient.ingredientValue.description)
+                        .font(.smallTitle)
+                        .multilineTextAlignment(.trailing)
+                    Text(ingredient.ingredient?.metric ?? "ml")
+                        .font(.normal)
+                }
+            }
+            .disabled(ingredient.ingredient?.parentIngredient == nil && (ingredient.ingredient?.alternatives?.count ?? 0) == 0)
+
+            if showingAlternatives{
+                alternatives
+            }
+        }
+        .foregroundColor(.white)
+    }
+    
+    private var alternatives: some View{
+        VStack(alignment: .leading){
+            if let parentIngredient = ingredient.ingredient?.parentIngredient ?? ingredient.ingredient,
+               let ingredientsSet = parentIngredient.alternatives,
+               let ingredients = ingredientsSet as? Set<DBIngredient>{
+                let ingredientsSorted = ingredients.sorted { l, r in
+                    ( l.name ?? "") < (r.name ?? "")
+                }
+                let array = ([parentIngredient] + ingredientsSorted)
+                ForEach(array, id: \.id){ingredientAlternative in
+                    if ingredient.ingredient == ingredientAlternative{
+                        Text(ingredientAlternative.name ?? "Booze")
+                            .font(.normal)
+                            .multilineTextAlignment(.leading)
+//                            .lineLimit(1)
+                                            .minimumScaleFactor(0.9)
+                            .matchedGeometryEffect(id: "UsedIngredient", in: animation)
+                    }else{
+                        Text(ingredientAlternative.name ?? "Booze")
+                            .font(.normal)
+                            .multilineTextAlignment(.leading)
+                            .opacity(0.75)
+                    }
+                    
+                }
+            }
+        }
     }
 }

@@ -20,7 +20,6 @@ struct ContentView: View {
                 .frame(height: 90)
                 HStack(spacing: 2){
                     ingredients
-                    ingredientCreate
                 }
                 .frame(height: 90)
                 cocktails
@@ -72,35 +71,6 @@ struct ContentView: View {
         }
     }
     
-    @State private var showIngredientCreate = false
-    private var ingredientCreate: some View{
-        Button {
-            showIngredientCreate.toggle()
-        } label: {
-            Rectangle()
-                .fill(Color.softGray)
-        }
-        .overlay(ZStack{
-            Rectangle()
-                .fill(Color.white)
-                .aspectRatio(15, contentMode: .fit)
-            Rectangle()
-                .fill(Color.white)
-                .aspectRatio(0.066, contentMode: .fit)
-        }
-            .aspectRatio(1, contentMode: .fit)
-            .padding(7)
-            .allowsHitTesting(false)
-        )
-        .clipShape(Rectangle())
-        .aspectRatio(1.6, contentMode: .fit)
-        .sheet(isPresented: $showIngredientCreate) {
-            CreateIngredientView(){
-                showIngredientCreate = false
-            }
-            .presentationDetents([.medium, .large])
-        }
-    }
     
     private var ingredients: some View{
         NavigationLink {
@@ -221,5 +191,6 @@ struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .preferredColorScheme(.dark)
+//            .previewDevice(.init(rawValue: "iPhone 14 Pro"))
     }
 }

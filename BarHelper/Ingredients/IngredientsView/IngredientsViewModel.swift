@@ -13,7 +13,10 @@ class IngredientsViewModel: ObservableObject{
     let db = DBManager.shared
     
     @Published var ingredients: [DBIngredient] = []
+    @Published var showIngredientCreate: Bool = false
     @Published var ingredientToEdit: DBIngredient? = nil
+    @Published var ingredientToDelete: DBIngredient? = nil
+    @Published var ingredientToAddAlternative: DBIngredient? = nil
     @Binding var selectedIngredients: [DBIngredient]
     @Published var search = ""
     let selectable: Bool
@@ -27,6 +30,7 @@ class IngredientsViewModel: ObservableObject{
             await fetchIngredients()
         }
         $search
+            .dropFirst()
             .sink { newSearch in
             Task{
                 let searchText: String? = newSearch.isEmpty ? nil : newSearch
@@ -44,7 +48,7 @@ class IngredientsViewModel: ObservableObject{
             await fetchIngredients()
         }
         $search
-            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
+            .dropFirst()
             .sink { newSearch in
             Task{
                 let searchText: String? = newSearch.isEmpty ? nil : newSearch
@@ -53,15 +57,20 @@ class IngredientsViewModel: ObservableObject{
         }
         .store(in: &cancellable)
     }
+    
+    
+    func onAdd(){
+        Task{
+            self.search = ""
+            await self.fetchIngredients()
+        }
+    }
 
     
     func deleteIngredient(ingredient: DBIngredient){
         Task{
             await db.deleteIngredient(ingredient: ingredient)
             await fetchIngredients()
-            DispatchQueue.main.async {
-                self.ingredientToEdit = nil
-            }
         }
     }
     
@@ -70,9 +79,14 @@ class IngredientsViewModel: ObservableObject{
             ingredient.name = newName
             await db.saveContext()
             await fetchIngredients()
-            DispatchQueue.main.async {
-                self.ingredientToEdit = nil
-            }
+        }
+    }
+    
+    func createSuccess(){
+        showIngredientCreate = false
+        search = ""
+        Task{
+            await fetchIngredients()
         }
     }
     

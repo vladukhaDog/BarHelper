@@ -40,9 +40,7 @@ struct PlusView: View {
     }
     private var currentColor: some View{
         Group{
-            
                 Color.white
-            
         }
     }
     

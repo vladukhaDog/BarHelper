@@ -13,14 +13,21 @@ class CreateIngredientViewModel: ObservableObject{
     @Published var name = ""
     @Published var metric = "ml"
     let onAdd: () -> ()
-    
-    init(onAdd: @escaping () ->()){
+    let baseIngredient: DBIngredient?
+    init(onAdd: @escaping () ->(), baseIngredient: DBIngredient? = nil){
         self.onAdd = onAdd
+        self.baseIngredient = baseIngredient
     }
     
     func addIngredient(){
         Task{
-            await db.addIngredient(name: self.name, metric: self.metric)
+            let usedMetric: String
+            if let baseIngredient{
+                usedMetric = baseIngredient.metric ?? "ml"
+            }else{
+                usedMetric = self.metric
+            }
+            await db.addIngredient(name: self.name, metric: usedMetric, parentIngredient: baseIngredient)
             self.onAdd()
         }
     }

@@ -21,7 +21,7 @@ struct SearchView: View {
 
             modeSelect
             ingredientFilter
-            CBButtonView(color: .green,
+            CPButtonView(color: .green,
                          text: "Find",
                          enabled: !vm.selectedIngredients.isEmpty) {
                 switch vm.searchMode{

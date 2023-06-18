@@ -44,7 +44,7 @@ struct CookingTypesView: View {
             }
             HStack{
                 Spacer()
-                CBButtonView(color: .green,
+                CPButtonView(color: .green,
                              text: "Add",
                              enabled: true,
                              action: {
@@ -68,13 +68,13 @@ struct CookingTypesView: View {
             Text(vm.typeToDelete?.name ?? "NO TYPE")
                 .font(.CBTitle)
             HStack{
-                CBButtonView(color: .gray,
+                CPButtonView(color: .gray,
                              text: "Cancel",
                              enabled: true,
                              action: {
                     vm.typeToDelete = nil
                 })
-                CBButtonView(color: .red,
+                CPButtonView(color: .red,
                              text: "Delete",
                              enabled: true,
                              action: {
@@ -98,14 +98,14 @@ struct CookingTypesView: View {
                 .padding(5)
                 .depthBorder()
             HStack{
-                CBButtonView(color: .orange,
+                CPButtonView(color: .orange,
                              text: "Reset",
                              enabled: true,
                              action: {
                     vm.name = ""
                 })
 
-                CBButtonView(color: .green,
+                CPButtonView(color: .green,
                              text: "Add",
                              enabled: true,
                              action: {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22A400" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22F66" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="CookingType" representedClassName="CookingType" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="cocktails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBCocktail" inverseName="cookingType" inverseEntity="DBCocktail"/>
@@ -16,6 +16,8 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="metric" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="name" optional="YES" attributeType="String" defaultValueString=""/>
+        <relationship name="alternatives" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBIngredient" inverseName="parentIngredient" inverseEntity="DBIngredient"/>
+        <relationship name="parentIngredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DBIngredient" inverseName="alternatives" inverseEntity="DBIngredient"/>
         <relationship name="records" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBIngredientRecord" inverseName="ingredient" inverseEntity="DBIngredientRecord"/>
     </entity>
     <entity name="DBIngredientRecord" representedClassName="DBIngredientRecord" syncable="YES" codeGenerationType="class">
