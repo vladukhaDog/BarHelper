@@ -36,7 +36,7 @@ class DBManager: ObservableObject{
         return newbackgroundContext
     }()
     
-    func addIngredient(name: String, metric: String, parentIngredient: DBIngredient? = nil) async {
+    func addIngredient(name: String, metric: String, parentIngredient: DBIngredient? = nil) async -> DBIngredient? {
         await withCheckedContinuation({ continuation in
             self.backgroundContext.performAndWait{
                 let request = DBIngredient.fetchRequest()
@@ -53,8 +53,11 @@ class DBManager: ObservableObject{
                     newIngredient.name = name
                     newIngredient.metric = metric
                     self.saveContext()
+                    continuation.resume(returning: newIngredient)
+                }else{
+                    continuation.resume(returning: nil)
                 }
-                continuation.resume()
+                
             }
         })
         

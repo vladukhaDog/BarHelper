@@ -12,9 +12,9 @@ class CreateIngredientViewModel: ObservableObject{
     
     @Published var name = ""
     @Published var metric = "ml"
-    let onAdd: () -> ()
+    let onAdd: (DBIngredient) -> ()
     let baseIngredient: DBIngredient?
-    init(onAdd: @escaping () ->(), baseIngredient: DBIngredient? = nil){
+    init(onAdd: @escaping (DBIngredient) ->(), baseIngredient: DBIngredient? = nil){
         self.onAdd = onAdd
         self.baseIngredient = baseIngredient
     }
@@ -27,8 +27,9 @@ class CreateIngredientViewModel: ObservableObject{
             }else{
                 usedMetric = self.metric
             }
-            await db.addIngredient(name: self.name, metric: usedMetric, parentIngredient: baseIngredient)
-            self.onAdd()
+            if let new = await db.addIngredient(name: self.name, metric: usedMetric, parentIngredient: baseIngredient){
+                self.onAdd(new)
+            }
         }
     }
 }

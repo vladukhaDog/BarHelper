@@ -10,15 +10,13 @@ import SwiftUI
 struct IngredientsView: View {
     @StateObject private var vm: IngredientsViewModel
     @State private var up = false
-    @State private var localSelected: [DBIngredient]
+    
     init(){
         self._vm = .init(wrappedValue: .init())
-        self._localSelected = .init(initialValue: [])
     }
     
     init(selectedIngredients: Binding<[DBIngredient]>){
         self._vm = .init(wrappedValue: .init(selectedIngredients: selectedIngredients))
-        self._localSelected = .init(initialValue: selectedIngredients.wrappedValue)
     }
     var body: some View {
         VStack{
@@ -40,31 +38,31 @@ struct IngredientsView: View {
                 }
             }
             .padding(.horizontal, 10)
-            
-            ScrollView{
-                HStack{
-                    Spacer()
-                }
-                VStack{
-                    ForEach(vm.ingredients){ingredient in
-                        IngredientCell(ingredient: ingredient, selectable: vm.selectable, selected: localSelected) {ingr in
-                            vm.ingredientToDelete = ingr
-                        } EditAction: {ingr in
-                            vm.ingredientToEdit = ingr
-                        } AddAction: {ingr in
-                            vm.ingredientToAddAlternative = ingr
-                        } onSelect: {ingr in
-                            if let localIndex = localSelected.firstIndex(of: ingr){
-                                localSelected.remove(at: localIndex)
-                            }else{
-                                localSelected.append(ingr)
-                            }
-                            self.vm.selectedIngredients = localSelected
-                        }
-                        .padding(5)
+            ScrollViewReader{ proxy in
+                ScrollView{
+                    HStack{
+                        Spacer()
                     }
+                    VStack{
+                        ForEach(vm.ingredients){ingredient in
+                            IngredientCell(ingredient: ingredient, selectable: vm.selectable, selected: vm.localSelected) {ingr in
+                                vm.ingredientToDelete = ingr
+                            } EditAction: {ingr in
+                                vm.ingredientToEdit = ingr
+                            } AddAction: {ingr in
+                                vm.ingredientToAddAlternative = ingr
+                            } onSelect: {ingr in
+                                vm.didSelect(ingr)
+                            }
+                            .id(ingredient.id)
+                            .padding(5)
+                        }
+                    }
+                    .padding(.horizontal, 5)
                 }
-                .padding(.horizontal, 5)
+                .onAppear{
+                    vm.scrollViewProxy = proxy
+                }
             }
             .background(Color.black)
             .padding(5)

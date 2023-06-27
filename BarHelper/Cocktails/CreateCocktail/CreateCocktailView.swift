@@ -160,7 +160,9 @@ struct CreateCocktailView: View {
                     for item in array{
                         newRecipe[item] = self.vm.recipe[item] ?? 0
                     }
-                    self.vm.recipe = newRecipe
+                    DispatchQueue.main.async{
+                        self.vm.recipe = newRecipe
+                    }
                 }))) {
                     PlusView()
                         .frame(height: 40)

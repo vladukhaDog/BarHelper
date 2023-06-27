@@ -18,6 +18,10 @@ class IngredientsViewModel: ObservableObject{
     @Published var ingredientToDelete: DBIngredient? = nil
     @Published var ingredientToAddAlternative: DBIngredient? = nil
     @Binding var selectedIngredients: [DBIngredient]
+    @Published var localSelected: [DBIngredient]
+    
+    @Published var scrollViewProxy: ScrollViewProxy? = nil
+    
     @Published var search = ""
     let selectable: Bool
     
@@ -26,6 +30,7 @@ class IngredientsViewModel: ObservableObject{
     init(selectedIngredients: Binding<[DBIngredient]>){
         selectable = true
         self._selectedIngredients = selectedIngredients
+        self._localSelected = .init(initialValue: selectedIngredients.wrappedValue)
         Task{
             await fetchIngredients()
         }
@@ -42,6 +47,7 @@ class IngredientsViewModel: ObservableObject{
     
     init(){
         selectable = false
+        self._localSelected = .init(initialValue: [])
         self._selectedIngredients = .init(get: {return []}, set: { ing in
         })
         Task{
@@ -59,10 +65,26 @@ class IngredientsViewModel: ObservableObject{
     }
     
     
-    func onAdd(){
+    func didSelect(_ ingr: DBIngredient){
+        if let localIndex = localSelected.firstIndex(of: ingr){
+            localSelected.remove(at: localIndex)
+        }else{
+            localSelected.append(ingr)
+        }
+        self.selectedIngredients = localSelected
+    }
+    
+    
+    func onAdd(_ newIngredient: DBIngredient){
         Task{
-            self.search = ""
             await self.fetchIngredients()
+            self.didSelect(newIngredient)
+            let parent = newIngredient.parentIngredient ?? newIngredient
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                withAnimation{
+                    self.scrollViewProxy?.scrollTo(parent.id, anchor: .center)
+                }
+            }
         }
     }
 

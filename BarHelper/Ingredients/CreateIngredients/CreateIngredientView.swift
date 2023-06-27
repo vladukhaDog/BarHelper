@@ -10,7 +10,7 @@ import SwiftUI
 struct CreateIngredientView: View {
     @StateObject private var vm: CreateIngredientViewModel
     @Environment(\.presentationMode) var presentationMode
-    init(onAdd: @escaping () ->(), baseIngredient: DBIngredient? = nil){
+    init(onAdd: @escaping (DBIngredient) ->(), baseIngredient: DBIngredient? = nil){
         self._vm = .init(wrappedValue: .init(onAdd: onAdd, baseIngredient: baseIngredient))
     }
     var body: some View {
@@ -122,7 +122,7 @@ struct CreateIngredientView: View {
 
 struct CreateIngredientView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateIngredientView(onAdd: {})
+        CreateIngredientView(onAdd: {_ in })
             .backgroundWithoutSafeSpace(.darkPurple)
     }
 }
