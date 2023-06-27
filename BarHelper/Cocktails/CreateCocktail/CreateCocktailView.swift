@@ -13,8 +13,8 @@ struct CreateCocktailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject private var vm: CreateCocktailsViewModel
     @State private var showSheet = false
-    init(editCocktail: DBCocktail? = nil, didEditCocktail: ((DBCocktail) -> ())? = nil){
-        self._vm = .init(wrappedValue: .init(editCocktail: editCocktail, didEditCocktail: didEditCocktail))
+    init(editCocktail: Binding<DBCocktail?> = .constant(nil)){
+        self._vm = .init(wrappedValue: .init(editCocktail: editCocktail))
     }
     
     let columns = [
@@ -152,17 +152,16 @@ struct CreateCocktailView: View {
                     .font(.smallTitle)
                     .foregroundColor(.white)
                 Spacer()
-                NavigationLink {
-                    IngredientsView(selectedIngredients: .init(get: {
-                        vm.recipe.map({$0.key})
-                    }, set: { array in
-                        var newRecipe: [DBIngredient: Int] = [:]
-                        for item in array{
-                            newRecipe[item] = self.vm.recipe[item] ?? 0
-                        }
-                        self.vm.recipe = newRecipe
-                    }))
-                } label: {
+                
+                NavigationLink(value: Destination.Ingredients(.init(get: {
+                    vm.recipe.map({$0.key})
+                }, set: { array in
+                    var newRecipe: [DBIngredient: Int] = [:]
+                    for item in array{
+                        newRecipe[item] = self.vm.recipe[item] ?? 0
+                    }
+                    self.vm.recipe = newRecipe
+                }))) {
                     PlusView()
                         .frame(height: 40)
                 }

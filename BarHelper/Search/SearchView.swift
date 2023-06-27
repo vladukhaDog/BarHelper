@@ -12,25 +12,12 @@ struct SearchView: View {
     @State private var nav = false
     var body: some View {
         VStack{
-            NavigationLink(isActive: $nav) {
-                CocktailsView(vm.cocktails)
-            } label: {
-                EmptyView()
-            }
-            .hidden()
-
             modeSelect
             ingredientFilter
             CPButtonView(color: .green,
                          text: "Find",
                          enabled: !vm.selectedIngredients.isEmpty) {
-                switch vm.searchMode{
-                case .cocktailContainsAnyIngredient:
-                    vm.findCocktailsWhichContain(ingredients: vm.selectedIngredients)
-                case .ingredientsContainCocktails:
-                    vm.findCocktailsWhichCanBeMadeUsing(ingredients: vm.selectedIngredients)
-                }
-                nav.toggle()
+                vm.startSearch()
             }
         }
         .padding(.horizontal)
@@ -69,10 +56,7 @@ struct SearchView: View {
                     .font(.smallTitle)
                     .foregroundColor(.white)
                 Spacer()
-                NavigationLink {
-                    IngredientsView(selectedIngredients: $vm.selectedIngredients)
-                        
-                } label: {
+                NavigationLink(value: Destination.Ingredients($vm.selectedIngredients)){
                     PlusView()
                         .frame(height: 40)
                 }

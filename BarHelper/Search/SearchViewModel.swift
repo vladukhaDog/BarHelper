@@ -17,9 +17,9 @@ class SearchViewModel: ObservableObject{
     
     
     @Published var selectedIngredients: [DBIngredient] = []
-    @Published var cocktails: [DBCocktail] = []
     @Published var searchMode: SearchMode = .ingredientsContainCocktails
     @Published var allCocktails: [DBCocktail] = []
+    
     init(){
         
         Task{
@@ -27,26 +27,42 @@ class SearchViewModel: ObservableObject{
         }
     }
     
-    func findCocktailsWhichCanBeMadeUsing(ingredients: [DBIngredient]){
-        let ingredientRecords = ingredients.flatMap { ingr in
+    func startSearch(){
+        switch searchMode{
+        case .cocktailContainsAnyIngredient:
+            Router.shared.push(
+                .CocktailsList(
+                    findCocktailsWhichContain()
+                )
+            )
+        case .ingredientsContainCocktails:
+            Router.shared.push(
+                .CocktailsList(
+                    findCocktailsWhichCanBeMadeUsing()
+                )
+            )
+        }
+    }
+    
+    private func findCocktailsWhichCanBeMadeUsing() -> [DBCocktail]{
+        let ingredientRecords = selectedIngredients.flatMap { ingr in
             ingr.records as! Set<DBIngredientRecord>
         }
-        let cocktails = allCocktails.filter { cocktail in
+        return allCocktails.filter { cocktail in
             let recipe = (cocktail.recipe as! Set<DBIngredientRecord>)
             return Set(ingredientRecords).isSuperset(of: recipe)
         }
-        self.cocktails = cocktails
     }
     
     
-    func findCocktailsWhichContain(ingredients: [DBIngredient]){
-        let cocktails = ingredients.flatMap { ingr in
+    private func findCocktailsWhichContain() -> [DBCocktail]{
+        return selectedIngredients.flatMap { ingr in
             let records = ingr.records as! Set<DBIngredientRecord>
             return records.compactMap { rec in
                 rec.cocktail
             }
         }
-        self.cocktails = cocktails
+        
     }
 
     private func fetchCocktails() async{

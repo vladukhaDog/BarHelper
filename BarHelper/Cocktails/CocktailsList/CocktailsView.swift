@@ -20,17 +20,25 @@ struct CocktailsView: View {
             }
             ScrollView{
                 LazyVStack{
-                    ForEach(vm.cocktails){cocktail in
-                        NavigationLink {
-                            CocktailView(cocktail: cocktail, didUpdate: vm.didUpdate, deleteCocktail: vm.delete)
-                        } label: {
-                            CocktailCellView(cocktail: cocktail)
+                    ForEach(vm.cocktails.indices, id: \.self){index in
+                        NavigationLink(value: Destination.CocktailView(
+                            .init(get: {
+                                self.vm.cocktails[index]
+                            }, set: { new in
+                                DispatchQueue.main.async{
+                                    self.vm.cocktails[index] = new
+                                    self.vm.cocktails[index].objectWillChange.send()
+                                    self.vm.objectWillChange.send()
+                                }
+                            }))
+                        ) {
+                            CocktailCellView(cocktail: vm.cocktails[index])
+                                .id("\(vm.cocktails[index].image?.fileName ?? "")+\(vm.cocktails[index].name ?? "")")
+                                
                         }
-                        
                     }
                 }
                 .padding(.horizontal)
-                .id(vm.up)
             }
             .padding(5)
         }

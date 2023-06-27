@@ -37,7 +37,6 @@ struct IngredientsView: View {
                             .foregroundColor(.white)
                             .font(.normal)
                     }
-                    
                 }
             }
             .padding(.horizontal, 10)

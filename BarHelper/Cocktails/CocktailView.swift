@@ -19,29 +19,18 @@ struct Line: Shape {
 struct CocktailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
-    @State private var cocktail: DBCocktail
-    private let updatedCocktail: ((DBCocktail) -> ())?
-    private let deleteCocktail: ((DBCocktail) -> ())?
+    @Binding private var cocktail: DBCocktail
     @State private var up = false
     
     
     
-    init(cocktail: DBCocktail, didUpdate: ((DBCocktail) -> ())? = nil, deleteCocktail: ((DBCocktail) -> ())? = nil){
-        self.deleteCocktail = deleteCocktail
-        self.updatedCocktail = didUpdate
-        self._cocktail = .init(initialValue: cocktail)
+    init(cocktail: Binding<DBCocktail>){
+        self._cocktail = cocktail
         
         
     }
     
-    private func didUpdateCocktail(_ newCocktail: DBCocktail){
-        DispatchQueue.main.async {
-            self.cocktail = newCocktail
-            up.toggle()
-        }
-        self.updatedCocktail?(newCocktail)
-    }
-    
+
     var body: some View {
         ScrollView{
             VStack{
@@ -59,20 +48,22 @@ struct CocktailView: View {
     @State private var nav = false
     private var buttons: some View{
         HStack{
-            NavigationLink(isActive: $nav) {
-                CreateCocktailView(editCocktail: cocktail, didEditCocktail: didUpdateCocktail)
-            } label: {
-                EmptyView()
-            }
-            .hidden()
-            if self.deleteCocktail != nil{
-                CPButtonView(color: .red, text: "Delete", enabled: true) {
-                    self.deleteCocktail?(cocktail)
-                    self.presentationMode.wrappedValue.dismiss()
-                }
+
+            CPButtonView(color: .red, text: "Delete", enabled: true) {
+#warning("make deletion")
+                self.presentationMode.wrappedValue.dismiss()
             }
             CPButtonView(color: .orange, text: "Edit", enabled: true) {
-                nav.toggle()
+                Router.shared.push(.EditCocktail(.init(get: {
+                    self.cocktail
+                }, set: { new in
+                    if let new{
+                        DispatchQueue.main.async{
+                            self.cocktail = new
+                            self.cocktail.objectWillChange.send()
+                        }
+                    }
+                })))
             }
         }
         .padding()
@@ -168,7 +159,7 @@ struct CocktailView_Previews: PreviewProvider {
         ingredientRecord.ingredient = ingredient
         ingredientRecord.ingredientValue = 30
         cocktail.addToRecipe(ingredientRecord)
-        return NavigationView{CocktailView(cocktail: cocktail)}.preferredColorScheme(.dark)
+        return NavigationView{CocktailView(cocktail: .constant(cocktail))}.preferredColorScheme(.dark)
     }
 }
 

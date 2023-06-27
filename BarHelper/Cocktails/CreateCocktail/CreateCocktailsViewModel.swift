@@ -22,13 +22,13 @@ class CreateCocktailsViewModel: ObservableObject{
     
     @Published var imagePlaceholer: String = ((1...8).randomElement() ?? 1).description
     
-    let toEditCocktail: DBCocktail?
+    @Binding var toEditCocktail: DBCocktail?
     let didEditCocktail: ((DBCocktail) -> ())?
     
-    init(editCocktail: DBCocktail? = nil, didEditCocktail: ((DBCocktail) -> ())? = nil){
-        self.toEditCocktail = editCocktail
+    init(editCocktail: Binding<DBCocktail?>, didEditCocktail: ((DBCocktail) -> ())? = nil){
+        self._toEditCocktail = editCocktail
         self.didEditCocktail = didEditCocktail
-        if let cocktail = editCocktail{
+        if let cocktail = editCocktail.wrappedValue{
             name = cocktail.name ?? ""
             description = cocktail.desc ?? ""
             cookType = cocktail.cookingType
@@ -60,8 +60,8 @@ class CreateCocktailsViewModel: ObservableObject{
     
     func save(){
         Task{
-            guard let toEditCocktail else {return}
-            if let oldImage = toEditCocktail.image, let oldImageName = oldImage.fileName{
+            guard let editedCocktail = toEditCocktail else {return}
+            if let oldImage = editedCocktail.image, let oldImageName = oldImage.fileName{
                 try? FileManager.default.removeItem(at: FileManager.default.temporaryDirectory.appendingPathComponent(oldImageName))
                 await db.deleteImage(image: oldImage)
             }
@@ -85,11 +85,11 @@ class CreateCocktailsViewModel: ObservableObject{
             } catch {
                 print("error:", error)
             }
-            toEditCocktail.image = imageEntry
-            toEditCocktail.name = name
-            toEditCocktail.desc = description
-            toEditCocktail.cookingType = cookType
-            if let recipeNSSet = toEditCocktail.recipe,
+            editedCocktail.image = imageEntry
+            editedCocktail.name = name
+            editedCocktail.desc = description
+            editedCocktail.cookingType = cookType
+            if let recipeNSSet = editedCocktail.recipe,
                let recipeSet = recipeNSSet as? Set<DBIngredientRecord>{
                 let recipeSorted = recipeSet.sorted { l, r in
                     (l.ingredient?.name ?? "") < (r.ingredient?.name ?? "")
@@ -103,10 +103,10 @@ class CreateCocktailsViewModel: ObservableObject{
                 let ingredientRecord = DBIngredientRecord(context: db.backgroundContext)
                 ingredientRecord.ingredientValue = Int64(ingredient.value)
                 ingredientRecord.ingredient = ingredient.key
-                toEditCocktail.addToRecipe(ingredientRecord)
+                editedCocktail.addToRecipe(ingredientRecord)
             }
             await db.saveContext()
-            self.didEditCocktail?(toEditCocktail)
+            self.toEditCocktail = editedCocktail
         }
     }
     
