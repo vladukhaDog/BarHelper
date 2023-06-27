@@ -56,25 +56,7 @@ struct CreateCocktailView: View {
     }
     
     private var descriptionTextField: some View{
-        TextEditor(text: $vm.description)
-            .scrollContentBackground(.hidden)
-            .font(.smallTitle)
-            .foregroundColor(.white)
-            .tint(.white)
-            .overlay(alignment: .topLeading, content: {
-                if vm.description.isEmpty{
-                    Text("Description")
-                        .font(.smallTitle)
-                        .foregroundColor(.white)
-                        .padding(3)
-                        .padding(.top, 6)
-                        .opacity(0.3)
-                        .allowsHitTesting(false)
-                }
-            })
-            .padding(5)
-            .background(Color.darkPurple)
-            .depthBorder()
+        CPTextEditor(text: $vm.description, placeholder: "Description")
     }
     
     private var confirmButton: some View{
