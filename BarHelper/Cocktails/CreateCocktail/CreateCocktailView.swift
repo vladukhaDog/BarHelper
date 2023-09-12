@@ -135,17 +135,7 @@ struct CreateCocktailView: View {
                     .foregroundColor(.white)
                 Spacer()
                 
-                NavigationLink(value: Destination.Ingredients(.init(get: {
-                    vm.recipe.map({$0.key})
-                }, set: { array in
-                    var newRecipe: [DBIngredient: Int] = [:]
-                    for item in array{
-                        newRecipe[item] = self.vm.recipe[item] ?? 0
-                    }
-                    DispatchQueue.main.async{
-                        self.vm.recipe = newRecipe
-                    }
-                }))) {
+                NavigationLink(value: Destination.Ingredients($vm.recipe)) {
                     PlusView()
                         .frame(height: 40)
                 }

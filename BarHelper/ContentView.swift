@@ -9,56 +9,6 @@ import SwiftUI
 import Combine
 import CoreData
 
-extension Binding: Equatable where Value: Equatable {
-    public static func == (lhs: Binding<Value>, rhs: Binding<Value>) -> Bool {
-        return lhs.wrappedValue == rhs.wrappedValue
-    }
-}
-
-extension Binding: Hashable where Value: Hashable{
-    public func hash(into hasher: inout Hasher) {
-        return hasher.combine(self.wrappedValue)
-    }
-}
-
-enum Destination: Hashable {
-    case CocktailsList([DBCocktail]?)
-    case Ingredients(Binding<[DBIngredient]>?)
-    case Search
-    case CreateCocktail
-    case CookingTypes
-    case EditCocktail(Binding<DBCocktail?>)
-    case CocktailView(Binding<DBCocktail>)
-}
-
-final class Router: ObservableObject {
-    static let shared = Router()
-    
-    
-    @Published var path = [Destination]()
-    private var cancellable = Set<AnyCancellable>()
-    private init(){
-        $path
-            .sink { pat in
-                print(pat.count)
-            }
-            .store(in: &cancellable)
-    }
-    
-    
-    
-    func push(_ destination: Destination){
-        path.append(destination)
-    }
-    
-    func backToRoot() {
-        path.removeAll()
-    }
-    
-    func back() {
-        path.removeLast()
-    }
-}
 
 struct ContentView: View {
     
@@ -89,9 +39,9 @@ struct ContentView: View {
                 switch route {
                 case .CocktailsList(let cocktails):
                     CocktailsView(cocktails)
-                case .Ingredients(let selectList):
+                case .Ingredients(let selectList, let canInputNumber):
                     if let list = selectList{
-                        IngredientsView(selectedIngredients: list)
+                        IngredientsView(selectedIngredients: list, canInputNumber: canInputNumber)
                     }else{
                         IngredientsView()
                     }

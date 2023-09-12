@@ -17,17 +17,19 @@ class IngredientsViewModel: ObservableObject{
     @Published var ingredientToEdit: DBIngredient? = nil
     @Published var ingredientToDelete: DBIngredient? = nil
     @Published var ingredientToAddAlternative: DBIngredient? = nil
-    @Binding var selectedIngredients: [DBIngredient]
-    @Published var localSelected: [DBIngredient]
+    @Binding var selectedIngredients: [DBIngredient: Int]
+    @Published var localSelected: [DBIngredient: Int]
     
     @Published var scrollViewProxy: ScrollViewProxy? = nil
     
     @Published var search = ""
     let selectable: Bool
+    let canInputNumber: Bool
     
     private var cancellable = Set<AnyCancellable>()
     
-    init(selectedIngredients: Binding<[DBIngredient]>){
+    init(selectedIngredients: Binding<[DBIngredient: Int]>, canInputNumber: Bool = true){
+        self.canInputNumber = canInputNumber
         selectable = true
         self._selectedIngredients = selectedIngredients
         self._localSelected = .init(initialValue: selectedIngredients.wrappedValue)
@@ -46,9 +48,10 @@ class IngredientsViewModel: ObservableObject{
     }
     
     init(){
+        self.canInputNumber = false
         selectable = false
-        self._localSelected = .init(initialValue: [])
-        self._selectedIngredients = .init(get: {return []}, set: { ing in
+        self._localSelected = .init(initialValue: [:])
+        self._selectedIngredients = .init(get: {return [:]}, set: { ing in
         })
         Task{
             await fetchIngredients()
@@ -66,10 +69,10 @@ class IngredientsViewModel: ObservableObject{
     
     
     func didSelect(_ ingr: DBIngredient){
-        if let localIndex = localSelected.firstIndex(of: ingr){
-            localSelected.remove(at: localIndex)
+        if localSelected[ingr] != nil{
+            localSelected.removeValue(forKey: ingr)
         }else{
-            localSelected.append(ingr)
+            localSelected[ingr] = 0
         }
         self.selectedIngredients = localSelected
     }
