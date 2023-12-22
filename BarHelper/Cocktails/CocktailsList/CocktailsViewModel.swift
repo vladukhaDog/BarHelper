@@ -10,7 +10,6 @@ import Combine
 
 class CocktailsViewModel: ObservableObject{
     let db = DBManager.shared
-    @Published var up = false
     @Published var search = ""
     @Published var cocktails: [DBCocktail] = []
     @Published var searchEnabled = true
@@ -39,25 +38,29 @@ class CocktailsViewModel: ObservableObject{
     
     
     
-    func delete(_ cocktail: DBCocktail){
+    private func delete(_ cocktail: DBCocktail){
         Task{
+            print("starting delete")
             await db.deleteCocktail(cocktail: cocktail)
+            print("finished delete")
             if let index = self.cocktails.firstIndex(of: cocktail){
                 DispatchQueue.main.async {
+                    print("updating deleted cocktail list")
                     self.cocktails.remove(at: index)
-                    self.up.toggle()
+                    self.objectWillChange.send()
                 }
             }
         }
     }
     
     func didUpdate(_ cocktail: DBCocktail){
-            if let index = cocktails.firstIndex(of: cocktail){
-                DispatchQueue.main.async {
-                    self.cocktails[index] = cocktail
-                    self.up.toggle()
-                }
+        if cocktail.deletedByUser {
+            self.delete(cocktail)
+        } else if let index = cocktails.firstIndex(of: cocktail){
+            DispatchQueue.main.async {
+                self.cocktails[index] = cocktail
             }
+        }
     }
   
 
