@@ -50,18 +50,18 @@ struct CocktailView: View {
         HStack{
 
             CPButtonView(color: .red, text: "Delete", enabled: true) {
-#warning("make deletion")
+                self.cocktail.deletedByUser = true
+                self.cocktail = self.cocktail
+                self.cocktail.objectWillChange.send()
                 self.presentationMode.wrappedValue.dismiss()
             }
             CPButtonView(color: .orange, text: "Edit", enabled: true) {
                 Router.shared.push(.EditCocktail(.init(get: {
                     self.cocktail
                 }, set: { new in
-                    if let new{
-                        DispatchQueue.main.async{
-                            self.cocktail = new
-                            self.cocktail.objectWillChange.send()
-                        }
+                    DispatchQueue.main.async{
+                        self.cocktail = new
+                        self.cocktail.objectWillChange.send()
                     }
                 })))
             }
