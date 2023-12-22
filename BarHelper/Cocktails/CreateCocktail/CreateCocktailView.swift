@@ -79,6 +79,7 @@ struct CreateCocktailView: View {
                 }
             }
         }
+        .frame(height: 80)
     }
     
     private var imageView: some View{
@@ -110,7 +111,7 @@ struct CreateCocktailView: View {
                             .scaledToFit()
                     }
                 }
-                .frame(maxWidth: 150, maxHeight: 150)
+                .frame(height: 150)
                 .clipShape(Rectangle())
                 .onTapGesture {
                     self.showSheet.toggle()
