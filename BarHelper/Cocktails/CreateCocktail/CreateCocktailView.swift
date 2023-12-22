@@ -198,22 +198,42 @@ struct CreateCocktailView: View {
  
     
     private var typeSelector: some View{
-        LazyVGrid(columns: columns){
-            ForEach(vm.types, id: \.id){type in
-                Button {
-                    withAnimation() {
-                        self.vm.cookType = type
+        Group {
+            if vm.types.isEmpty {
+                VStack {
+                    Text("No cocktail types")
+                        .font(.smallTitle)
+                    Button {
+                        Router.shared.path.removeLast()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                            Router.shared.path
+                                .append(.CookingTypes)
+                        }
+                    } label: {
+                        PlusView()
+                            .frame(width: 40, height: 40)
                     }
-                } label: {
-                    HStack{
-                        Text(type.name ?? "type")
-                            .font(.smallTitle)
-                            .foregroundColor(.white.opacity(vm.cookType == type ? 1 : 0.4))
+                }
+            } else {
+                LazyVGrid(columns: columns){
+                    ForEach(vm.types, id: \.id){type in
+                        Button {
+                            withAnimation() {
+                                self.vm.cookType = type
+                            }
+                        } label: {
+                            HStack{
+                                Text(type.name ?? "type")
+                                    .font(.smallTitle)
+                                    .foregroundColor(.white.opacity(vm.cookType == type ? 1 : 0.4))
+                            }
+                            .padding(.vertical, 5)
+                        }
                     }
-                    .padding(.vertical, 5)
                 }
             }
         }
+        .frame(maxWidth: .infinity)
         .padding(5)
         .background(Color.black)
         .padding(4)
