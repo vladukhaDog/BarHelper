@@ -23,11 +23,12 @@ extension Binding: Hashable where Value: Hashable{
 
 enum Destination: Hashable {
     case CocktailsList([DBCocktail]?)
-    case Ingredients(Binding<[DBIngredient: Int]>?, Bool = true)
+    /// Bindable list of ingredients to add to in parent view if ingredient is tapped or created
+    case Ingredients(Binding<[DBIngredient: Int]>?)
     case Search
     case CreateCocktail
     case CookingTypes
-    case EditCocktail(Binding<DBCocktail?>)
+    case EditCocktail(Binding<DBCocktail>)
     case CocktailView(Binding<DBCocktail>)
 }
 
@@ -38,11 +39,6 @@ final class Router: ObservableObject {
     @Published var path = [Destination]()
     private var cancellable = Set<AnyCancellable>()
     private init(){
-        $path
-            .sink { pat in
-                print(pat.count)
-            }
-            .store(in: &cancellable)
     }
     
     

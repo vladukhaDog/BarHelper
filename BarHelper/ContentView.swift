@@ -39,9 +39,9 @@ struct ContentView: View {
                 switch route {
                 case .CocktailsList(let cocktails):
                     CocktailsView(cocktails)
-                case .Ingredients(let selectList, let canInputNumber):
+                case .Ingredients(let selectList):
                     if let list = selectList{
-                        IngredientsView(selectedIngredients: list, canInputNumber: canInputNumber)
+                        IngredientsView(selectedIngredients: list)
                     }else{
                         IngredientsView()
                     }
