@@ -23,11 +23,16 @@ class CreateCocktailsViewModel: ObservableObject{
     @Published var imagePlaceholer: String = ((1...8).randomElement() ?? 1).description
     
     @Binding var toEditCocktail: DBCocktail?
-    let didEditCocktail: ((DBCocktail) -> ())?
     
-    init(editCocktail: Binding<DBCocktail?>, didEditCocktail: ((DBCocktail) -> ())? = nil){
+    init() {
+        self._toEditCocktail = .constant(nil)
+        Task{
+            await fetchTypes()
+        }
+    }
+    
+    init(editCocktail: Binding<DBCocktail?>){
         self._toEditCocktail = editCocktail
-        self.didEditCocktail = didEditCocktail
         if let cocktail = editCocktail.wrappedValue{
             name = cocktail.name ?? ""
             description = cocktail.desc ?? ""
@@ -83,7 +88,7 @@ class CreateCocktailsViewModel: ObservableObject{
                     imageEntry = await db.addImage(name: fileName)
                 }
             } catch {
-                print("error:", error)
+                print("error creating image cocktail for edit cocktail:", error)
             }
             editedCocktail.image = imageEntry
             editedCocktail.name = name
@@ -116,7 +121,7 @@ class CreateCocktailsViewModel: ObservableObject{
             do {
                 // get the documents directory url
                 let documentsDirectory = FileManager.default.temporaryDirectory
-                print("documentsDirectory:", documentsDirectory.path)
+                print("documentsDirectory for new Image:", documentsDirectory.path)
                 // choose a name for your image
                 let fileName = "\(name)_\(UUID().uuidString).jpg"
                 // create the destination file url to save your image
@@ -130,7 +135,7 @@ class CreateCocktailsViewModel: ObservableObject{
                     imageEntry = await db.addImage(name: fileName)
                 }
             } catch {
-                print("error:", error)
+                print("error Creating image cocktail:", error)
             }
             guard let cookType else {return}
             await db.addCocktail(name: name,

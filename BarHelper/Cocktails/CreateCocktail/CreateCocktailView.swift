@@ -13,8 +13,24 @@ struct CreateCocktailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject private var vm: CreateCocktailsViewModel
     @State private var showSheet = false
-    init(editCocktail: Binding<DBCocktail?> = .constant(nil)){
-        self._vm = .init(wrappedValue: .init(editCocktail: editCocktail))
+    
+    init(editCocktail: Binding<DBCocktail>){
+        let proxyBinding: Binding<DBCocktail?> = .init(get: {
+            editCocktail.wrappedValue
+        }, set: { new in
+            if let new {
+                editCocktail.wrappedValue = new
+            }
+        })
+        self._vm = .init(wrappedValue: .init(editCocktail: proxyBinding))
+    }
+    
+    init() {
+        self._vm = .init(wrappedValue: .init())
+    }
+    
+    init(_ viewModel: CreateCocktailsViewModel) {
+        self._vm = .init(wrappedValue: viewModel)
     }
     
     let columns = [
