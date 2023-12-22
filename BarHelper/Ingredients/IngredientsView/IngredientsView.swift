@@ -15,7 +15,7 @@ struct IngredientsView: View {
         self._vm = .init(wrappedValue: .init())
     }
     
-    init(selectedIngredients: Binding<[DBIngredient: Int]>, canInputNumber: Bool = true){
+    init(selectedIngredients: Binding<[DBIngredient: Int]>){
         self._vm = .init(wrappedValue: .init(selectedIngredients: selectedIngredients))
     }
     var body: some View {
