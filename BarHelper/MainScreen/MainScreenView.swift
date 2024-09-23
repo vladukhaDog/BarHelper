@@ -13,6 +13,7 @@ struct MainScreenView: View {
         ScrollView {
             LazyVStack{
                 CookingTypesHeader()
+                IngredientsHeader()
             }
             .padding()
         }

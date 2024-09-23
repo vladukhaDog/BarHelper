@@ -10,7 +10,13 @@ import SwiftUI
 struct CookingTypesHeader: View {
     var body: some View {
         VStack(alignment: .leading) {
-            title
+            HStack {
+                title
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .foregroundStyle(Color.primary)
+                    .bold()
+            }
             existingList
         }
         .padding(8)
@@ -19,9 +25,17 @@ struct CookingTypesHeader: View {
     }
     
     private var title: some View {
-        Text("Cooking methods")
-            .font(.title)
-            .frame(maxWidth: .infinity, alignment: .leading)
+        HStack {
+            Image("shaker")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 30, height: 30, alignment: .center)
+                .foregroundStyle(Color.primary)
+            Text("Cooking methods")
+                .font(.title)
+                .fontWeight(.semibold)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
     }
     
     private var existingList: some View {
