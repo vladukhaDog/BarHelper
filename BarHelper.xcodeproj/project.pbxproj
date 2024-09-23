@@ -15,6 +15,7 @@
 		61CFFFD62A3F6CF0002D87B8 /* TrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CFFFD52A3F6CF0002D87B8 /* TrashView.swift */; };
 		61DCFBE62CA1AC26001019B0 /* Binding extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBE52CA1AC26001019B0 /* Binding extension.swift */; };
 		61DCFBE82CA1AC84001019B0 /* DestinationCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBE72CA1AC84001019B0 /* DestinationCases.swift */; };
+		61DCFBEA2CA1AF23001019B0 /* DestinationPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBE92CA1AF23001019B0 /* DestinationPath.swift */; };
 		61E33FD62A085B47009B9725 /* BarHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD52A085B47009B9725 /* BarHelperApp.swift */; };
 		61E33FD82A085B47009B9725 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD72A085B47009B9725 /* ContentView.swift */; };
 		61E33FDA2A085B49009B9725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61E33FD92A085B49009B9725 /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		61CFFFD52A3F6CF0002D87B8 /* TrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashView.swift; sourceTree = "<group>"; };
 		61DCFBE52CA1AC26001019B0 /* Binding extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding extension.swift"; sourceTree = "<group>"; };
 		61DCFBE72CA1AC84001019B0 /* DestinationCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationCases.swift; sourceTree = "<group>"; };
+		61DCFBE92CA1AF23001019B0 /* DestinationPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationPath.swift; sourceTree = "<group>"; };
 		61E33FD22A085B47009B9725 /* BarHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E33FD52A085B47009B9725 /* BarHelperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarHelperApp.swift; sourceTree = "<group>"; };
 		61E33FD72A085B47009B9725 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				61A2D7B82A4E17BC007FA201 /* Router.swift */,
 				61DCFBE72CA1AC84001019B0 /* DestinationCases.swift */,
 				61DCFBE52CA1AC26001019B0 /* Binding extension.swift */,
+				61DCFBE92CA1AF23001019B0 /* DestinationPath.swift */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 				61CFFFD42A3F6868002D87B8 /* EditIngredientsView.swift in Sources */,
 				61E3401D2A0C0F4B009B9725 /* CocktailView.swift in Sources */,
 				61F91E1A2A0E826400D320D8 /* PlusView.swift in Sources */,
+				61DCFBEA2CA1AF23001019B0 /* DestinationPath.swift in Sources */,
 				61DCFBE62CA1AC26001019B0 /* Binding extension.swift in Sources */,
 				61E340162A0AE31D009B9725 /* CreateCocktailsViewModel.swift in Sources */,
 				61E340212A0D1615009B9725 /* Font + extension.swift in Sources */,

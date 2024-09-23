@@ -34,28 +34,7 @@ struct ContentView: View {
             }
             .padding(8)
             .backgroundWithoutSafeSpace(.pinkPurple)
-            .navigationDestination(for: Destination.self) { route in
-                switch route {
-                case .CocktailsList(let cocktails):
-                    CocktailsView(cocktails)
-                case .Ingredients(let selectList):
-                    if let list = selectList{
-                        IngredientsView(selectedIngredients: list)
-                    }else{
-                        IngredientsView()
-                    }
-                case .Search:
-                    SearchView()
-                case .CreateCocktail:
-                    CreateCocktailView()
-                case .CookingTypes:
-                    CookingTypesView()
-                case .EditCocktail(let cocktail):
-                    CreateCocktailView(editCocktail: cocktail)
-                case .CocktailView(let cocktail):
-                    CocktailView(cocktail: cocktail)
-                }
-            }
+            .routePath()
         }
     }
     
