@@ -11,12 +11,13 @@ import SwiftUI
 struct MainScreenView: View {
     var body: some View {
         ScrollView {
-            LazyVStack{
+            LazyVStack {
                 CookingTypesHeader()
                 IngredientsHeader()
                 CocktailsHeader()
             }
             .padding()
+            FavouritesHeader(favourites: [])
         }
         .frame(maxWidth: .infinity)
     }
