@@ -28,20 +28,21 @@ class SearchViewModel: ObservableObject{
     }
     
     func startSearch(){
-        switch searchMode{
-        case .cocktailContainsAnyIngredient:
-            Router.shared.push(
-                .CocktailsList(
-                    findCocktailsWhichContain()
-                )
-            )
-        case .ingredientsContainCocktails:
-            Router.shared.push(
-                .CocktailsList(
-                    findCocktailsWhichCanBeMadeUsing()
-                )
-            )
-        }
+#warning("DISABLED NAVIGATION")
+//        switch searchMode{
+//        case .cocktailContainsAnyIngredient:
+//            Router.shared.push(
+//                .CocktailsList(
+//                    findCocktailsWhichContain()
+//                )
+//            )
+//        case .ingredientsContainCocktails:
+//            Router.shared.push(
+//                .CocktailsList(
+//                    findCocktailsWhichCanBeMadeUsing()
+//                )
+//            )
+//        }
     }
     
     private func findCocktailsWhichCanBeMadeUsing() -> [DBCocktail]{

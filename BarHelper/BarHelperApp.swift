@@ -15,10 +15,11 @@ struct BarHelperApp: App {
             CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
         })
     }
+    @State private var router: Router = .init()
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .preferredColorScheme(.dark)
+                .environmentObject(router)
         }
     }
 }

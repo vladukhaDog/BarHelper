@@ -11,15 +11,14 @@ import CoreData
 
 
 struct ContentView: View {
-    
-    @ObservedObject var router = Router.shared
+    @EnvironmentObject var router: Router
     
     var body: some View {
         NavigationStack(path: $router.path){
             VStack(spacing: 4){
                 HStack(spacing: 2){
                     cookingTypes
-                    search
+                    
                 }
                 .frame(height: 90)
                 HStack(spacing: 2){
@@ -35,33 +34,12 @@ struct ContentView: View {
             }
             .padding(8)
             .backgroundWithoutSafeSpace(.pinkPurple)
-            .navigationDestination(for: Destination.self) { route in
-                switch route {
-                case .CocktailsList(let cocktails):
-                    CocktailsView(cocktails)
-                case .Ingredients(let selectList):
-                    if let list = selectList{
-                        IngredientsView(selectedIngredients: list)
-                    }else{
-                        IngredientsView()
-                    }
-                case .Search:
-                    SearchView()
-                case .CreateCocktail:
-                    CreateCocktailView()
-                case .CookingTypes:
-                    CookingTypesView()
-                case .EditCocktail(let cocktail):
-                    CreateCocktailView(editCocktail: cocktail)
-                case .CocktailView(let cocktail):
-                    CocktailView(cocktail: cocktail)
-                }
-            }
+            .routePath()
         }
     }
     
     private var cookingTypes: some View{
-        NavigationLink(value: Destination.CookingTypes) {
+        NavigationLink(value: Destination.CookingTypesList) {
             Rectangle()
                 .fill(Color.softPink)
                 .overlay(
@@ -97,7 +75,7 @@ struct ContentView: View {
     
     
     private var ingredients: some View{
-        NavigationLink(value: Destination.Ingredients(nil)) {
+        NavigationLink(value: Destination.IngredientsList) {
             Rectangle()
                 .fill(Color.softBlue)
                 .overlay(
@@ -116,27 +94,8 @@ struct ContentView: View {
         }
     }
     
-    private var search: some View{
-        NavigationLink(value: Destination.Search) {
-            Rectangle()
-                .fill(Color.darkPurple)
-                .overlay(
-                    HStack{
-                        Text("Search")
-                            .lineLimit(1)
-                            .foregroundColor(.white)
-                            .font(.CBTitle)
-                            .minimumScaleFactor(0.1)
-                    }
-                    
-                )
-                .depthBorder()
-        }
-        
-    }
-    
     private var cocktails: some View{
-        NavigationLink(value: Destination.CocktailsList(nil)) {
+        NavigationLink(value: Destination.StoredCocktailsList) {
             Rectangle()
                 .fill(Color.darkPurple)
                 .overlay(

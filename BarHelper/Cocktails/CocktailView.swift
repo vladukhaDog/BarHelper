@@ -56,14 +56,15 @@ struct CocktailView: View {
                 self.presentationMode.wrappedValue.dismiss()
             }
             CPButtonView(color: .orange, text: "Edit", enabled: true) {
-                Router.shared.push(.EditCocktail(.init(get: {
-                    self.cocktail
-                }, set: { new in
-                    DispatchQueue.main.async{
-                        self.cocktail = new
-                        self.cocktail.objectWillChange.send()
-                    }
-                })))
+#warning("DISABLED NAVIGATION")
+//                Router.shared.push(.EditCocktail(.init(get: {
+//                    self.cocktail
+//                }, set: { new in
+//                    DispatchQueue.main.async{
+//                        self.cocktail = new
+//                        self.cocktail.objectWillChange.send()
+//                    }
+//                })))
             }
         }
         .padding()
