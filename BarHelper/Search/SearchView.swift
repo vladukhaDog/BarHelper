@@ -56,7 +56,7 @@ struct SearchView: View {
                     .font(.smallTitle)
                     .foregroundColor(.white)
                 Spacer()
-                NavigationLink(value: Destination.Ingredients(.init(get: {
+                NavigationLink(value: Destination.IngredientsSelector(.init(get: {
                     Dictionary(uniqueKeysWithValues: vm.selectedIngredients.map{($0, 0)})
                 }, set: { dict in
                     vm.selectedIngredients = dict.map{$0.key}

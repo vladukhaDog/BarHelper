@@ -152,7 +152,7 @@ struct CreateCocktailView: View {
                     .foregroundColor(.white)
                 Spacer()
                 
-                NavigationLink(value: Destination.Ingredients($vm.recipe)) {
+                NavigationLink(value: Destination.IngredientsSelector($vm.recipe)) {
                     PlusView()
                         .frame(height: 40)
                 }
@@ -221,10 +221,11 @@ struct CreateCocktailView: View {
                     Text("No cocktail types")
                         .font(.smallTitle)
                     Button {
-                        Router.shared.path.removeLast()
+#warning("DISABLED NAVIGATION")
+//                        Router.shared.path.removeLast()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                            Router.shared.path
-                                .append(.CookingTypes)
+//                            Router.shared.path
+//                                .append(.CookingTypes)
                         }
                     } label: {
                         PlusView()
