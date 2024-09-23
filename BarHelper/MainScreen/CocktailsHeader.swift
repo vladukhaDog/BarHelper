@@ -1,5 +1,5 @@
 //
-//  CookingTypesHeader.swift
+//  CocktailsHeader.swift
 //  BarHelper
 //
 //  Created by Владислав Пермяков on 23.09.2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CookingTypesHeader: View {
+struct CocktailsHeader: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -17,20 +17,21 @@ struct CookingTypesHeader: View {
                     .foregroundStyle(Color.primary)
                     .bold()
             }
+            existingList
         }
         .padding(8)
-        .background(Color.blue.opacity(0.15))
+        .background(Color.green.opacity(0.2))
         .clipShape(RoundedRectangle(cornerRadius: 10))
     }
     
     private var title: some View {
         HStack {
-            Image("shaker")
+            Image("cocktail")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 30, height: 30, alignment: .center)
+                .frame(width: 25, height: 25, alignment: .center)
                 .foregroundStyle(Color.primary)
-            Text("Cooking methods")
+            Text("Cocktails")
                 .font(.title)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -72,6 +73,5 @@ struct CookingTypesHeader: View {
 }
 
 #Preview {
-    CookingTypesHeader()
-        .padding()
+    CocktailsHeader()
 }

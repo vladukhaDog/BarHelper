@@ -19,6 +19,7 @@
 		61DCFBEC2CA1B458001019B0 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBEB2CA1B458001019B0 /* MainScreenView.swift */; };
 		61DCFBEF2CA1B8FB001019B0 /* CookingTypesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBEE2CA1B8FB001019B0 /* CookingTypesHeader.swift */; };
 		61DCFBF12CA1BCC5001019B0 /* IngredientsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF02CA1BCC5001019B0 /* IngredientsHeader.swift */; };
+		61DCFBF32CA1D376001019B0 /* CocktailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF22CA1D376001019B0 /* CocktailsHeader.swift */; };
 		61E33FD62A085B47009B9725 /* BarHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD52A085B47009B9725 /* BarHelperApp.swift */; };
 		61E33FD82A085B47009B9725 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD72A085B47009B9725 /* ContentView.swift */; };
 		61E33FDA2A085B49009B9725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61E33FD92A085B49009B9725 /* Assets.xcassets */; };
@@ -61,6 +62,7 @@
 		61DCFBEB2CA1B458001019B0 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
 		61DCFBEE2CA1B8FB001019B0 /* CookingTypesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookingTypesHeader.swift; sourceTree = "<group>"; };
 		61DCFBF02CA1BCC5001019B0 /* IngredientsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsHeader.swift; sourceTree = "<group>"; };
+		61DCFBF22CA1D376001019B0 /* CocktailsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsHeader.swift; sourceTree = "<group>"; };
 		61E33FD22A085B47009B9725 /* BarHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E33FD52A085B47009B9725 /* BarHelperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarHelperApp.swift; sourceTree = "<group>"; };
 		61E33FD72A085B47009B9725 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 			children = (
 				61DCFBEB2CA1B458001019B0 /* MainScreenView.swift */,
 				61DCFBEE2CA1B8FB001019B0 /* CookingTypesHeader.swift */,
+				61DCFBF22CA1D376001019B0 /* CocktailsHeader.swift */,
 				61DCFBF02CA1BCC5001019B0 /* IngredientsHeader.swift */,
 			);
 			path = MainScreen;
@@ -366,6 +369,7 @@
 				61F91E172A0D3FBA00D320D8 /* CPButtonView.swift in Sources */,
 				61E340122A0ADF3F009B9725 /* CookingTypesViewModel.swift in Sources */,
 				61F91E1C2A11594E00D320D8 /* CocktailCellView.swift in Sources */,
+				61DCFBF32CA1D376001019B0 /* CocktailsHeader.swift in Sources */,
 				61E340192A0B9187009B9725 /* CocktailsView.swift in Sources */,
 				61CFFFD42A3F6868002D87B8 /* EditIngredientsView.swift in Sources */,
 				61E3401D2A0C0F4B009B9725 /* CocktailView.swift in Sources */,

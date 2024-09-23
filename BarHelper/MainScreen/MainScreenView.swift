@@ -14,6 +14,7 @@ struct MainScreenView: View {
             LazyVStack{
                 CookingTypesHeader()
                 IngredientsHeader()
+                CocktailsHeader()
             }
             .padding()
         }
