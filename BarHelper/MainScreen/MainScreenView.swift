@@ -15,10 +15,10 @@ struct MainScreenView: View {
                 NavigationLink(value: Destination.CookingTypesList) {
                     CookingTypesHeader()
                 }
-                NavigationLink(value: Destination.CookingTypesList) {
+                NavigationLink(value: Destination.IngredientsList) {
                     IngredientsHeader()
                 }
-                NavigationLink(value: Destination.CookingTypesList) {
+                NavigationLink(value: Destination.StoredCocktailsList) {
                     CocktailsHeader()
                 }
             }

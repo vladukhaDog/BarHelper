@@ -22,7 +22,9 @@ struct FavouritesHeader: View {
             ScrollView(.horizontal) {
                 LazyHGrid(rows: favourites.count > 3 ? twoRows : [GridItem(.flexible(minimum: 100))]) {
                     ForEach(favourites, id: \.id) { cocktail in
-                        CocktailTile(cocktail)
+                        NavigationLink(value: Destination.CocktailView(.constant(cocktail))) {
+                            CocktailTile(cocktail)
+                        }
                     }
                 }
                 .padding(.horizontal)

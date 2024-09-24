@@ -43,7 +43,10 @@ struct CocktailsHeader: View {
             HStack {
                 addButton
                 ForEach(0..<2) { ai in
-                    CocktailTile(MockData.mockCocktail())
+                    let cocktail = MockData.mockCocktail()
+                    NavigationLink(value: Destination.CocktailView(.constant(cocktail))) {
+                        CocktailTile(cocktail)
+                    }
                 }
             }
             .padding(8)
