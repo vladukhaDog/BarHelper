@@ -9,10 +9,14 @@ import Foundation
 import CoreData
 import os
 
+enum RepositoryError: Error {
+    case alreadyExists
+    case contextError(Error)
+}
 
 class DBManager: ObservableObject{
     
-    let q = DispatchQueue(label: "coredata.manager.queue")
+    private let q = DispatchQueue(label: "coredata.manager.queue")
     
     private init(){
         let container = NSPersistentContainer(name: "BarHelper")
@@ -29,8 +33,8 @@ class DBManager: ObservableObject{
     public static let shared = DBManager.init()
     
     
-    public var container: NSPersistentContainer
-    lazy var backgroundContext: NSManagedObjectContext = {
+    private(set) var container: NSPersistentContainer
+    private(set) lazy var backgroundContext: NSManagedObjectContext = {
         let newbackgroundContext = container.newBackgroundContext()
         newbackgroundContext.automaticallyMergesChangesFromParent = true
         return newbackgroundContext
@@ -161,53 +165,6 @@ class DBManager: ObservableObject{
         await withCheckedContinuation({ continuation in
             self.backgroundContext.performAndWait{
                 self.backgroundContext.delete(image)
-                self.saveContext()
-                continuation.resume()
-            }
-        })
-    }
-    
-    func addCookingType(name: String) async {
-        await withCheckedContinuation({ continuation in
-            self.backgroundContext.performAndWait{
-                let request = CookingType.fetchRequest()
-                let predicate = NSPredicate(format: "name == %@", name)
-                request.predicate = predicate
-                request.fetchLimit = 1
-                let items = (try? self.backgroundContext.fetch(request)) ?? []
-                if items.isEmpty{
-                    let type = CookingType(context: self.backgroundContext)
-                    type.name = name
-                    self.saveContext()
-                }
-                continuation.resume()
-            }
-        })
-    }
-    
-    func fetchCookingTypes() async -> [CookingType] {
-        await withCheckedContinuation({ continuation in
-            self.backgroundContext.performAndWait{
-                
-                let request = CookingType.fetchRequest()
-                request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-                do{
-                    let items = try self.backgroundContext.fetch(request)
-                    continuation.resume(returning: items)
-                }catch{
-                    print("fetchCookingTypes произошла ошибка получения списка всех видов приготовления в БД \(error.localizedDescription)")
-                    continuation.resume(returning: [])
-                }
-                
-            }
-        })
-        
-    }
-    
-    func deleteCookingType(cookingType: CookingType) async{
-        await withCheckedContinuation({ continuation in
-            self.backgroundContext.performAndWait{
-                self.backgroundContext.delete(cookingType)
                 self.saveContext()
                 continuation.resume()
             }
