@@ -17,7 +17,7 @@ struct CookingMethodsView: View {
                     HStack{
                         Spacer()
                     }
-                    ForEach(vm.types){type in
+                    ForEach(vm.types, id: \.id){ type in
                         HStack{
                             Button {
                                 vm.typeToDelete = type

@@ -53,41 +53,21 @@ final class CookingMethodRepository {
         return NotificationCenter.default.publisher(for: Notification.Name("CookingMethodNotification"))
     }
     
-//    func editCookingMethod(_ method: CookingMethod) async throws {
-//        try await withCheckedThrowingContinuation {continuation in
-//            do {
-//                try self.context.performAndWait{
-//                    // Get request for the struct
-//                    let request = CookingMethod.fetchRequest()
-//                    // Look for existing one by name
-//                    let predicate = NSPredicate(format: "name == %@", name)
-//                    request.predicate = predicate
-//                    request.fetchLimit = 1
-//                    // Fetching existing records
-//                    let items = try self.context.fetch(request)
-//                    
-//                    // if list is empty, we are creating a new Cooking type and saving the context
-//                    if items.isEmpty{
-//                        let type = CookingMethod(context: self.context)
-//                        type.name = name
-//                        
-//                        if self.context.hasChanges{
-//                            try context.save()
-//                        }
-//                        self.sendAction(.Added(type))
-//                        continuation.resume()
-//                        
-//                    } else {
-//                        // Else we just throw an error that the cooking type with this name already exists
-//                        continuation.resume(throwing: RepositoryError.alreadyExists)
-//                    }
-//                    
-//                }
-//            } catch(let contextError) {
-//                continuation.resume(throwing: RepositoryError.contextError(contextError))
-//            }
-//        }
-//    }
+    func editCookingMethod(_ method: CookingMethod) async throws {
+        try await withCheckedThrowingContinuation {continuation in
+            do {
+                try self.context.performAndWait{
+                    if self.context.hasChanges{
+                        try context.save()
+                    }
+                    self.sendAction(.Changed(method))
+                    continuation.resume()
+                }
+            } catch(let contextError) {
+                continuation.resume(throwing: RepositoryError.contextError(contextError))
+            }
+        }
+    }
     
     func addCookingMethod(name: String) async throws {
         try await withCheckedThrowingContinuation {continuation in
@@ -106,7 +86,7 @@ final class CookingMethodRepository {
                     if items.isEmpty{
                         let type = CookingMethod(context: self.context)
                         type.name = name
-                        
+                        type.id = UUID().uuidString
                         if self.context.hasChanges{
                             try context.save()
                         }
