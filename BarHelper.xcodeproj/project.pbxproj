@@ -16,6 +16,13 @@
 		61DCFBE62CA1AC26001019B0 /* Binding extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBE52CA1AC26001019B0 /* Binding extension.swift */; };
 		61DCFBE82CA1AC84001019B0 /* DestinationCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBE72CA1AC84001019B0 /* DestinationCases.swift */; };
 		61DCFBEA2CA1AF23001019B0 /* DestinationPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBE92CA1AF23001019B0 /* DestinationPath.swift */; };
+		61DCFBEC2CA1B458001019B0 /* MainScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBEB2CA1B458001019B0 /* MainScreenView.swift */; };
+		61DCFBEF2CA1B8FB001019B0 /* CookingTypesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBEE2CA1B8FB001019B0 /* CookingTypesHeader.swift */; };
+		61DCFBF12CA1BCC5001019B0 /* IngredientsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF02CA1BCC5001019B0 /* IngredientsHeader.swift */; };
+		61DCFBF32CA1D376001019B0 /* CocktailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF22CA1D376001019B0 /* CocktailsHeader.swift */; };
+		61DCFBF52CA1D628001019B0 /* FavouritesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF42CA1D628001019B0 /* FavouritesHeader.swift */; };
+		61DCFBF72CA1E77E001019B0 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF62CA1E77E001019B0 /* MockData.swift */; };
+		61DCFBF92CA31827001019B0 /* CocktailTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF82CA31827001019B0 /* CocktailTile.swift */; };
 		61E33FD62A085B47009B9725 /* BarHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD52A085B47009B9725 /* BarHelperApp.swift */; };
 		61E33FD82A085B47009B9725 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD72A085B47009B9725 /* ContentView.swift */; };
 		61E33FDA2A085B49009B9725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61E33FD92A085B49009B9725 /* Assets.xcassets */; };
@@ -55,6 +62,13 @@
 		61DCFBE52CA1AC26001019B0 /* Binding extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding extension.swift"; sourceTree = "<group>"; };
 		61DCFBE72CA1AC84001019B0 /* DestinationCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationCases.swift; sourceTree = "<group>"; };
 		61DCFBE92CA1AF23001019B0 /* DestinationPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationPath.swift; sourceTree = "<group>"; };
+		61DCFBEB2CA1B458001019B0 /* MainScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenView.swift; sourceTree = "<group>"; };
+		61DCFBEE2CA1B8FB001019B0 /* CookingTypesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookingTypesHeader.swift; sourceTree = "<group>"; };
+		61DCFBF02CA1BCC5001019B0 /* IngredientsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsHeader.swift; sourceTree = "<group>"; };
+		61DCFBF22CA1D376001019B0 /* CocktailsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsHeader.swift; sourceTree = "<group>"; };
+		61DCFBF42CA1D628001019B0 /* FavouritesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesHeader.swift; sourceTree = "<group>"; };
+		61DCFBF62CA1E77E001019B0 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		61DCFBF82CA31827001019B0 /* CocktailTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailTile.swift; sourceTree = "<group>"; };
 		61E33FD22A085B47009B9725 /* BarHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E33FD52A085B47009B9725 /* BarHelperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarHelperApp.swift; sourceTree = "<group>"; };
 		61E33FD72A085B47009B9725 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -158,6 +172,18 @@
 			path = Navigation;
 			sourceTree = "<group>";
 		};
+		61DCFBED2CA1B8ED001019B0 /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				61DCFBEB2CA1B458001019B0 /* MainScreenView.swift */,
+				61DCFBF42CA1D628001019B0 /* FavouritesHeader.swift */,
+				61DCFBEE2CA1B8FB001019B0 /* CookingTypesHeader.swift */,
+				61DCFBF22CA1D376001019B0 /* CocktailsHeader.swift */,
+				61DCFBF02CA1BCC5001019B0 /* IngredientsHeader.swift */,
+			);
+			path = MainScreen;
+			sourceTree = "<group>";
+		};
 		61E33FC92A085B47009B9725 = {
 			isa = PBXGroup;
 			children = (
@@ -178,8 +204,11 @@
 			isa = PBXGroup;
 			children = (
 				61E33FD52A085B47009B9725 /* BarHelperApp.swift */,
-				61DCFBE42CA1AC0D001019B0 /* Navigation */,
 				61E33FD72A085B47009B9725 /* ContentView.swift */,
+				61DCFBF62CA1E77E001019B0 /* MockData.swift */,
+				61DCFBF82CA31827001019B0 /* CocktailTile.swift */,
+				61DCFBED2CA1B8ED001019B0 /* MainScreen */,
+				61DCFBE42CA1AC0D001019B0 /* Navigation */,
 				612E26F02A166ECD001F5539 /* Search */,
 				6121B33C2A116F3A0029E65D /* Ingredients */,
 				61E340142A0AE241009B9725 /* CookingTypesView */,
@@ -337,17 +366,22 @@
 				61DCFBE82CA1AC84001019B0 /* DestinationCases.swift in Sources */,
 				61F91E152A0D3E7D00D320D8 /* CreateIngredientView.swift in Sources */,
 				61E3400C2A0AD37E009B9725 /* CreateCocktailView.swift in Sources */,
+				61DCFBEC2CA1B458001019B0 /* MainScreenView.swift in Sources */,
 				61E3402A2A0D210B009B9725 /* Color + extension.swift in Sources */,
 				6121B33F2A116FE20029E65D /* SearchView.swift in Sources */,
 				61E340082A0ABE92009B9725 /* IngredientsViewModel.swift in Sources */,
 				61F91E132A0D373200D320D8 /* CreateIngredientViewModel.swift in Sources */,
+				61DCFBF52CA1D628001019B0 /* FavouritesHeader.swift in Sources */,
 				61E340062A0AB2A7009B9725 /* DBManager.swift in Sources */,
 				61E340282A0D1DBC009B9725 /* View + extension.swift in Sources */,
+				61DCFBF92CA31827001019B0 /* CocktailTile.swift in Sources */,
 				61E340102A0ADF37009B9725 /* CookingTypesView.swift in Sources */,
 				61E33FD82A085B47009B9725 /* ContentView.swift in Sources */,
 				61F91E172A0D3FBA00D320D8 /* CPButtonView.swift in Sources */,
+				61DCFBF72CA1E77E001019B0 /* MockData.swift in Sources */,
 				61E340122A0ADF3F009B9725 /* CookingTypesViewModel.swift in Sources */,
 				61F91E1C2A11594E00D320D8 /* CocktailCellView.swift in Sources */,
+				61DCFBF32CA1D376001019B0 /* CocktailsHeader.swift in Sources */,
 				61E340192A0B9187009B9725 /* CocktailsView.swift in Sources */,
 				61CFFFD42A3F6868002D87B8 /* EditIngredientsView.swift in Sources */,
 				61E3401D2A0C0F4B009B9725 /* CocktailView.swift in Sources */,
@@ -358,10 +392,12 @@
 				61E340212A0D1615009B9725 /* Font + extension.swift in Sources */,
 				61E3400A2A0AC54F009B9725 /* CocktailsViewModel.swift in Sources */,
 				61F91E102A0D34A800D320D8 /* Keyboard + extension.swift in Sources */,
+				61DCFBF12CA1BCC5001019B0 /* IngredientsHeader.swift in Sources */,
 				6121B3412A117E1B0029E65D /* SearchViewModel.swift in Sources */,
 				61E33FD62A085B47009B9725 /* BarHelperApp.swift in Sources */,
 				61A2D7B92A4E17BC007FA201 /* Router.swift in Sources */,
 				61A2D7BB2A4E181E007FA201 /* IngredientCell.swift in Sources */,
+				61DCFBEF2CA1B8FB001019B0 /* CookingTypesHeader.swift in Sources */,
 				61E33FE22A085B49009B9725 /* BarHelper.xcdatamodeld in Sources */,
 				61CFFFD62A3F6CF0002D87B8 /* TrashView.swift in Sources */,
 				61E3400E2A0AD94A009B9725 /* IngredientsView.swift in Sources */,
@@ -501,6 +537,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -533,6 +570,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
