@@ -9,7 +9,9 @@ import SwiftUI
 
 /// Tile with image and a name of a cocktail for quick preview, 150 by 150
 struct CocktailTile: View {
+    private let titleHeight: CGFloat = 30
     private let cocktail: DBCocktail
+    
     init(_ cocktail: DBCocktail) {
         self.cocktail = cocktail
     }
@@ -20,22 +22,29 @@ struct CocktailTile: View {
                 image
             }
             imageOverlayGradient
-            Text(cocktail.name ?? "noname")
-                .foregroundStyle(.white)
-                .italic()
-                .shadow(radius: 5)
+            title
         }
         .aspectRatio(1.0, contentMode: .fit)
         .clipShape(RoundedRectangle(cornerRadius: 15))
     }
     
+    private var title: some View {
+        Text(cocktail.name ?? "noname")
+            .foregroundStyle(.white)
+            .italic()
+            .shadow(radius: 5)
+            .minimumScaleFactor(0.4)
+            .frame(maxHeight: titleHeight)
+            .padding(.horizontal, 5)
+    }
+    
     /// black to clear gradient as a background to read text
     private var imageOverlayGradient: some View {
         LinearGradient(colors: .init(repeating: .clear, count: 1) +
-                        [.black.opacity(0.5)],
+                        [.black.opacity(0.8)],
                        startPoint: .top,
                        endPoint: .bottom)
-        .frame(height: 30)
+        .frame(height: titleHeight + 10)
         .clipShape(
             .rect(
                 topLeadingRadius: 20,
