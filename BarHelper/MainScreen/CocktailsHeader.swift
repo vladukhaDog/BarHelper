@@ -43,8 +43,7 @@ struct CocktailsHeader: View {
             HStack {
                 addButton
                 ForEach(0..<2) { ai in
-                    Color.red
-                        .aspectRatio(1.0, contentMode: .fit)
+                    CocktailTile(MockData.mockCocktail())
                 }
             }
             .padding(8)

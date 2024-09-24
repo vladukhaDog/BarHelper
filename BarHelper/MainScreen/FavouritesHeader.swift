@@ -13,7 +13,7 @@ struct FavouritesHeader: View {
         GridItem(.flexible(minimum: 100))
     ]
     
-    let favourites: [DBCocktail]
+    let favourites: [DBCocktail] = MockData.mockCocktails(5)
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -48,16 +48,16 @@ struct FavouritesHeader: View {
 }
 
 #Preview {
-    @Previewable @State var count: Int = 5
+//    @Previewable @State var count: Int = 5
     ScrollView {
-        Slider(value: .init(get: {
-            Float(count)
-        }, set: { float in
-            count = Int(float)
-        }), in: 0...10) {
-            Text("Count")
-        }
-        FavouritesHeader(favourites: MockData.mockCocktails(count))
+//        Slider(value: .init(get: {
+//            Float(count)
+//        }, set: { float in
+//            count = Int(float)
+//        }), in: 0...10) {
+//            Text("Count")
+//        }
+        FavouritesHeader()
     }
 }
 

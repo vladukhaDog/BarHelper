@@ -25,7 +25,7 @@ struct CocktailTile: View {
                 .italic()
                 .shadow(radius: 5)
         }
-        .frame(width: 150, height: 150)
+        .aspectRatio(1.0, contentMode: .fit)
         .clipShape(RoundedRectangle(cornerRadius: 15))
     }
     
@@ -66,7 +66,21 @@ struct CocktailTile: View {
 }
 
 #Preview {
-    CocktailTile(MockData.mockCocktail())
-        .padding(20)
-        .border(.red, width: 2)
+    VStack {
+        CocktailTile(MockData.mockCocktail())
+            .frame(width: 100, height: 100, alignment: .center)
+            .padding(20)
+            .border(.red, width: 2)
+        HStack {
+            CocktailTile(MockData.mockCocktail())
+                .frame(width: 150, height: 150, alignment: .center)
+                .padding(20)
+                .border(.red, width: 2)
+            CocktailTile(MockData.mockCocktail())
+                .frame(width: 150, height: 150, alignment: .center)
+                .padding(20)
+                .border(.red, width: 2)
+        }
+        
+    }
 }

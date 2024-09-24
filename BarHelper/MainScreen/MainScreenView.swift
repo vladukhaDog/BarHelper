@@ -17,7 +17,7 @@ struct MainScreenView: View {
                 CocktailsHeader()
             }
             .padding()
-            FavouritesHeader(favourites: [])
+            FavouritesHeader()
         }
         .frame(maxWidth: .infinity)
     }
