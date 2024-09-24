@@ -15,4 +15,5 @@ extension Color{
     public static let softBlue =  Color("softBlue")
     public static let softGray =  Color("softGray")
     public static let darkPurple =  Color("darkPurple")
+    public static let mint =  Color("mint")
 }
