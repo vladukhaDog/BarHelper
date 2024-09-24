@@ -27,12 +27,12 @@ struct IngredientsHeader: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 30, height: 30, alignment: .center)
-                .foregroundStyle(Color.primary)
             Text("Ingredients")
                 .font(.title)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .foregroundStyle(Color.primary.opacity(0.85))
     }
 }
 

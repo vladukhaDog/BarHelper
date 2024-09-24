@@ -12,9 +12,15 @@ struct MainScreenView: View {
     var body: some View {
         ScrollView {
             LazyVStack {
-                CookingTypesHeader()
-                IngredientsHeader()
-                CocktailsHeader()
+                NavigationLink(value: Destination.CookingTypesList) {
+                    CookingTypesHeader()
+                }
+                NavigationLink(value: Destination.CookingTypesList) {
+                    IngredientsHeader()
+                }
+                NavigationLink(value: Destination.CookingTypesList) {
+                    CocktailsHeader()
+                }
             }
             .padding()
             FavouritesHeader()
@@ -139,5 +145,8 @@ struct MainScreenView: View {
 }
 
 #Preview {
-    MainScreenView()
+    NavigationStack {
+        MainScreenView()
+            .routePath()
+    }
 }

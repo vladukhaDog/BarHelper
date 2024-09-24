@@ -29,12 +29,12 @@ struct CookingTypesHeader: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 30, height: 30, alignment: .center)
-                .foregroundStyle(Color.primary)
             Text("Cooking methods")
                 .font(.title)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .foregroundStyle(Color.primary.opacity(0.85))
     }
     
     private var existingList: some View {

@@ -30,12 +30,12 @@ struct CocktailsHeader: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 25, height: 25, alignment: .center)
-                .foregroundStyle(Color.primary)
             Text("Cocktails")
                 .font(.title)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .foregroundStyle(Color.primary.opacity(0.85))
     }
     
     private var existingList: some View {
