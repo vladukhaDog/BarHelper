@@ -11,6 +11,23 @@ import SwiftUI
 final class MockData {
     private init(){}
     
+    static func mockCookingMethod() -> CookingMethod {
+        let method: CookingMethod
+        method = .init(context: DBManager.shared.backgroundContext)
+        method.id = UUID().uuidString
+        method.name = "Mock Method"
+        method.desc = "Mock Description of a cooking method for a bar helper"
+        return method
+    }
+    
+    static func mockCookingMethods(_ count: Int) -> [CookingMethod] {
+        var array: [CookingMethod] = []
+        for _ in 0..<count {
+            array.append(mockCookingMethod())
+        }
+        return array
+    }
+    
     static func mockCocktails(_ count: Int) -> [DBCocktail] {
         var array: [DBCocktail] = []
         for _ in 0..<count {

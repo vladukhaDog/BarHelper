@@ -69,7 +69,7 @@ final class CookingMethodRepository {
         }
     }
     
-    func addCookingMethod(name: String) async throws {
+    func addCookingMethod(name: String, description: String? = nil) async throws {
         try await withCheckedThrowingContinuation {continuation in
             do {
                 try self.context.performAndWait{
@@ -87,6 +87,7 @@ final class CookingMethodRepository {
                         let type = CookingMethod(context: self.context)
                         type.name = name
                         type.id = UUID().uuidString
+                        type.desc = description
                         if self.context.hasChanges{
                             try context.save()
                         }

@@ -7,8 +7,13 @@
 
 import SwiftUI
 
-struct CookingMethodsView: View {
-    @StateObject private var vm = CookingMethodsViewModel()
+struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewModelProtocol {
+    
+    init(vm: ViewModel = CookingMethodsViewModel()) {
+        self._vm = StateObject(wrappedValue: vm)
+    }
+    
+    @StateObject private var vm: ViewModel
     @State private var showAdd = false
     var body: some View {
         VStack{
@@ -17,12 +22,12 @@ struct CookingMethodsView: View {
                     HStack{
                         Spacer()
                     }
-                    ForEach(vm.types, id: \.id){ type in
+                    ForEach(vm.methods, id: \.id){ method in
                         HStack{
                             Button {
-                                vm.typeToDelete = type
+                                vm.typeToDelete = method
                             } label: {
-                                Text(type.name ?? "")
+                                Text(method.name ?? "")
                                     .font(.smallTitle)
                                     .foregroundColor(.white)
                                     
@@ -79,7 +84,7 @@ struct CookingMethodsView: View {
                              enabled: true,
                              action: {
                     guard let t = vm.typeToDelete else {return}
-                    vm.deleteType(type: t)
+                    vm.deleteMethod(method: t)
                 })
                 
             }
@@ -120,8 +125,30 @@ struct CookingMethodsView: View {
     }
 }
 
-struct CookingMethodsView_Previews: PreviewProvider {
-    static var previews: some View {
-        CookingMethodsView()
+/// Mock view model with a list of mock methods prefilled
+fileprivate final class MockCookingMethodsViewModel: CookingMethodsViewModelProtocol {
+    var name: String = ""
+    
+    @Published var methods: [CookingMethod] = []
+    
+    var typeToDelete: CookingMethod? = nil
+    
+    init() {
+        Task {
+            await fetchMethods()
+        }
     }
+    func fetchMethods() async {
+        DispatchQueue.main.async {
+            self.methods = MockData.mockCookingMethods(14)
+        }
+    }
+    
+    func updateList(_ action: CookingMethodRepository.Action) {}
+    func addCookingMethod() {}
+    func deleteMethod(method: CookingMethod) {}
+}
+
+#Preview {
+    CookingMethodsView(vm: MockCookingMethodsViewModel())
 }

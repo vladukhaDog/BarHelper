@@ -9,17 +9,27 @@ import Foundation
 import Combine
 import SwiftUI
 
-class CookingMethodsViewModel: ObservableObject{
+protocol CookingMethodsViewModelProtocol: ObservableObject {
+    var name: String { get set }
+    var methods: [CookingMethod] { get set }
+    var typeToDelete: CookingMethod? { get set }
+    func fetchMethods() async
+    func updateList(_ action: CookingMethodRepository.Action)
+    func addCookingMethod()
+    func deleteMethod(method: CookingMethod)
+}
+
+class CookingMethodsViewModel: CookingMethodsViewModelProtocol {
     private let cookingMethodRepository = CookingMethodRepository()
     @Published var name = ""
-    @Published var types: [CookingMethod] = []
+    @Published var methods: [CookingMethod] = []
     
     @Published var typeToDelete: CookingMethod? = nil
     private var cancellable = Set<AnyCancellable>()
     
     init(){
         Task{
-            await fetchTypes()
+            await fetchMethods()
         }
         cookingMethodRepository
             .getPublisher()
@@ -35,17 +45,17 @@ class CookingMethodsViewModel: ObservableObject{
         cancellable.removeAll()
     }
     
-    private func updateList(_ action: CookingMethodRepository.Action) {
+    internal func updateList(_ action: CookingMethodRepository.Action) {
         DispatchQueue.main.async {
             withAnimation {
                 switch action {
                 case .Deleted(let cookingMethod):
-                    self.types.removeAll(where: {$0.id == cookingMethod.id})
+                    self.methods.removeAll(where: {$0.id == cookingMethod.id})
                 case .Added(let cookingMethod):
-                    self.types.append(cookingMethod)
+                    self.methods.append(cookingMethod)
                 case .Changed(let cookingMethod):
-                    if let index = self.types.firstIndex(where: {$0.id == cookingMethod.id}){
-                        self.types[index] = cookingMethod
+                    if let index = self.methods.firstIndex(where: {$0.id == cookingMethod.id}){
+                        self.methods[index] = cookingMethod
                     }
                 }
             }
@@ -61,9 +71,9 @@ class CookingMethodsViewModel: ObservableObject{
         }
     }
     
-    func deleteType(type: CookingMethod){
+    func deleteMethod(method: CookingMethod){
         Task{
-            try? await cookingMethodRepository.deleteCookingMethod(cookingMethod: type)
+            try? await cookingMethodRepository.deleteCookingMethod(cookingMethod: method)
             DispatchQueue.main.async {
                 self.typeToDelete = nil
             }
@@ -71,10 +81,10 @@ class CookingMethodsViewModel: ObservableObject{
     }
     
     
-    private func fetchTypes() async {
-        guard let types = try? await cookingMethodRepository.fetchCookingMethods() else {return}
+    internal func fetchMethods() async {
+        guard let methods = try? await cookingMethodRepository.fetchCookingMethods() else {return}
         DispatchQueue.main.async {
-            self.types = types
+            self.methods = methods
         }
     }
 }

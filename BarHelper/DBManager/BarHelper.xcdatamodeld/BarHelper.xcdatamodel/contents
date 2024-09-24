@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24B5035e" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
     <entity name="CookingMethod" representedClassName="CookingMethod" syncable="YES" codeGenerationType="class">
+        <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="String" defaultValueString="&quot;&quot;"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="cocktails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBCocktail" inverseName="cookingMethod" inverseEntity="DBCocktail"/>
