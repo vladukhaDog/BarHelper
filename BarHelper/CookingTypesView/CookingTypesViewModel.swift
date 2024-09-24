@@ -22,13 +22,17 @@ class CookingTypesViewModel: ObservableObject{
             await fetchTypes()
         }
         cookingTypeRepository
-            .gePublisher()
+            .getPublisher()
             .sink { notification in
                 guard let action = notification.object as? CookingMethodRepository.Action
                 else {return}
                 self.updateList(action)
             }
             .store(in: &cancellable)
+    }
+    
+    deinit {
+        cancellable.removeAll()
     }
     
     private func updateList(_ action: CookingMethodRepository.Action) {

@@ -49,12 +49,9 @@ final class CookingMethodRepository {
                                         object: action)
     }
     
-    func gePublisher() -> NotificationCenter.Publisher {
-//        let logoutNotification = Notification.Name("tokenFailed:\(self.url)")
+    func getPublisher() -> NotificationCenter.Publisher {
         return NotificationCenter.default.publisher(for: Notification.Name("CookingMethodNotification"))
     }
-    
-    // TODO: ADD LISTENERS AND NOTIFS
     
     func addCookingType(name: String) async throws {
         try await withCheckedThrowingContinuation {continuation in
