@@ -32,12 +32,12 @@ final class MockData {
         ingredientRecord.ingredientValue = 30
         cocktail.addToRecipe(ingredientRecord)
         let image = ImageEntry(context: DBManager.shared.backgroundContext)
-        image.fileName = "mockImage.jpeg"
+        image.fileName = "mockImage.png"
         cocktail.image = image
-        if let data = UIImage(named: "mockImage.jpeg")?.jpegData(compressionQuality: 1.0) {
+        if let data = UIImage(named: "mockImage.png")?.jpegData(compressionQuality: 1.0) {
             
             let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let fileURL = documentsURL.appendingPathComponent("mockImage.jpeg")
+            let fileURL = documentsURL.appendingPathComponent("mockImage.png")
             
             do {
                 try data.write(to: fileURL)

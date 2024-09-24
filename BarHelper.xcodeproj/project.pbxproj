@@ -22,6 +22,7 @@
 		61DCFBF32CA1D376001019B0 /* CocktailsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF22CA1D376001019B0 /* CocktailsHeader.swift */; };
 		61DCFBF52CA1D628001019B0 /* FavouritesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF42CA1D628001019B0 /* FavouritesHeader.swift */; };
 		61DCFBF72CA1E77E001019B0 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF62CA1E77E001019B0 /* MockData.swift */; };
+		61DCFBF92CA31827001019B0 /* CocktailTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF82CA31827001019B0 /* CocktailTile.swift */; };
 		61E33FD62A085B47009B9725 /* BarHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD52A085B47009B9725 /* BarHelperApp.swift */; };
 		61E33FD82A085B47009B9725 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD72A085B47009B9725 /* ContentView.swift */; };
 		61E33FDA2A085B49009B9725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61E33FD92A085B49009B9725 /* Assets.xcassets */; };
@@ -67,6 +68,7 @@
 		61DCFBF22CA1D376001019B0 /* CocktailsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailsHeader.swift; sourceTree = "<group>"; };
 		61DCFBF42CA1D628001019B0 /* FavouritesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesHeader.swift; sourceTree = "<group>"; };
 		61DCFBF62CA1E77E001019B0 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		61DCFBF82CA31827001019B0 /* CocktailTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailTile.swift; sourceTree = "<group>"; };
 		61E33FD22A085B47009B9725 /* BarHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E33FD52A085B47009B9725 /* BarHelperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarHelperApp.swift; sourceTree = "<group>"; };
 		61E33FD72A085B47009B9725 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				61E33FD52A085B47009B9725 /* BarHelperApp.swift */,
 				61E33FD72A085B47009B9725 /* ContentView.swift */,
 				61DCFBF62CA1E77E001019B0 /* MockData.swift */,
+				61DCFBF82CA31827001019B0 /* CocktailTile.swift */,
 				61DCFBED2CA1B8ED001019B0 /* MainScreen */,
 				61DCFBE42CA1AC0D001019B0 /* Navigation */,
 				612E26F02A166ECD001F5539 /* Search */,
@@ -371,6 +374,7 @@
 				61DCFBF52CA1D628001019B0 /* FavouritesHeader.swift in Sources */,
 				61E340062A0AB2A7009B9725 /* DBManager.swift in Sources */,
 				61E340282A0D1DBC009B9725 /* View + extension.swift in Sources */,
+				61DCFBF92CA31827001019B0 /* CocktailTile.swift in Sources */,
 				61E340102A0ADF37009B9725 /* CookingTypesView.swift in Sources */,
 				61E33FD82A085B47009B9725 /* ContentView.swift in Sources */,
 				61F91E172A0D3FBA00D320D8 /* CPButtonView.swift in Sources */,

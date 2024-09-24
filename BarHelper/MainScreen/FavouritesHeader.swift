@@ -22,33 +22,13 @@ struct FavouritesHeader: View {
             ScrollView(.horizontal) {
                 LazyHGrid(rows: favourites.count > 3 ? twoRows : [GridItem(.flexible(minimum: 100))]) {
                     ForEach(favourites, id: \.id) { cocktail in
-                        cocktailTile(cocktail)
-                            .frame(height: 150)
+                        CocktailTile(cocktail)
                     }
                 }
                 .padding(.horizontal)
                 .padding(.bottom, 8)
             }
     
-        }
-    }
-    
-    private func cocktailTile(_ cocktail: DBCocktail) -> some View {
-        VStack(spacing: 2) {
-            Group {
-                if let imageName = cocktail.image?.fileName,
-                   let imageData = try? Data(contentsOf: FileManager.default.temporaryDirectory.appendingPathComponent(imageName)),
-                   let image = UIImage(data: imageData){
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                    
-                }else{
-                    Color.red
-                }
-            }
-            .aspectRatio(1.0, contentMode: .fit)
-            Text(cocktail.name ?? "noname")
         }
     }
     
