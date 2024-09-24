@@ -78,7 +78,7 @@ struct CocktailView: View {
             HStack{
                 Spacer()
             }
-            Text(cocktail.cookingType?.name ?? "CookingType")
+            Text(cocktail.cookingMethod?.name ?? "CookingMethod")
                 .font(.smallTitle)
                 .multilineTextAlignment(.leading)
             Text(cocktail.desc ?? "CocktailDescription")

@@ -1,5 +1,5 @@
 //
-//  CookingTypesView.swift
+//  CookingMethodsView.swift
 //  BarHelper
 //
 //  Created by Владислав Пермяков on 09.05.2023.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct CookingTypesView: View {
-    @StateObject private var vm = CookingTypesViewModel()
+struct CookingMethodsView: View {
+    @StateObject private var vm = CookingMethodsViewModel()
     @State private var showAdd = false
     var body: some View {
         VStack{
@@ -52,7 +52,7 @@ struct CookingTypesView: View {
                 })
                 .frame(width: 150)
                 .sheet(isPresented: $showAdd) {
-                    addCookingType
+                    addCookingMethod
                     .presentationDetents([.medium, .large])
                 }
             }
@@ -89,7 +89,7 @@ struct CookingTypesView: View {
         .backgroundWithoutSafeSpace(.darkPurple)
     }
     
-    private var addCookingType: some View{
+    private var addCookingMethod: some View{
         VStack{
             TextField("", text: $vm.name, prompt: Text("Cooking Type name"))
                 .font(.smallTitle)
@@ -110,7 +110,7 @@ struct CookingTypesView: View {
                              enabled: true,
                              action: {
                     showAdd = false
-                    vm.addCookingType()
+                    vm.addCookingMethod()
                 })
             }
             Spacer()
@@ -120,8 +120,8 @@ struct CookingTypesView: View {
     }
 }
 
-struct CookingTypesView_Previews: PreviewProvider {
+struct CookingMethodsView_Previews: PreviewProvider {
     static var previews: some View {
-        CookingTypesView()
+        CookingMethodsView()
     }
 }

@@ -21,8 +21,8 @@ extension View {
                     IngredientsView()
                 case .CreateCocktail:
                     CreateCocktailView()
-                case .CookingTypesList:
-                    CookingTypesView()
+                case .CookingMethodsList:
+                    CookingMethodsView()
                 case .EditCocktail(let cocktail):
                     CreateCocktailView(editCocktail: cocktail)
                 case .CocktailView(let cocktail):

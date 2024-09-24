@@ -1,5 +1,5 @@
 //
-//  CookingTypesHeader.swift
+//  CookingMethodsHeader.swift
 //  BarHelper
 //
 //  Created by Владислав Пермяков on 23.09.2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CookingTypesHeader: View {
+struct CookingMethodsHeader: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -72,6 +72,6 @@ struct CookingTypesHeader: View {
 }
 
 #Preview {
-    CookingTypesHeader()
+    CookingMethodsHeader()
         .padding()
 }

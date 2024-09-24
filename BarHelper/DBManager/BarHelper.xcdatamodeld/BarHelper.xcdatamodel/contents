@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23C71" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
-    <entity name="CookingType" representedClassName="CookingType" syncable="YES" codeGenerationType="class">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23231" systemVersion="24B5035e" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="CookingMethod" representedClassName="CookingMethod" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="cocktails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBCocktail" inverseName="cookingType" inverseEntity="DBCocktail"/>
+        <relationship name="cocktails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBCocktail" inverseName="cookingMethod" inverseEntity="DBCocktail"/>
     </entity>
     <entity name="DBCocktail" representedClassName="DBCocktail" syncable="YES" codeGenerationType="class">
         <attribute name="deletedByUser" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <relationship name="cookingType" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CookingType" inverseName="cocktails" inverseEntity="CookingType"/>
+        <relationship name="cookingMethod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CookingMethod" inverseName="cocktails" inverseEntity="CookingMethod"/>
         <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageEntry" inverseName="cocktail" inverseEntity="ImageEntry"/>
         <relationship name="recipe" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBIngredientRecord" inverseName="cocktail" inverseEntity="DBIngredientRecord"/>
     </entity>

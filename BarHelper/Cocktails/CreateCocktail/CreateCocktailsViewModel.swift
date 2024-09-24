@@ -12,12 +12,12 @@ class CreateCocktailsViewModel: ObservableObject{
     let db = DBManager.shared
     
 
-    @Published var types: [CookingType] = []
+    @Published var types: [CookingMethod] = []
     
     @Published var recipe: [DBIngredient: Int] = [:]
     @Published var name = ""
     @Published var description = ""
-    @Published var cookType: CookingType? = nil
+    @Published var cookType: CookingMethod? = nil
     @Published var image: UIImage? = nil
     
     @Published var imagePlaceholer: String = ((1...8).randomElement() ?? 1).description
@@ -36,7 +36,7 @@ class CreateCocktailsViewModel: ObservableObject{
         if let cocktail = editCocktail.wrappedValue{
             name = cocktail.name ?? ""
             description = cocktail.desc ?? ""
-            cookType = cocktail.cookingType
+            cookType = cocktail.cookingMethod
             if let imageName = cocktail.image?.fileName,
                let imageData = try? Data(contentsOf: FileManager.default.temporaryDirectory.appendingPathComponent(imageName)),
                let uiImage = UIImage(data: imageData){
@@ -93,7 +93,7 @@ class CreateCocktailsViewModel: ObservableObject{
             editedCocktail.image = imageEntry
             editedCocktail.name = name
             editedCocktail.desc = description
-            editedCocktail.cookingType = cookType
+            editedCocktail.cookingMethod = cookType
             if let recipeNSSet = editedCocktail.recipe,
                let recipeSet = recipeNSSet as? Set<DBIngredientRecord>{
                 let recipeSorted = recipeSet.sorted { l, r in
@@ -140,7 +140,7 @@ class CreateCocktailsViewModel: ObservableObject{
             guard let cookType else {return}
             await db.addCocktail(name: name,
                                  description: description,
-                                 cookingType: cookType,
+                                 cookingMethod: cookType,
                                  recipe: recipe,
             image: imageEntry)
         }
@@ -149,7 +149,7 @@ class CreateCocktailsViewModel: ObservableObject{
 
     private func fetchTypes() async{
 #warning("NO FETCH FOR COOOKING METHODS")
-//        let types = await db.fetchCookingTypes()
+//        let types = await db.fetchCookingMethods()
 //        DispatchQueue.main.async {
 //            self.types = types
 //            if self.cookType == nil{

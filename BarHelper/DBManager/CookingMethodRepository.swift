@@ -12,11 +12,11 @@ import CoreData
 final class CookingMethodRepository {
     
     enum Action {
-        case Deleted(CookingType)
-        case Added(CookingType)
-        case Changed(CookingType)
+        case Deleted(CookingMethod)
+        case Added(CookingMethod)
+        case Changed(CookingMethod)
         
-        func object() -> CookingType {
+        func object() -> CookingMethod {
             switch self {
             case .Deleted(let object): return object
             case .Added(let object): return object
@@ -53,12 +53,48 @@ final class CookingMethodRepository {
         return NotificationCenter.default.publisher(for: Notification.Name("CookingMethodNotification"))
     }
     
-    func addCookingType(name: String) async throws {
+//    func editCookingMethod(_ method: CookingMethod) async throws {
+//        try await withCheckedThrowingContinuation {continuation in
+//            do {
+//                try self.context.performAndWait{
+//                    // Get request for the struct
+//                    let request = CookingMethod.fetchRequest()
+//                    // Look for existing one by name
+//                    let predicate = NSPredicate(format: "name == %@", name)
+//                    request.predicate = predicate
+//                    request.fetchLimit = 1
+//                    // Fetching existing records
+//                    let items = try self.context.fetch(request)
+//                    
+//                    // if list is empty, we are creating a new Cooking type and saving the context
+//                    if items.isEmpty{
+//                        let type = CookingMethod(context: self.context)
+//                        type.name = name
+//                        
+//                        if self.context.hasChanges{
+//                            try context.save()
+//                        }
+//                        self.sendAction(.Added(type))
+//                        continuation.resume()
+//                        
+//                    } else {
+//                        // Else we just throw an error that the cooking type with this name already exists
+//                        continuation.resume(throwing: RepositoryError.alreadyExists)
+//                    }
+//                    
+//                }
+//            } catch(let contextError) {
+//                continuation.resume(throwing: RepositoryError.contextError(contextError))
+//            }
+//        }
+//    }
+    
+    func addCookingMethod(name: String) async throws {
         try await withCheckedThrowingContinuation {continuation in
             do {
                 try self.context.performAndWait{
                     // Get request for the struct
-                    let request = CookingType.fetchRequest()
+                    let request = CookingMethod.fetchRequest()
                     // Look for existing one by name
                     let predicate = NSPredicate(format: "name == %@", name)
                     request.predicate = predicate
@@ -68,7 +104,7 @@ final class CookingMethodRepository {
                     
                     // if list is empty, we are creating a new Cooking type and saving the context
                     if items.isEmpty{
-                        let type = CookingType(context: self.context)
+                        let type = CookingMethod(context: self.context)
                         type.name = name
                         
                         if self.context.hasChanges{
@@ -89,11 +125,11 @@ final class CookingMethodRepository {
         }
     }
     
-    func fetchCookingTypes() async throws -> [CookingType] {
+    func fetchCookingMethods() async throws -> [CookingMethod] {
         try await withCheckedThrowingContinuation({ continuation in
             self.context.performAndWait{
                 
-                let request = CookingType.fetchRequest()
+                let request = CookingMethod.fetchRequest()
                 request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
                 do {
                     let items = try self.context.fetch(request)
@@ -106,15 +142,15 @@ final class CookingMethodRepository {
         
     }
     
-    func deleteCookingType(cookingType: CookingType) async throws {
+    func deleteCookingMethod(cookingMethod: CookingMethod) async throws {
         try await withCheckedThrowingContinuation({ continuation in
             self.context.performAndWait{
-                self.context.delete(cookingType)
+                self.context.delete(cookingMethod)
                 do {
                     if self.context.hasChanges{
                         try context.save()
                     }
-                    self.sendAction(.Deleted(cookingType))
+                    self.sendAction(.Deleted(cookingMethod))
                     continuation.resume()
                 } catch {
                     continuation.resume(throwing: RepositoryError.contextError(error))

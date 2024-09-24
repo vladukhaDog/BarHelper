@@ -225,7 +225,7 @@ struct CreateCocktailView: View {
 //                        Router.shared.path.removeLast()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
 //                            Router.shared.path
-//                                .append(.CookingTypes)
+//                                .append(.CookingMethods)
                         }
                     } label: {
                         PlusView()

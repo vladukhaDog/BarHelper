@@ -12,8 +12,8 @@ struct MainScreenView: View {
     var body: some View {
         ScrollView {
             LazyVStack {
-                NavigationLink(value: Destination.CookingTypesList) {
-                    CookingTypesHeader()
+                NavigationLink(value: Destination.CookingMethodsList) {
+                    CookingMethodsHeader()
                 }
                 NavigationLink(value: Destination.IngredientsList) {
                     IngredientsHeader()
@@ -29,8 +29,8 @@ struct MainScreenView: View {
     }
     
     
-//    private var cookingTypes: some View {
-//        NavigationLink(value: Destination.CookingTypesList) {
+//    private var CookingMethods: some View {
+//        NavigationLink(value: Destination.CookingMethodsList) {
 //            Rectangle()
 //                .fill(Color.softPink)
 //                .overlay(

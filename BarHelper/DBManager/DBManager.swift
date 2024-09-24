@@ -107,7 +107,7 @@ class DBManager: ObservableObject{
   
     
     
-    func addCocktail(name: String, description: String, cookingType: CookingType, recipe: [DBIngredient: Int], image: ImageEntry?) async {
+    func addCocktail(name: String, description: String, cookingMethod: CookingMethod, recipe: [DBIngredient: Int], image: ImageEntry?) async {
         await withCheckedContinuation({ continuation in
             self.backgroundContext.performAndWait{
                 let cocktail = DBCocktail(context: self.backgroundContext)
@@ -115,7 +115,7 @@ class DBManager: ObservableObject{
                 cocktail.id = .init()
                 cocktail.name = name
                 cocktail.desc = description
-                cocktail.cookingType = cookingType
+                cocktail.cookingMethod = cookingMethod
                 cocktail.image = image
                 for ingredient in recipe{
                     let ingredientRecord = DBIngredientRecord(context: self.backgroundContext)

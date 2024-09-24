@@ -21,7 +21,7 @@ enum Destination: Hashable {
     /// Screen for creating a cocktail
     case CreateCocktail
     /// Screen of cocktail Cooking methods
-    case CookingTypesList
+    case CookingMethodsList
     /// Screen for editing a cocktail
     case EditCocktail(Binding<DBCocktail>)
     /// Screen for viewing a cocktail, binding in case the cocktail was edited
