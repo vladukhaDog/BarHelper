@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 extension View {
+    /// wraps the view with navigation destination modifier and explains navigation destination views for each destination enumerator
     func routePath() -> some View {
         self
             .navigationDestination(for: Destination.self) { route in
