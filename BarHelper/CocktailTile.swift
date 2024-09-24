@@ -7,9 +7,11 @@
 
 import SwiftUI
 
-/// Tile with image and a name of a cocktail for quick preview, 150 by 150
+/// Tile with image and a name of a cocktail for quick preview. Is aspected to 1to1 and fills the whole available space
 struct CocktailTile: View {
+    /// Height used for limiting cocktail name text and its background black gradient
     private let titleHeight: CGFloat = 30
+    
     private let cocktail: DBCocktail
     
     init(_ cocktail: DBCocktail) {

@@ -7,11 +7,14 @@
 
 import SwiftUI
 
+/// Section with a grid of favourite cocktails
 struct FavouritesHeader: View {
+    static private let gridRow = GridItem(.flexible(minimum: 100))
     private let twoRows = [
-        GridItem(.flexible(minimum: 100)),
-        GridItem(.flexible(minimum: 100))
+        FavouritesHeader.gridRow,
+        FavouritesHeader.gridRow
     ]
+    private let oneRow = [FavouritesHeader.gridRow]
     
     let favourites: [DBCocktail] = MockData.mockCocktails(5)
     
@@ -20,18 +23,22 @@ struct FavouritesHeader: View {
             title
                 .padding(.horizontal)
             ScrollView(.horizontal) {
-                LazyHGrid(rows: favourites.count > 3 ? twoRows : [GridItem(.flexible(minimum: 100))]) {
-                    ForEach(favourites, id: \.id) { cocktail in
-                        NavigationLink(value: Destination.CocktailView(.constant(cocktail))) {
-                            CocktailTile(cocktail)
-                        }
-                    }
-                }
-                .padding(.horizontal)
-                .padding(.bottom, 8)
+                grid
             }
     
         }
+    }
+    
+    private var grid: some View {
+        LazyHGrid(rows: favourites.count > 3 ? twoRows : oneRow) {
+            ForEach(favourites, id: \.id) { cocktail in
+                NavigationLink(value: Destination.CocktailView(.constant(cocktail))) {
+                    CocktailTile(cocktail)
+                }
+            }
+        }
+        .padding(.horizontal)
+        .padding(.bottom, 8)
     }
     
     private var title: some View {
@@ -50,15 +57,7 @@ struct FavouritesHeader: View {
 }
 
 #Preview {
-//    @Previewable @State var count: Int = 5
     ScrollView {
-//        Slider(value: .init(get: {
-//            Float(count)
-//        }, set: { float in
-//            count = Int(float)
-//        }), in: 0...10) {
-//            Text("Count")
-//        }
         FavouritesHeader()
     }
 }

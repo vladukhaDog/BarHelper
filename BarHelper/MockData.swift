@@ -8,9 +8,10 @@
 import Foundation
 import SwiftUI
 
+/// Class that generates mock data from CoreData
 final class MockData {
     private init(){}
-    
+    /// Creates a ``CookingMethod`` with unique id and filled out name and description
     static func mockCookingMethod() -> CookingMethod {
         let method: CookingMethod
         method = .init(context: DBManager.shared.backgroundContext)
@@ -20,6 +21,7 @@ final class MockData {
         return method
     }
     
+    /// Creates an array of identical Cooking methods with unique identifiers
     static func mockCookingMethods(_ count: Int) -> [CookingMethod] {
         var array: [CookingMethod] = []
         for _ in 0..<count {
@@ -28,6 +30,7 @@ final class MockData {
         return array
     }
     
+    /// Creates an array of identical cocktails with uniquie identifiers
     static func mockCocktails(_ count: Int) -> [DBCocktail] {
         var array: [DBCocktail] = []
         for _ in 0..<count {
@@ -36,6 +39,7 @@ final class MockData {
         return array
     }
     
+    /// Creates a ``DBCocktail`` with filled out data, including an image
     static func mockCocktail() -> DBCocktail {
         let cocktail: DBCocktail
         cocktail = .init(context: DBManager.shared.backgroundContext)

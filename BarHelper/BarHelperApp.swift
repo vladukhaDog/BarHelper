@@ -15,6 +15,7 @@ struct BarHelperApp: App {
             CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
         })
     }
+    /// Storing a ``Router`` class and passing it as environmentObject down the app
     @State private var router: Router = .init()
     var body: some Scene {
         WindowGroup {

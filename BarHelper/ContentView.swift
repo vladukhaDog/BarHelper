@@ -10,6 +10,7 @@ import Combine
 
 /// Main View wrapping the main screen with navigation
 struct ContentView: View {
+    /// Navigation class
     @EnvironmentObject var router: Router
     
     var body: some View {
