@@ -16,6 +16,31 @@ struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewMo
     @StateObject private var vm: ViewModel
     @State private var showAdd = false
     var body: some View {
+        List {
+            ForEach(vm.methods, id: \.id){ method in
+                methodInfo(method)
+            }
+        }
+        .environment(\.defaultMinListRowHeight, 70)
+        .navigationTitle("Cooking types")
+    }
+    
+    private func methodInfo(_ method: CookingMethod) -> some View{
+        VStack(alignment: .leading) {
+            Text(method.name ?? "")
+                .font(.title)
+            if let description = method.desc {
+                Text(description)
+                    .opacity(0.5)
+                    .font(.caption)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                    .padding(.leading, 5)
+                    .padding(.trailing)
+            }
+        }
+    }
+    var old: some View {
         VStack{
             ScrollView{
                 VStack{
@@ -150,5 +175,12 @@ fileprivate final class MockCookingMethodsViewModel: CookingMethodsViewModelProt
 }
 
 #Preview {
-    CookingMethodsView(vm: MockCookingMethodsViewModel())
+    NavigationStack(path: .constant([Destination.CookingMethodsList])) {
+        Color.blue
+            .navigationDestination(for: Destination.self) { route in
+                CookingMethodsView(vm: MockCookingMethodsViewModel())
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+    }
+    .tint(.mint)
 }
