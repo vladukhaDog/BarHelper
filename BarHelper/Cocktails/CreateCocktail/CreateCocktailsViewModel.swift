@@ -148,13 +148,14 @@ class CreateCocktailsViewModel: ObservableObject{
   
 
     private func fetchTypes() async{
-        let types = await db.fetchCookingTypes()
-        DispatchQueue.main.async {
-            self.types = types
-            if self.cookType == nil{
-                self.cookType = self.types.first
-            }
-        }
+#warning("NO FETCH FOR COOOKING METHODS")
+//        let types = await db.fetchCookingTypes()
+//        DispatchQueue.main.async {
+//            self.types = types
+//            if self.cookType == nil{
+//                self.cookType = self.types.first
+//            }
+//        }
     }
 
 }

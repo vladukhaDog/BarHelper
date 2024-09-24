@@ -11,6 +11,20 @@ import CoreData
 /// Repository to change records about Cooking Methods
 final class CookingMethodRepository {
     
+    enum Action {
+        case Deleted(CookingType)
+        case Added(CookingType)
+        case Changed(CookingType)
+        
+        func object() -> CookingType {
+            switch self {
+            case .Deleted(let object): return object
+            case .Added(let object): return object
+            case .Changed(let object): return object
+            }
+        }
+    }
+    
     /// Context which is used to access data memory safe
     /// ```swift
     ///await withCheckedContinuation({ continuation in
@@ -28,6 +42,16 @@ final class CookingMethodRepository {
     
     init() {
         self.context = DBManager.shared.backgroundContext
+    }
+    
+    private func sendAction(_ action: CookingMethodRepository.Action) {
+        NotificationCenter.default.post(name: Notification.Name("CookingMethodNotification"),
+                                        object: action)
+    }
+    
+    func gePublisher() -> NotificationCenter.Publisher {
+//        let logoutNotification = Notification.Name("tokenFailed:\(self.url)")
+        return NotificationCenter.default.publisher(for: Notification.Name("CookingMethodNotification"))
     }
     
     // TODO: ADD LISTENERS AND NOTIFS
@@ -53,6 +77,7 @@ final class CookingMethodRepository {
                         if self.context.hasChanges{
                             try context.save()
                         }
+                        self.sendAction(.Added(type))
                         continuation.resume()
                         
                     } else {
@@ -92,6 +117,7 @@ final class CookingMethodRepository {
                     if self.context.hasChanges{
                         try context.save()
                     }
+                    self.sendAction(.Deleted(cookingType))
                     continuation.resume()
                 } catch {
                     continuation.resume(throwing: RepositoryError.contextError(error))
