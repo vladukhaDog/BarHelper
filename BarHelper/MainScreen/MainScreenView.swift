@@ -10,22 +10,21 @@ import SwiftUI
 /// Main screen of an app with links and previews
 struct MainScreenView: View {
     var body: some View {
-        ScrollView {
-            LazyVStack {
+        VStack(spacing: 4){
+            HStack {
                 NavigationLink(value: Destination.CookingMethodsList) {
                     CookingMethodsHeader()
-                }
+                    }
                 NavigationLink(value: Destination.IngredientsList) {
                     IngredientsHeader()
                 }
-                NavigationLink(value: Destination.StoredCocktailsList) {
-                    CocktailsHeader()
-                }
             }
-            .padding()
-            FavouritesHeader()
+            NavigationLink(value: Destination.StoredCocktailsList) {
+                CocktailsHeader()
+            }
         }
-        .frame(maxWidth: .infinity)
+        .padding(8)
+        .backgroundWithoutSafeSpace(.pinkPurple)
     }
 }
 

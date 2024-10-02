@@ -9,33 +9,52 @@ import SwiftUI
 
 struct CocktailsHeader: View {
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
+        VStack {
+            HStack{
+                leftCocktails
                 title
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .foregroundStyle(Color.primary)
-                    .bold()
+                rightCocktails
             }
+            .frame(height: 90)
             existingList
         }
-        .padding(8)
-        .background(Color.green.opacity(0.2))
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .frame(maxWidth: .infinity)
+        .background(Color.darkPurple)
     }
     
     private var title: some View {
-        HStack {
-            Image("cocktail")
+        Text("Cocktails")
+            .cyberpunkFont(.smallTitle)
+            .lineLimit(1)
+            .foregroundColor(.white)
+            .minimumScaleFactor(0.1)
+    }
+    
+    private var rightCocktails: some View {
+        HStack(spacing: 0){
+            Image("6")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 25, height: 25, alignment: .center)
-            Text("Cocktails")
-                .font(.title)
-                .fontWeight(.semibold)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            Image("1")
+                .resizable()
+                .scaledToFit()
         }
-        .foregroundStyle(Color.primary.opacity(0.85))
+        .padding(.horizontal, 8)
+        .padding(.vertical, 10)
+        .padding(.top, 20)
+    }
+    
+    private var leftCocktails: some View {
+        HStack(spacing: 0){
+            Image("5")
+                .resizable()
+                .scaledToFit()
+            Image("8")
+                .resizable()
+                .scaledToFit()
+        }
+        .padding(.horizontal, 8)
+        .padding(.vertical, 10)
     }
     
     private var existingList: some View {
@@ -51,26 +70,20 @@ struct CocktailsHeader: View {
             }
             .padding(8)
         }
-        .background(Color.primary.colorInvert())
         .frame(height: 100)
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .background(Color.black)
+        .padding(5)
+        .depthBorder()
+        .padding(10)
     }
     
     private var addButton: some View {
         Button{
             
         } label: {
-            Color.clear.opacity(0.15)
-                .aspectRatio(1.0, contentMode: .fit)
-                .clipShape(RoundedRectangle(cornerRadius: 5))
-                .overlay {
-                    Image(systemName: "plus")
-                        .resizable()
-                        .scaledToFit()
-                        .foregroundStyle(Color.primary.opacity(0.2))
-                        .padding(20)
-                }
+            PlusView()
         }
+        .padding(10)
     }
 }
 

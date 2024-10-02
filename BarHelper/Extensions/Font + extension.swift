@@ -8,8 +8,58 @@
 import Foundation
 import SwiftUI
 
-extension Font{
+
+
+extension Font {
+    /// Default sizes for custom font size
+    enum CyberpunkFontSize: CGFloat {
+        case title = 33
+        case smallTitle = 25
+        case body = 20
+    }
+    
+    @available(*, deprecated, renamed: "cyberpunkWaifu(size:)")
     static let CBTitle = Font.custom("CyberpunkWaifus", size: 33)
+    @available(*, deprecated, renamed: "cyberpunkWaifu(size:)")
     static let smallTitle = Font.custom("CyberpunkWaifus", size: 25)
+    @available(*, deprecated, renamed: "cyberpunkWaifu(size:)")
     static let normal = Font.custom("CyberpunkWaifus", size: 20)
+    
+    /// Return custom font with specified size
+    static func cyberpunkWaifu(_ size: CyberpunkFontSize = .body) -> Font {
+        return Font.custom("CyberpunkWaifus", size: size.rawValue)
+    }
+    
+    /// Return custom font with specified size
+    static func cyberpunkWaifu(_ size: CGFloat) -> Font {
+        return Font.custom("CyberpunkWaifus", size: size)
+    }
+}
+
+extension Text {
+    /// Wraps text with cyperpunk pixel font
+    func cyberpunkFont(_ size: Font.CyberpunkFontSize = .body) -> Text {
+        self
+            .font(.cyberpunkWaifu(size))
+    }
+    
+    /// Wraps text with cyperpunk pixel font
+    func cyberpunkFont(_ size: CGFloat) -> Text {
+        self
+            .font(.cyberpunkWaifu(size))
+    }
+    
+}
+
+#Preview {
+    VStack {
+        Text("Title")
+            .cyberpunkFont(.title)
+        Text("smallTitle")
+            .cyberpunkFont(.smallTitle)
+        Text("body")
+            .cyberpunkFont(.body)
+        Text("Custom 50")
+            .cyberpunkFont(50)
+    }
 }

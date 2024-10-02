@@ -20,20 +20,19 @@ struct CocktailTile: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            Color.clear.overlay {
-                image
-            }
-            imageOverlayGradient
+            image
+                .scaledToFit()
+                .padding(.bottom)
             title
         }
-        .aspectRatio(1.0, contentMode: .fit)
+        .aspectRatio(0.8, contentMode: .fit)
         .clipShape(RoundedRectangle(cornerRadius: 15))
     }
     
     private var title: some View {
         Text(cocktail.name ?? "noname")
+            .cyberpunkFont(12)
             .foregroundStyle(.white)
-            .italic()
             .shadow(radius: 5)
             .minimumScaleFactor(0.4)
             .frame(maxHeight: titleHeight)
