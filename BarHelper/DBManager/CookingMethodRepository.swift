@@ -8,8 +8,18 @@
 import Foundation
 import CoreData
 
+/// Dependency Injection info for a class that writes/gets CookingMethods and notifies about it
+typealias CookingMethodDI = Repository<CookingMethod> & CookingMethodRepositoryProtocol
+
+protocol CookingMethodRepositoryProtocol {
+    func editCookingMethod(_ method: CookingMethod) async throws
+    func addCookingMethod(name: String, description: String?) async throws
+    func fetchCookingMethods() async throws -> [CookingMethod]
+    func deleteCookingMethod(cookingMethod: CookingMethod) async throws
+}
+
 /// Repository to change records about Cooking Methods
-final class CookingMethodRepository: Repository<CookingMethod> {
+final class CookingMethodRepository: CookingMethodDI {
     
     func editCookingMethod(_ method: CookingMethod) async throws {
         try await withCheckedThrowingContinuation {continuation in

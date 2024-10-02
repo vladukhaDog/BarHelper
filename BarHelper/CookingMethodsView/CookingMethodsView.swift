@@ -16,13 +16,7 @@ struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewMo
     @StateObject private var vm: ViewModel
     @State private var showAdd = false
     var body: some View {
-        List {
-            ForEach(vm.methods, id: \.id){ method in
-                methodInfo(method)
-            }
-        }
-        .environment(\.defaultMinListRowHeight, 70)
-        .navigationTitle("Cooking types")
+        old
     }
     
     private func methodInfo(_ method: CookingMethod) -> some View{
