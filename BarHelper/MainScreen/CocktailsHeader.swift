@@ -8,15 +8,31 @@
 import SwiftUI
 
 struct CocktailsHeader: View {
+    let cocktails: [DBCocktail]
+    
+    init(cocktails: [DBCocktail] = [MockData.mockCocktail(), MockData.mockCocktail()]) {
+        self.cocktails = cocktails
+    }
+    
+    
+    
+//    let cocktails: [DBCocktail] = []
+    
     var body: some View {
         VStack {
             HStack{
                 leftCocktails
                 title
-                rightCocktails
+                if cocktails.isEmpty {
+                    addButton
+                } else {
+                    rightCocktails
+                }
             }
             .frame(height: 90)
-            existingList
+            if !cocktails.isEmpty {
+                existingList
+            }
         }
         .frame(maxWidth: .infinity)
         .background(Color.darkPurple)
@@ -61,8 +77,7 @@ struct CocktailsHeader: View {
         ScrollView(.horizontal) {
             HStack {
                 addButton
-                ForEach(0..<2) { ai in
-                    let cocktail = MockData.mockCocktail()
+                ForEach(cocktails, id: \.id) { cocktail in
                     NavigationLink(value: Destination.CocktailView(.constant(cocktail))) {
                         CocktailTile(cocktail)
                     }
@@ -88,5 +103,9 @@ struct CocktailsHeader: View {
 }
 
 #Preview {
-    CocktailsHeader()
+    VStack {
+        CocktailsHeader()
+        CocktailsHeader(cocktails: [])
+    }
+    .padding()
 }
