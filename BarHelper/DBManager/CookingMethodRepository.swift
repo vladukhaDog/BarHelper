@@ -9,49 +9,7 @@ import Foundation
 import CoreData
 
 /// Repository to change records about Cooking Methods
-final class CookingMethodRepository {
-    
-    enum Action {
-        case Deleted(CookingMethod)
-        case Added(CookingMethod)
-        case Changed(CookingMethod)
-        
-        func object() -> CookingMethod {
-            switch self {
-            case .Deleted(let object): return object
-            case .Added(let object): return object
-            case .Changed(let object): return object
-            }
-        }
-    }
-    
-    /// Context which is used to access data memory safe
-    /// ```swift
-    ///await withCheckedContinuation({ continuation in
-    /// self.backgroundContext.performAndWait{
-    ///         //FETCH DATA
-    ///         //RETURN DATA
-    ///         continuation.resume(returning: DATA)
-    ///         //OR CONTINUE WITHOUT RETURN
-    ///         continuation.resume()
-    /// }
-    ///})
-    ///
-    /// ```
-    private let context: NSManagedObjectContext
-    
-    init() {
-        self.context = DBManager.shared.backgroundContext
-    }
-    
-    private func sendAction(_ action: CookingMethodRepository.Action) {
-        NotificationCenter.default.post(name: Notification.Name("CookingMethodNotification"),
-                                        object: action)
-    }
-    
-    func getPublisher() -> NotificationCenter.Publisher {
-        return NotificationCenter.default.publisher(for: Notification.Name("CookingMethodNotification"))
-    }
+final class CookingMethodRepository: Repository<CookingMethod> {
     
     func editCookingMethod(_ method: CookingMethod) async throws {
         try await withCheckedThrowingContinuation {continuation in
