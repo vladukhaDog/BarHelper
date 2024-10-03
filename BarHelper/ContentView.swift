@@ -18,6 +18,7 @@ struct ContentView: View {
             MainScreenView()
             .routePath()
         }
+        .navigationBarTitleTextColor(.white)
         .tint(.mint)
     }
 }

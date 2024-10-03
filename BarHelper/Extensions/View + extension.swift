@@ -26,6 +26,13 @@ struct Ext_Previews: PreviewProvider {
 }
 extension View{
     
+    func navigationBarTitleTextColor(_ color: Color) -> some View {
+        let uiColor = UIColor(color)
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: uiColor , .font: UIFont(name: "CyberpunkWaifus", size: 22) ?? .systemFont(ofSize: 22)]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: uiColor , .font: UIFont(name: "CyberpunkWaifus", size: 22) ?? .systemFont(ofSize: 22)]
+        return self
+    }
+    
     func backgroundWithoutSafeSpace(_ color: Color) -> some View{
         ZStack{
             color.ignoresSafeArea()

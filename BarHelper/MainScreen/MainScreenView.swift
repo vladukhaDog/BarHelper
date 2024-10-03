@@ -33,5 +33,6 @@ struct MainScreenView: View {
         MainScreenView()
             .routePath()
     }
+    .navigationBarTitleTextColor(.white)
     .tint(.mint)
 }

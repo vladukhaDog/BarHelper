@@ -36,11 +36,8 @@ struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewMo
     }
     var old: some View {
         VStack{
-            ScrollView{
+            ScrollView {
                 VStack{
-                    HStack{
-                        Spacer()
-                    }
                     ForEach(vm.methods, id: \.id){ method in
                         HStack{
                             Button {
@@ -58,6 +55,7 @@ struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewMo
                 }
                 .padding(.horizontal, 5)
             }
+            .frame(maxWidth: .infinity)
             .background(Color.black)
             .padding(5)
             .depthBorder()
@@ -144,6 +142,8 @@ struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewMo
     }
 }
 
+
+// MARK: Preview Mock data
 /// Mock view model with a list of mock methods prefilled
 fileprivate final class MockCookingMethodsViewModel: CookingMethodsViewModelProtocol {
     var name: String = ""
@@ -168,6 +168,7 @@ fileprivate final class MockCookingMethodsViewModel: CookingMethodsViewModelProt
     func deleteMethod(method: CookingMethod) {}
 }
 
+// MARK: Preview
 #Preview {
     NavigationStack(path: .constant([Destination.CookingMethodsList])) {
         Color.blue
@@ -176,5 +177,6 @@ fileprivate final class MockCookingMethodsViewModel: CookingMethodsViewModelProt
                     .navigationBarTitleDisplayMode(.inline)
             }
     }
+    .navigationBarTitleTextColor(.white)
     .tint(.mint)
 }
