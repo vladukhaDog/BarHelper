@@ -36,15 +36,15 @@ extension Font {
     }
 }
 
-extension Text {
+extension View {
     /// Wraps text with cyperpunk pixel font
-    func cyberpunkFont(_ size: Font.CyberpunkFontSize = .body) -> Text {
+    func cyberpunkFont(_ size: Font.CyberpunkFontSize = .body) -> some View {
         self
             .font(.cyberpunkWaifu(size))
     }
     
     /// Wraps text with cyperpunk pixel font
-    func cyberpunkFont(_ size: CGFloat) -> Text {
+    func cyberpunkFont(_ size: CGFloat) -> some View {
         self
             .font(.cyberpunkWaifu(size))
     }

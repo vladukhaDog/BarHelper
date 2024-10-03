@@ -70,7 +70,7 @@ extension View{
         }
     }
     
-    func depthBorderUp() -> some View{
+    func depthBorderUp(noBottom: Bool = false) -> some View{
         let width = 5.0
         let dopacity = 0.02
         let lopacity = 0.1
@@ -93,10 +93,12 @@ extension View{
                             .opacity(lopacity)
                     }
                     
-                    Rectangle()
-                        .fill(Color.black)
-                        .frame(height: width)
-                        .opacity(lopacity)
+                    if !noBottom{
+                        Rectangle()
+                            .fill(Color.black)
+                            .frame(height: width)
+                            .opacity(lopacity)
+                    }
                 })
                
         }

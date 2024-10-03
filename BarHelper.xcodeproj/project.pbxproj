@@ -11,6 +11,9 @@
 		6121B3412A117E1B0029E65D /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6121B3402A117E1B0029E65D /* SearchViewModel.swift */; };
 		6137F34E2CAE080100621744 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6137F34D2CAE080100621744 /* Repository.swift */; };
 		6137F3502CAEC74F00621744 /* EditCookingMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6137F34F2CAEC74F00621744 /* EditCookingMethodView.swift */; };
+		6137F3522CAEF68900621744 /* CyberpunkTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6137F3512CAEF68900621744 /* CyberpunkTextFieldStyle.swift */; };
+		6176DC0C2CAF27E800387E5A /* EditcookingMethodViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6176DC0B2CAF27E800387E5A /* EditcookingMethodViewModelProtocol.swift */; };
+		6176DC0E2CAF280300387E5A /* EditCookingMethodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6176DC0D2CAF280300387E5A /* EditCookingMethodViewModel.swift */; };
 		61A2D7B92A4E17BC007FA201 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A2D7B82A4E17BC007FA201 /* Router.swift */; };
 		61A2D7BB2A4E181E007FA201 /* IngredientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A2D7BA2A4E181E007FA201 /* IngredientCell.swift */; };
 		61CFFFD42A3F6868002D87B8 /* EditIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CFFFD32A3F6868002D87B8 /* EditIngredientsView.swift */; };
@@ -60,6 +63,9 @@
 		6121B3402A117E1B0029E65D /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		6137F34D2CAE080100621744 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		6137F34F2CAEC74F00621744 /* EditCookingMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCookingMethodView.swift; sourceTree = "<group>"; };
+		6137F3512CAEF68900621744 /* CyberpunkTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberpunkTextFieldStyle.swift; sourceTree = "<group>"; };
+		6176DC0B2CAF27E800387E5A /* EditcookingMethodViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditcookingMethodViewModelProtocol.swift; sourceTree = "<group>"; };
+		6176DC0D2CAF280300387E5A /* EditCookingMethodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCookingMethodViewModel.swift; sourceTree = "<group>"; };
 		61A2D7B82A4E17BC007FA201 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		61A2D7BA2A4E181E007FA201 /* IngredientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCell.swift; sourceTree = "<group>"; };
 		61CFFFD32A3F6868002D87B8 /* EditIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIngredientsView.swift; sourceTree = "<group>"; };
@@ -151,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				61F399552A4B127D0058DA30 /* CPTextEditor.swift */,
+				6137F3512CAEF68900621744 /* CyberpunkTextFieldStyle.swift */,
 				61F91E162A0D3FBA00D320D8 /* CPButtonView.swift */,
 				61F91E192A0E826400D320D8 /* PlusView.swift */,
 				61CFFFD52A3F6CF0002D87B8 /* TrashView.swift */,
@@ -167,6 +174,16 @@
 				6137F34D2CAE080100621744 /* Repository.swift */,
 			);
 			path = DBManager;
+			sourceTree = "<group>";
+		};
+		6176DC0F2CAF282B00387E5A /* EditCookingMethod */ = {
+			isa = PBXGroup;
+			children = (
+				6137F34F2CAEC74F00621744 /* EditCookingMethodView.swift */,
+				6176DC0D2CAF280300387E5A /* EditCookingMethodViewModel.swift */,
+				6176DC0B2CAF27E800387E5A /* EditcookingMethodViewModelProtocol.swift */,
+			);
+			path = EditCookingMethod;
 			sourceTree = "<group>";
 		};
 		61DCFBE42CA1AC0D001019B0 /* Navigation */ = {
@@ -253,9 +270,9 @@
 		61E340142A0AE241009B9725 /* CookingMethodsView */ = {
 			isa = PBXGroup;
 			children = (
-				6137F34F2CAEC74F00621744 /* EditCookingMethodView.swift */,
 				61E3400F2A0ADF37009B9725 /* CookingMethodsView.swift */,
 				61E340112A0ADF3F009B9725 /* CookingMethodsViewModel.swift */,
+				6176DC0F2CAF282B00387E5A /* EditCookingMethod */,
 			);
 			path = CookingMethodsView;
 			sourceTree = "<group>";
@@ -370,6 +387,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6176DC0C2CAF27E800387E5A /* EditcookingMethodViewModelProtocol.swift in Sources */,
 				61F399562A4B127D0058DA30 /* CPTextEditor.swift in Sources */,
 				61E3401B2A0BFC77009B9725 /* ImagePicker.swift in Sources */,
 				61DCFBE82CA1AC84001019B0 /* DestinationCases.swift in Sources */,
@@ -407,7 +425,9 @@
 				6121B3412A117E1B0029E65D /* SearchViewModel.swift in Sources */,
 				61E33FD62A085B47009B9725 /* BarHelperApp.swift in Sources */,
 				6137F34E2CAE080100621744 /* Repository.swift in Sources */,
+				6137F3522CAEF68900621744 /* CyberpunkTextFieldStyle.swift in Sources */,
 				61A2D7B92A4E17BC007FA201 /* Router.swift in Sources */,
+				6176DC0E2CAF280300387E5A /* EditCookingMethodViewModel.swift in Sources */,
 				61A2D7BB2A4E181E007FA201 /* IngredientCell.swift in Sources */,
 				61DCFBEF2CA1B8FB001019B0 /* CookingTypesHeader.swift in Sources */,
 				61E33FE22A085B49009B9725 /* BarHelper.xcdatamodeld in Sources */,

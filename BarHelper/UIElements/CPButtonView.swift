@@ -61,9 +61,11 @@ struct CyberpunkButtonStyle: ButtonStyle {
                 
             }
             .aspectRatio(3.5, contentMode: .fit)
+            .frame(maxHeight: 60)
             .background(
                 geometryReader
             )
+            
         }
         
         private var geometryReader: some View {

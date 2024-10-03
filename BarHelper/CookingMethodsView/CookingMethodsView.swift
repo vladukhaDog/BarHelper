@@ -20,7 +20,6 @@ struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewMo
         VStack(alignment: .center) {
             methodImages
             list
-                .border(.blue)
             addButon
                 .alignmentGuide(HorizontalAlignment.center, computeValue: {d in d[.leading]})
         }

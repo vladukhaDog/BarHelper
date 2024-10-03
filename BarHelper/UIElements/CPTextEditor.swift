@@ -25,26 +25,28 @@ struct CPTextEditor: View {
                 })
             TextEditor(text: $text)
                 .scrollContentBackground(.hidden)
-                .frame(height: max(40,textEditorHeight))
+                .frame(height: max(30,textEditorHeight))
                 .focused($focused)
-        }.onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
-            
-            .font(.CBTitle)
-            .foregroundColor(.white)
-            .tint(.white)
-            .overlay(alignment: .topLeading, content: {
-                if text.isEmpty{
-                    Text(placeholder)
-                        .font(.CBTitle)
-                        .foregroundColor(.white)
-                        .padding(5)
-                        .padding(.top, 3)
-                        .opacity(0.25)
-                        .allowsHitTesting(false)
-                }
-            })
-            .background(Color.darkPurple)
-            .depthBorder()
+        }
+        .onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
+        
+        .cyberpunkFont(.body)
+        .foregroundColor(.white)
+        .tint(.white)
+        .overlay(alignment: .topLeading, content: {
+            if text.isEmpty{
+                Text(placeholder)
+                    .cyberpunkFont(.body)
+                    .foregroundColor(.white)
+                    .padding(5)
+                    .padding(.top, 3)
+                    .opacity(0.25)
+                    .allowsHitTesting(false)
+            }
+        })
+        .background(Color.black)
+        .padding(5)
+        .depthBorderUp()
     }
     
 }
@@ -60,13 +62,6 @@ struct ViewHeightKey: PreferenceKey {
 struct CPTextEditor_Previews: PreviewProvider {
     static var previews: some View {
         VStack{
-            TextField("", text: .constant(""), prompt: Text("Cocktail Name"))
-                .font(.CBTitle)
-                .foregroundColor(.white)
-                .tint(.white)
-                .padding(5)
-                .background(Color.darkPurple)
-                .depthBorder()
             CPTextEditor(text: .constant("a"), placeholder: "Placeholder")
             CPTextEditor(text: .constant(""), placeholder: "Placeholder")
         }
