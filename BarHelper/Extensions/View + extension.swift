@@ -30,6 +30,7 @@ extension View{
         let uiColor = UIColor(color)
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: uiColor , .font: UIFont(name: "CyberpunkWaifus", size: 22) ?? .systemFont(ofSize: 22)]
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: uiColor , .font: UIFont(name: "CyberpunkWaifus", size: 22) ?? .systemFont(ofSize: 22)]
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "CyberpunkWaifus", size: 25) ?? .systemFont(ofSize: 22)], for: .normal)
         return self
     }
     
