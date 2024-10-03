@@ -98,18 +98,22 @@ struct IngredientsView: View {
                     .font(.smallTitle)
                     .foregroundColor(.white)
                 HStack{
-                    CPButtonView(color: .gray, text: "Cancel", enabled: true, action: {
+                    
+                    Button("Cancel") {
                         withAnimation{
                             self.vm.ingredientToDelete = nil
                         }
-                    })
-                    CPButtonView(color: .red, text: "Delete", enabled: true, action: {
+                    }
+                    .cyberpunkStyle(.gray)
+
+                    Button("Delete") {
                         withAnimation{
                             self.vm.ingredientToDelete = nil
                             self.vm.deleteIngredient(ingredient: ingredient)
                         }
                         
-                    })
+                    }
+                    .cyberpunkStyle(.red)
                 }
                 .padding(8)
             }

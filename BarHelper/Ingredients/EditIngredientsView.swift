@@ -27,17 +27,20 @@ struct EditIngredientView: View{
                 .padding(5)
                 .depthBorder()
             HStack{
-                CPButtonView(color: .gray, text: "Cancel", enabled: true) {
+                Button("Cancel") {
                     withAnimation{
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
-                CPButtonView(color: .green, text: "Save", enabled: true) {
+                .cyberpunkStyle(.gray)
+
+                Button("Save") {
                     onEdit(ingredient, name)
                     withAnimation{
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
+                .cyberpunkStyle(.green)
             }
             Spacer()
         }

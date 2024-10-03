@@ -49,13 +49,16 @@ struct CocktailView: View {
     private var buttons: some View{
         HStack{
 
-            CPButtonView(color: .red, text: "Delete", enabled: true) {
+            
+            Button("Delete") {
                 self.cocktail.deletedByUser = true
                 self.cocktail = self.cocktail
                 self.cocktail.objectWillChange.send()
                 self.presentationMode.wrappedValue.dismiss()
             }
-            CPButtonView(color: .orange, text: "Edit", enabled: true) {
+            .cyberpunkStyle(.red)
+            
+            Button("Edit") {
 #warning("DISABLED NAVIGATION")
 //                Router.shared.push(.EditCocktail(.init(get: {
 //                    self.cocktail
@@ -66,6 +69,7 @@ struct CocktailView: View {
 //                    }
 //                })))
             }
+            .cyberpunkStyle(.orange)
         }
         .padding()
         .background(Color.black)

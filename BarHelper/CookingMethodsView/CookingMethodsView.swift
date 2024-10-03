@@ -17,38 +17,23 @@ struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewMo
     @State private var showAdd = false
     var body: some View {
         old
-    }
-    
-    private func methodInfo(_ method: CookingMethod) -> some View{
-        VStack(alignment: .leading) {
-            Text(method.name ?? "")
-                .font(.title)
-            if let description = method.desc {
-                Text(description)
-                    .opacity(0.5)
-                    .font(.caption)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-                    .padding(.leading, 5)
-                    .padding(.trailing)
+            .sheet(item: $vm.methodToView) { item in
+                EditCookingMethodView(item)
+                    .presentationDetents([.medium, .large])
             }
-        }
     }
-    var old: some View {
-        VStack{
-            ScrollView {
-                VStack{
-                    ForEach(vm.methods, id: \.id){ method in
-                        HStack{
-                            Button {
-                                vm.typeToDelete = method
-                            } label: {
-                                Text(method.name ?? "")
-                                    .font(.smallTitle)
-                                    .foregroundColor(.white)
-                                    
-                            }
 
+    var old: some View {
+        VStack(alignment: .trailing) {
+            ScrollView {
+                LazyVStack {
+                    ForEach(vm.methods, id: \.id) { method in
+                        Button {
+                            vm.methodToView = method
+                        } label: {
+                            Text(method.name ?? "")
+                                .cyberpunkFont(.smallTitle)
+                                .foregroundColor(.white)
                         }
                         .padding(5)
                     }
@@ -59,56 +44,22 @@ struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewMo
             .background(Color.black)
             .padding(5)
             .depthBorder()
-            .padding(5)
-            .sheet(item: $vm.typeToDelete) { item in
-                deleteTypeConfirm
-                    .presentationDetents([.medium, .large])
+            .padding(.horizontal, 5)
+            
+            Button("Add") {
+                showAdd.toggle()
             }
-            HStack{
-                Spacer()
-                CPButtonView(color: .green,
-                             text: "Add",
-                             enabled: true,
-                             action: {
-                    showAdd.toggle()
-                })
-                .frame(width: 150)
-                .sheet(isPresented: $showAdd) {
-                    addCookingMethod
-                    .presentationDetents([.medium, .large])
-                }
+            .cyberpunkStyle(.green)
+            .frame(width: 150)
+            .sheet(isPresented: $showAdd) {
+                addCookingMethod
+                .presentationDetents([.medium, .large])
             }
             .padding(.horizontal)
             
         }
         .backgroundWithoutSafeSpace(.darkPurple)
         .navigationTitle("Cooking types")
-    }
-    
-    private var deleteTypeConfirm: some View{
-        VStack{
-            Text(vm.typeToDelete?.name ?? "NO TYPE")
-                .font(.CBTitle)
-            HStack{
-                CPButtonView(color: .gray,
-                             text: "Cancel",
-                             enabled: true,
-                             action: {
-                    vm.typeToDelete = nil
-                })
-                CPButtonView(color: .red,
-                             text: "Delete",
-                             enabled: true,
-                             action: {
-                    guard let t = vm.typeToDelete else {return}
-                    vm.deleteMethod(method: t)
-                })
-                
-            }
-            Spacer()
-        }
-        .padding()
-        .backgroundWithoutSafeSpace(.darkPurple)
     }
     
     private var addCookingMethod: some View{
@@ -120,20 +71,16 @@ struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewMo
                 .padding(5)
                 .depthBorder()
             HStack{
-                CPButtonView(color: .orange,
-                             text: "Reset",
-                             enabled: true,
-                             action: {
+                Button("Reset") {
                     vm.name = ""
-                })
+                }
+                .cyberpunkStyle(.orange)
 
-                CPButtonView(color: .green,
-                             text: "Add",
-                             enabled: true,
-                             action: {
+                Button("Add") {
                     showAdd = false
                     vm.addCookingMethod()
-                })
+                }
+                .cyberpunkStyle(.green)
             }
             Spacer()
         }
@@ -150,7 +97,7 @@ fileprivate final class MockCookingMethodsViewModel: CookingMethodsViewModelProt
     
     @Published var methods: [CookingMethod] = []
     
-    var typeToDelete: CookingMethod? = nil
+    @Published var methodToView: CookingMethod? = nil
     
     init() {
         Task {

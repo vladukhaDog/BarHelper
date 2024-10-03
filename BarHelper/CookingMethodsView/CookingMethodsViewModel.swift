@@ -12,7 +12,7 @@ import SwiftUI
 protocol CookingMethodsViewModelProtocol: ObservableObject {
     var name: String { get set }
     var methods: [CookingMethod] { get set }
-    var typeToDelete: CookingMethod? { get set }
+    var methodToView: CookingMethod? { get set }
     func fetchMethods() async
     func updateList(_ action: CookingMethodRepository.Action)
     func addCookingMethod()
@@ -24,7 +24,7 @@ class CookingMethodsViewModel: CookingMethodsViewModelProtocol {
     @Published var name = ""
     @Published var methods: [CookingMethod] = []
     
-    @Published var typeToDelete: CookingMethod? = nil
+    @Published var methodToView: CookingMethod? = nil
     private var cancellable = Set<AnyCancellable>()
     
     init(){
@@ -75,7 +75,7 @@ class CookingMethodsViewModel: CookingMethodsViewModelProtocol {
         Task{
             try? await cookingMethodRepository.deleteCookingMethod(cookingMethod: method)
             DispatchQueue.main.async {
-                self.typeToDelete = nil
+                self.methodToView = nil
             }
         }
     }

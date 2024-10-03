@@ -77,22 +77,19 @@ struct CreateCocktailView: View {
     
     private var confirmButton: some View{
         Group{
-            if vm.toEditCocktail == nil{
-                CPButtonView(color: .green,
-                             text: "Add Cocktail",
-                             enabled: (!vm.name.isEmpty &&
-                                       !vm.recipe.isEmpty
-                                      )) {
+            if vm.toEditCocktail == nil {
+                Button("Add Cocktail") {
                     vm.add()
                     self.presentationMode.wrappedValue.dismiss()
                 }
-            }else{
-                CPButtonView(color: .green,
-                             text: "Save Cocktail",
-                             enabled: true) {
+                .cyberpunkStyle(.green)
+                .disabled(vm.name.isEmpty || vm.recipe.isEmpty)
+            } else {
+                Button("Save Cocktail") {
                     vm.save()
                     self.presentationMode.wrappedValue.dismiss()
                 }
+                .cyberpunkStyle(.green)
             }
         }
         .frame(height: 80)

@@ -14,11 +14,11 @@ struct SearchView: View {
         VStack{
             modeSelect
             ingredientFilter
-            CPButtonView(color: .green,
-                         text: "Find",
-                         enabled: !vm.selectedIngredients.isEmpty) {
+            Button("Find") {
                 vm.startSearch()
             }
+            .cyberpunkStyle(.green)
+            .disabled(vm.selectedIngredients.isEmpty)
         }
         .padding(.horizontal)
         

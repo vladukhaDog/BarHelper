@@ -99,19 +99,18 @@ struct CreateIngredientView: View {
             }
             
             HStack{
-                CPButtonView(color: .orange,
-                             text: "Reset",
-                             enabled: true) {
+                Button("Reset") {
                     vm.name = ""
                 }
-                CPButtonView(color: .green,
-                             text: "Add",
-                             enabled: !vm.name.isEmpty) {
+                .cyberpunkStyle(.orange)
+                Button("Add") {
                     vm.addIngredient()
                     withAnimation{
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
+                .cyberpunkStyle(.green)
+                .disabled(vm.name.isEmpty)
             }
             Spacer()
         }
