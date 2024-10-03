@@ -18,6 +18,8 @@ struct EditCookingMethodView<VM>: View where VM: EditCookingMethodViewModelProto
     @StateObject private var vm: VM
     @Environment(\.presentationMode) var presentationMode
     
+    @State private var deleting: Bool = false
+    
     internal init(vm: VM) {
         self._vm = StateObject(wrappedValue: vm)
     }
@@ -27,19 +29,33 @@ struct EditCookingMethodView<VM>: View where VM: EditCookingMethodViewModelProto
             TextField("",
                       text: $vm.methodName,
                       prompt: Text("Method name"))
-                .cyberpunkStyle()
+            .cyberpunkStyle()
             CPTextEditor(text: $vm.description, placeholder: "Method description")
             HStack {
-                Button("Delete") {
-                    self.vm.deleteMethod()
-                    self.presentationMode.wrappedValue.dismiss()
+                Button(deleting ? "Confirm" : "Delete") {
+                    if deleting {
+                        self.vm.deleteMethod()
+                        self.presentationMode.wrappedValue.dismiss()
+                    } else {
+                        deleting.toggle()
+                    }
                 }
                 .cyberpunkStyle(.red)
-                Button("Cancel") {
-                    self.presentationMode.wrappedValue.dismiss()
+                if deleting {
+                    Button("X") {
+                        withAnimation {
+                            deleting.toggle()
+                        }
+                    }
+                    .cyberpunkStyle(.mint)
+                    .frame(width: 80)
+                    .transition(
+                        .move(edge: .trailing)
+                        .combined(with: .opacity)
+                    )
                 }
-                .cyberpunkStyle(.mint)
             }
+            .animation(.bouncy, value: deleting)
             Group {
                 if vm.methodName != (vm.method.name ?? "") ||
                     vm.description != (vm.method.desc ?? "") {

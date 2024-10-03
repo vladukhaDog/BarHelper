@@ -11,9 +11,9 @@ import SwiftUI
 extension Button {
     /// Vallahala style button with color background and separate disabled design
     func cyberpunkStyle(_ mode: Color = .green) -> some View {
-            self
+        self
             .buttonStyle(CyberpunkButtonStyle(mode))
-        }
+    }
 }
 
 struct CyberpunkButtonStyle: ButtonStyle {
@@ -36,48 +36,34 @@ struct CyberpunkButtonStyle: ButtonStyle {
         
         var body: some View {
             let isPressed = configuration.isPressed
-            /// Button background
-            ZStack{
-                border
-                    .scaleEffect(isPressed ? 0.99 : 1.0, anchor: .center)
-                ZStack{
-                    border
-                        .scaleEffect(isPressed ? 1.01 : 1.0, anchor: .center)
-                    currentColor
-                        .overlay(
-                            configuration.label
-                                .foregroundColor(isEnabled ? .white : .black)
-                                .font(.custom("CyberpunkWaifus", size: 200))
-                                .minimumScaleFactor(0.01)
-                                .padding(4)
-                                .padding(.horizontal, 5)
-                        )
-                        .opacity(isPressed ? 0.8 : 1.0)
-                        .scaleEffect(isPressed ? 0.99 : 1.0, anchor: .center)
-                        .padding(lineSize * 2)
-                }
-                .padding(.vertical ,lineSize * 2)
-                .padding(.horizontal ,lineSize * 4)
-                
-            }
-            .aspectRatio(3.5, contentMode: .fit)
-            .frame(maxHeight: 60)
-            .background(
-                geometryReader
-            )
-            
-        }
-        
-        private var geometryReader: some View {
-            GeometryReader(content: { proxy in
-                Color.clear
-                    .onAppear{
-                        lineSize = proxy.size.width/100
-                    }
-                    .onChange(of: proxy.size.width, { oldValue, newValue in
-                        lineSize = proxy.size.width/100
+            configuration.label
+                .foregroundColor(isEnabled ? .white : .black)
+                .cyberpunkFont(30)
+                .padding(.horizontal, 25)
+                .frame(minWidth: 50, maxWidth: .infinity, minHeight: 50)
+                .padding(.vertical, 5)
+                .opacity(isPressed ? 0.8 : 1.0)
+                .background {
+                    GeometryReader(content: { proxy in
+                        ZStack {
+                            border
+                            currentColor
+                                .padding(lineSize * 2)
+                                .background(border)
+                                .padding(.vertical ,lineSize * 1.8)
+                                .padding(.horizontal ,lineSize * 2)
+                                .opacity(isPressed ? 0.8 : 1.0)
+                                .scaleEffect(isPressed ? 0.99 : 1.0, anchor: .center)
+                        }
+                        .onAppear{
+                            lineSize = proxy.size.height/18
+                        }
+                        .onChange(of: proxy.size.width, { oldValue, newValue in
+                            lineSize = proxy.size.height/25
+                        })
                     })
-            })
+                }
+                .scaleEffect(isPressed ? 0.99 : 1.0, anchor: .center)
         }
         
         private var currentColor: Color {
@@ -104,26 +90,26 @@ struct CyberpunkButtonStyle: ButtonStyle {
         
         private var verticalLine: some View {
             VStack(spacing: 0){
-                    Color.clear
-                        .aspectRatio(1.0, contentMode: .fit)
+                Color.clear
+                    .aspectRatio(1.0, contentMode: .fit)
                 currentColor
-                    Color.clear
-                        .aspectRatio(1.0, contentMode: .fit)
-                }
-                .frame(width: lineSize)
+                Color.clear
+                    .aspectRatio(1.0, contentMode: .fit)
+            }
+            .frame(width: lineSize)
             
         }
         
         private var horizontalLine: some View {
             
             HStack(spacing: 0){
-                    Color.clear
-                        .aspectRatio(1.0, contentMode: .fit)
+                Color.clear
+                    .aspectRatio(1.0, contentMode: .fit)
                 currentColor
-                    Color.clear
-                        .aspectRatio(1.0, contentMode: .fit)
-                }
-                .frame(height: lineSize)
+                Color.clear
+                    .aspectRatio(1.0, contentMode: .fit)
+            }
+            .frame(height: lineSize)
             
         }
     }
@@ -136,20 +122,24 @@ struct CyberpunkButtonStyle: ButtonStyle {
         }
         .cyberpunkStyle(.green)
         HStack {
-            Button("Text text") {
+            Button("Text") {
                 
             }
             .cyberpunkStyle(.red)
-            Button("Text text") {
+            Button("Te") {
                 
             }
             .cyberpunkStyle(.orange)
         }
-        Button("Text text") {
+        Button("T") {
             
         }
         .cyberpunkStyle(.green)
         .disabled(true)
+        Button("") {
+            
+        }
+        .cyberpunkStyle(.green)
     }
     .backgroundWithoutSafeSpace(.darkPurple)
 }
