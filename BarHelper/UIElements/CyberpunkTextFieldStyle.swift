@@ -9,6 +9,12 @@ import SwiftUI
 
 
 struct CyberpunkTextFieldStyle: TextFieldStyle {
+    var state: FocusState<Bool>.Binding
+    @State private var isFocused: Bool = false
+    init(state: FocusState<Bool>.Binding? = nil) {
+        self.state = state ?? FocusState<Bool>.init().projectedValue
+    }
+
     func _body(configuration: TextField<Self._Label>) -> some View {
         HStack(spacing: 3) {
             Image("arrow")
@@ -19,6 +25,7 @@ struct CyberpunkTextFieldStyle: TextFieldStyle {
                 .rotationEffect(.degrees(180))
                 
             configuration
+                .focused(state)
                 .cyberpunkFont(.smallTitle)
                 .foregroundColor(.white)
                 .tint(.white)
@@ -32,9 +39,9 @@ struct CyberpunkTextFieldStyle: TextFieldStyle {
 
 extension TextField {
     /// Cyberpunk textfield style
-    func cyberpunkStyle() -> some View {
+    func cyberpunkStyle(focusState: FocusState<Bool>.Binding? = nil) -> some View {
         self
-            .textFieldStyle(CyberpunkTextFieldStyle())
+            .textFieldStyle(CyberpunkTextFieldStyle(state: focusState))
     }
 }
 

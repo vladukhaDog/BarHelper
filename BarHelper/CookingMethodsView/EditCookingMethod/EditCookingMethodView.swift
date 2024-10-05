@@ -17,7 +17,7 @@ extension EditCookingMethodView where VM == EditCookingMethodViewModel {
 struct EditCookingMethodView<VM>: View where VM: EditCookingMethodViewModelProtocol {
     @StateObject private var vm: VM
     @Environment(\.presentationMode) var presentationMode
-    
+    @FocusState private var nameIsFocused: Bool
     @State private var deleting: Bool = false
     
     internal init(vm: VM) {
@@ -29,7 +29,12 @@ struct EditCookingMethodView<VM>: View where VM: EditCookingMethodViewModelProto
             TextField("",
                       text: $vm.methodName,
                       prompt: Text("Method name"))
-            .cyberpunkStyle()
+            .cyberpunkStyle(focusState: $nameIsFocused)
+            .onAppear {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                    nameIsFocused = true
+                }
+            }
             CPTextEditor(text: $vm.description, placeholder: "Method description")
             HStack {
                 Button(deleting ? "Confirm" : "Delete") {
