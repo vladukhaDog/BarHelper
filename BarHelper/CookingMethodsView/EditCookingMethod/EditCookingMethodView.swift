@@ -31,7 +31,7 @@ struct EditCookingMethodView<VM>: View where VM: EditCookingMethodViewModelProto
                       prompt: Text("Method name"))
             .cyberpunkStyle(focusState: $nameIsFocused)
             .onAppear {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                DispatchQueue.main.async {
                     nameIsFocused = true
                 }
             }

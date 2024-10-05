@@ -10,20 +10,16 @@ import Combine
 import SwiftUI
 
 protocol CookingMethodsViewModelProtocol: ObservableObject {
-    var name: String { get set }
     var methods: [CookingMethod] { get set }
     var methodToView: CookingMethod? { get set }
     func fetchMethods() async
     func updateList(_ action: CookingMethodRepository.Action)
-    func addCookingMethod()
     func deleteMethod(method: CookingMethod)
 }
 
 class CookingMethodsViewModel: CookingMethodsViewModelProtocol {
     private let cookingMethodRepository = CookingMethodRepository()
-    @Published var name = ""
     @Published var methods: [CookingMethod] = []
-    
     @Published var methodToView: CookingMethod? = nil
     private var cancellable = Set<AnyCancellable>()
     
@@ -58,15 +54,6 @@ class CookingMethodsViewModel: CookingMethodsViewModelProtocol {
                         self.methods[index] = cookingMethod
                     }
                 }
-            }
-        }
-    }
-    
-    func addCookingMethod(){
-        Task{
-            try? await cookingMethodRepository.addCookingMethod(name: self.name)
-            DispatchQueue.main.async {
-                self.name = ""
             }
         }
     }

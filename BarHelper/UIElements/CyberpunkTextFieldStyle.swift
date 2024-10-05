@@ -29,6 +29,7 @@ struct CyberpunkTextFieldStyle: TextFieldStyle {
                 .cyberpunkFont(.smallTitle)
                 .foregroundColor(.white)
                 .tint(.white)
+                .colorScheme(.dark)
         }
             .padding(5)
             .background(Color.black)

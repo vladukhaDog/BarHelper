@@ -29,6 +29,9 @@
 		61DCFBF72CA1E77E001019B0 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF62CA1E77E001019B0 /* MockData.swift */; };
 		61DCFBF92CA31827001019B0 /* CocktailTile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBF82CA31827001019B0 /* CocktailTile.swift */; };
 		61DCFBFB2CA32C5E001019B0 /* CookingMethodRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBFA2CA32C5E001019B0 /* CookingMethodRepository.swift */; };
+		61DEBAFE2CB201900091AFE2 /* AddCookingMethodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DEBAFD2CB201900091AFE2 /* AddCookingMethodView.swift */; };
+		61DEBB002CB2047B0091AFE2 /* AddCookingMethodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DEBAFF2CB2047B0091AFE2 /* AddCookingMethodViewModel.swift */; };
+		61DEBB022CB2048E0091AFE2 /* AddCookingMethodViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DEBB012CB2048E0091AFE2 /* AddCookingMethodViewModelProtocol.swift */; };
 		61E33FD62A085B47009B9725 /* BarHelperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD52A085B47009B9725 /* BarHelperApp.swift */; };
 		61E33FD82A085B47009B9725 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E33FD72A085B47009B9725 /* ContentView.swift */; };
 		61E33FDA2A085B49009B9725 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61E33FD92A085B49009B9725 /* Assets.xcassets */; };
@@ -81,6 +84,9 @@
 		61DCFBF62CA1E77E001019B0 /* MockData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
 		61DCFBF82CA31827001019B0 /* CocktailTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CocktailTile.swift; sourceTree = "<group>"; };
 		61DCFBFA2CA32C5E001019B0 /* CookingMethodRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookingMethodRepository.swift; sourceTree = "<group>"; };
+		61DEBAFD2CB201900091AFE2 /* AddCookingMethodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCookingMethodView.swift; sourceTree = "<group>"; };
+		61DEBAFF2CB2047B0091AFE2 /* AddCookingMethodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCookingMethodViewModel.swift; sourceTree = "<group>"; };
+		61DEBB012CB2048E0091AFE2 /* AddCookingMethodViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCookingMethodViewModelProtocol.swift; sourceTree = "<group>"; };
 		61E33FD22A085B47009B9725 /* BarHelper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarHelper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E33FD52A085B47009B9725 /* BarHelperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarHelperApp.swift; sourceTree = "<group>"; };
 		61E33FD72A085B47009B9725 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -209,6 +215,16 @@
 			path = MainScreen;
 			sourceTree = "<group>";
 		};
+		61DEBB032CB204D40091AFE2 /* AddCookingMethod */ = {
+			isa = PBXGroup;
+			children = (
+				61DEBAFD2CB201900091AFE2 /* AddCookingMethodView.swift */,
+				61DEBAFF2CB2047B0091AFE2 /* AddCookingMethodViewModel.swift */,
+				61DEBB012CB2048E0091AFE2 /* AddCookingMethodViewModelProtocol.swift */,
+			);
+			path = AddCookingMethod;
+			sourceTree = "<group>";
+		};
 		61E33FC92A085B47009B9725 = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +288,7 @@
 			children = (
 				61E3400F2A0ADF37009B9725 /* CookingMethodsView.swift */,
 				61E340112A0ADF3F009B9725 /* CookingMethodsViewModel.swift */,
+				61DEBB032CB204D40091AFE2 /* AddCookingMethod */,
 				6176DC0F2CAF282B00387E5A /* EditCookingMethod */,
 			);
 			path = CookingMethodsView;
@@ -405,13 +422,16 @@
 				61E340102A0ADF37009B9725 /* CookingMethodsView.swift in Sources */,
 				61E33FD82A085B47009B9725 /* ContentView.swift in Sources */,
 				61F91E172A0D3FBA00D320D8 /* CPButtonView.swift in Sources */,
+				61DEBB022CB2048E0091AFE2 /* AddCookingMethodViewModelProtocol.swift in Sources */,
 				61DCFBFB2CA32C5E001019B0 /* CookingMethodRepository.swift in Sources */,
+				61DEBAFE2CB201900091AFE2 /* AddCookingMethodView.swift in Sources */,
 				61DCFBF72CA1E77E001019B0 /* MockData.swift in Sources */,
 				61E340122A0ADF3F009B9725 /* CookingMethodsViewModel.swift in Sources */,
 				61F91E1C2A11594E00D320D8 /* CocktailCellView.swift in Sources */,
 				61DCFBF32CA1D376001019B0 /* CocktailsHeader.swift in Sources */,
 				61E340192A0B9187009B9725 /* CocktailsView.swift in Sources */,
 				61CFFFD42A3F6868002D87B8 /* EditIngredientsView.swift in Sources */,
+				61DEBB002CB2047B0091AFE2 /* AddCookingMethodViewModel.swift in Sources */,
 				61E3401D2A0C0F4B009B9725 /* CocktailView.swift in Sources */,
 				61F91E1A2A0E826400D320D8 /* PlusView.swift in Sources */,
 				61DCFBEA2CA1AF23001019B0 /* DestinationPath.swift in Sources */,

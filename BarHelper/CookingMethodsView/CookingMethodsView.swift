@@ -33,6 +33,10 @@ struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewMo
             EditCookingMethodView(item)
                 .presentationDetents([.medium, .large])
         }
+        .sheet(isPresented: $showAdd) {
+            AddCookingMethodView()
+                .presentationDetents([.medium, .large])
+        }
     }
     
     private var list: some View {
@@ -113,37 +117,7 @@ struct CookingMethodsView<ViewModel>: View where ViewModel: CookingMethodsViewMo
         }
         .cyberpunkStyle(.green)
         .frame(width: 150)
-        .sheet(isPresented: $showAdd) {
-            addCookingMethod
-            .presentationDetents([.medium, .large])
-        }
         .padding(.horizontal)
-    }
-    
-    private var addCookingMethod: some View{
-        VStack{
-            TextField("", text: $vm.name, prompt: Text("Cooking Type name"))
-                .font(.smallTitle)
-                .foregroundColor(.white)
-                .tint(.white)
-                .padding(5)
-                .depthBorder()
-            HStack{
-                Button("Reset") {
-                    vm.name = ""
-                }
-                .cyberpunkStyle(.orange)
-
-                Button("Add") {
-                    showAdd = false
-                    vm.addCookingMethod()
-                }
-                .cyberpunkStyle(.green)
-            }
-            Spacer()
-        }
-        .padding()
-        .backgroundWithoutSafeSpace(.darkPurple)
     }
 }
 
