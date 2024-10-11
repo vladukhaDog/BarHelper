@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Combine
 
+@MainActor
 /// Class that controls the path for the navigationView
 final class Router: ObservableObject {
     /// path with navigation

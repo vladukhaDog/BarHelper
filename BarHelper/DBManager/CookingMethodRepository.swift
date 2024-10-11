@@ -28,7 +28,7 @@ final class CookingMethodRepository: CookingMethodDI {
                     if self.context.hasChanges{
                         try context.save()
                     }
-                    self.sendAction(.Changed(method))
+                    self.sendAction(.updated(method))
                     continuation.resume()
                 }
             } catch(let contextError) {
@@ -59,7 +59,7 @@ final class CookingMethodRepository: CookingMethodDI {
                         if self.context.hasChanges{
                             try context.save()
                         }
-                        self.sendAction(.Added(type))
+                        self.sendAction(.added(type))
                         continuation.resume()
                         
                     } else {
@@ -99,7 +99,7 @@ final class CookingMethodRepository: CookingMethodDI {
                     if self.context.hasChanges{
                         try context.save()
                     }
-                    self.sendAction(.Deleted(cookingMethod))
+                    self.sendAction(.deleted(cookingMethod))
                     continuation.resume()
                 } catch {
                     continuation.resume(throwing: RepositoryError.contextError(error))

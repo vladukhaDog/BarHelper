@@ -17,7 +17,7 @@ extension View {
                 case .CocktailsList(let cocktails):
                     CocktailsView(cocktails)
                 case .IngredientsSelector(let ingredientsListBinding):
-                    IngredientsView(selectedIngredients: ingredientsListBinding)
+                    IngredientsView(/*selectedIngredients: ingredientsListBinding*/)
                 case .IngredientsList:
                     IngredientsView()
                 case .CreateCocktail:
@@ -30,6 +30,8 @@ extension View {
                     CocktailView(cocktail: cocktail)
                 case .StoredCocktailsList:
                     CocktailsView()
+                case .CreateIngredientView(let parent):
+                    CreateIngredientView(parent)
                 }
             }
     }

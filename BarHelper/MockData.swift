@@ -30,6 +30,29 @@ final class MockData {
         return array
     }
     
+    static func mockIngredient(_ name: String = "Ingredient name") -> DBIngredient {
+        let ingredient = DBIngredient(context: DBManager.shared.backgroundContext)
+        ingredient.id = UUID()
+        ingredient.name = name
+        return ingredient
+    }
+    
+    static func mockIngredients(_ names: [String]) -> [DBIngredient] {
+        var array: [DBIngredient] = []
+        for name in names {
+            array.append(mockIngredient(name))
+        }
+        return array
+    }
+    
+    static func mockIngredients(_ count: Int) -> [DBIngredient] {
+        var array: [DBIngredient] = []
+        for _ in 0..<count {
+            array.append(mockIngredient())
+        }
+        return array
+    }
+    
     /// Creates an array of identical cocktails with uniquie identifiers
     static func mockCocktails(_ count: Int) -> [DBCocktail] {
         var array: [DBCocktail] = []
@@ -47,9 +70,7 @@ final class MockData {
         cocktail.name = "Cocktail name"
         cocktail.desc = "Description lognga nfksjelfnajck nbjfkaewljndkvsjernva ejk"
         let ingredientRecord = DBIngredientRecord(context: DBManager.shared.backgroundContext)
-        let ingredient = DBIngredient(context: DBManager.shared.backgroundContext)
-        ingredient.name = "Ingredient name"
-        ingredientRecord.ingredient = ingredient
+        ingredientRecord.ingredient = Self.mockIngredient()
         ingredientRecord.ingredientValue = 30
         cocktail.addToRecipe(ingredientRecord)
         let image = ImageEntry(context: DBManager.shared.backgroundContext)

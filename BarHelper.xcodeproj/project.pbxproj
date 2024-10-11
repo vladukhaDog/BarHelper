@@ -16,6 +16,8 @@
 		6176DC0E2CAF280300387E5A /* EditCookingMethodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6176DC0D2CAF280300387E5A /* EditCookingMethodViewModel.swift */; };
 		61A2D7B92A4E17BC007FA201 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A2D7B82A4E17BC007FA201 /* Router.swift */; };
 		61A2D7BB2A4E181E007FA201 /* IngredientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A2D7BA2A4E181E007FA201 /* IngredientCell.swift */; };
+		61C2FB2B2CB41788004A2368 /* IngredientsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C2FB2A2CB41788004A2368 /* IngredientsRepository.swift */; };
+		61C2FB2D2CB47A0B004A2368 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C2FB2C2CB47A0B004A2368 /* Line.swift */; };
 		61CFFFD42A3F6868002D87B8 /* EditIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CFFFD32A3F6868002D87B8 /* EditIngredientsView.swift */; };
 		61CFFFD62A3F6CF0002D87B8 /* TrashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CFFFD52A3F6CF0002D87B8 /* TrashView.swift */; };
 		61DCFBE62CA1AC26001019B0 /* Binding extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DCFBE52CA1AC26001019B0 /* Binding extension.swift */; };
@@ -71,6 +73,8 @@
 		6176DC0D2CAF280300387E5A /* EditCookingMethodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCookingMethodViewModel.swift; sourceTree = "<group>"; };
 		61A2D7B82A4E17BC007FA201 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		61A2D7BA2A4E181E007FA201 /* IngredientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCell.swift; sourceTree = "<group>"; };
+		61C2FB2A2CB41788004A2368 /* IngredientsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsRepository.swift; sourceTree = "<group>"; };
+		61C2FB2C2CB47A0B004A2368 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		61CFFFD32A3F6868002D87B8 /* EditIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIngredientsView.swift; sourceTree = "<group>"; };
 		61CFFFD52A3F6CF0002D87B8 /* TrashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrashView.swift; sourceTree = "<group>"; };
 		61DCFBE52CA1AC26001019B0 /* Binding extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding extension.swift"; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 				61F91E162A0D3FBA00D320D8 /* CPButtonView.swift */,
 				61F91E192A0E826400D320D8 /* PlusView.swift */,
 				61CFFFD52A3F6CF0002D87B8 /* TrashView.swift */,
+				61C2FB2C2CB47A0B004A2368 /* Line.swift */,
 			);
 			path = UIElements;
 			sourceTree = "<group>";
@@ -177,6 +182,7 @@
 				61E33FE02A085B49009B9725 /* BarHelper.xcdatamodeld */,
 				61E340052A0AB2A7009B9725 /* DBManager.swift */,
 				61DCFBFA2CA32C5E001019B0 /* CookingMethodRepository.swift */,
+				61C2FB2A2CB41788004A2368 /* IngredientsRepository.swift */,
 				6137F34D2CAE080100621744 /* Repository.swift */,
 			);
 			path = DBManager;
@@ -416,6 +422,7 @@
 				61E340082A0ABE92009B9725 /* IngredientsViewModel.swift in Sources */,
 				61F91E132A0D373200D320D8 /* CreateIngredientViewModel.swift in Sources */,
 				61DCFBF52CA1D628001019B0 /* FavouritesHeader.swift in Sources */,
+				61C2FB2B2CB41788004A2368 /* IngredientsRepository.swift in Sources */,
 				61E340062A0AB2A7009B9725 /* DBManager.swift in Sources */,
 				61E340282A0D1DBC009B9725 /* View + extension.swift in Sources */,
 				61DCFBF92CA31827001019B0 /* CocktailTile.swift in Sources */,
@@ -439,6 +446,7 @@
 				61E340162A0AE31D009B9725 /* CreateCocktailsViewModel.swift in Sources */,
 				6137F3502CAEC74F00621744 /* EditCookingMethodView.swift in Sources */,
 				61E340212A0D1615009B9725 /* Font + extension.swift in Sources */,
+				61C2FB2D2CB47A0B004A2368 /* Line.swift in Sources */,
 				61E3400A2A0AC54F009B9725 /* CocktailsViewModel.swift in Sources */,
 				61F91E102A0D34A800D320D8 /* Keyboard + extension.swift in Sources */,
 				61DCFBF12CA1BCC5001019B0 /* IngredientsHeader.swift in Sources */,

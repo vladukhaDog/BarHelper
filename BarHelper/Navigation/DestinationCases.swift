@@ -26,4 +26,7 @@ enum Destination: Hashable {
     case EditCocktail(Binding<DBCocktail>)
     /// Screen for viewing a cocktail, binding in case the cocktail was edited
     case CocktailView(Binding<DBCocktail>)
+    /// Screen to add new ingredient
+    ///  - Parameter DBIngredient: Родительский ингредиент
+    case CreateIngredientView(DBIngredient?)
 }

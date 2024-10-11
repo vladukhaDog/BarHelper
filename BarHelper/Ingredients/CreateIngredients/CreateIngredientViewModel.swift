@@ -8,27 +8,33 @@
 import Foundation
 
 class CreateIngredientViewModel: ObservableObject{
-    let db = DBManager.shared
+    private let ingredientRepository: IngredientsRepository = .init()
     
     @Published var name = ""
     @Published var metric = "ml"
-    let onAdd: (DBIngredient) -> ()
-    let baseIngredient: DBIngredient?
-    init(onAdd: @escaping (DBIngredient) ->(), baseIngredient: DBIngredient? = nil){
-        self.onAdd = onAdd
-        self.baseIngredient = baseIngredient
+    let parent: DBIngredient?
+    private var router: Router? = nil
+    init(parent: DBIngredient? = nil){
+        self.parent = parent
     }
     
-    func addIngredient(){
-        Task{
-            let usedMetric: String
-            if let baseIngredient{
-                usedMetric = baseIngredient.metric ?? "ml"
-            }else{
-                usedMetric = self.metric
-            }
-            if let new = await db.addIngredient(name: self.name, metric: usedMetric, parentIngredient: baseIngredient){
-                self.onAdd(new)
+    func setup(_ router: Router) async {
+        await MainActor.run {
+            self.router = router
+        }
+    }
+    
+    func addIngredient() {
+        Task {
+            do {
+                try await ingredientRepository.addIngredient(name: self.name,
+                                                             metric: parent?.metric ?? self.metric,
+                                                             parentIngredient: self.parent)
+                await MainActor.run {
+                    self.router?.back()
+                }
+            } catch {
+                print(error.localizedDescription)
             }
         }
     }

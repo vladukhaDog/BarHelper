@@ -12,6 +12,8 @@ import os
 enum RepositoryError: Error {
     case alreadyExists
     case contextError(Error)
+    case cannotBeAParent
+    case cannotHaveAParent
 }
 
 class DBManager: ObservableObject{

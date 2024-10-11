@@ -10,9 +10,9 @@ import CoreData
 
 class Repository<T> {
     enum Action {
-        case Deleted(T)
-        case Added(T)
-        case Changed(T)
+        case deleted(T)
+        case added(T)
+        case updated(T)
     }
     
     /// Context which is used to access data memory safe

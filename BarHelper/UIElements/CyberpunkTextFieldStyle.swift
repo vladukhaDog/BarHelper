@@ -11,8 +11,8 @@ import SwiftUI
 struct CyberpunkTextFieldStyle: TextFieldStyle {
     var state: FocusState<Bool>.Binding
     @State private var isFocused: Bool = false
-    init(state: FocusState<Bool>.Binding? = nil) {
-        self.state = state ?? FocusState<Bool>.init().projectedValue
+    init(state: FocusState<Bool>.Binding) {
+        self.state = state
     }
 
     func _body(configuration: TextField<Self._Label>) -> some View {
@@ -38,11 +38,25 @@ struct CyberpunkTextFieldStyle: TextFieldStyle {
     }
 }
 
+private struct CyberpunkTextFieldWithOwnFocus<Label>: View where Label: View {
+    @FocusState var focusState: Bool
+    let textField: TextField<Label>
+    var body: some View {
+        textField
+            .textFieldStyle(CyberpunkTextFieldStyle(state: $focusState))
+    }
+}
+
 extension TextField {
     /// Cyberpunk textfield style
+    @ViewBuilder
     func cyberpunkStyle(focusState: FocusState<Bool>.Binding? = nil) -> some View {
-        self
-            .textFieldStyle(CyberpunkTextFieldStyle(state: focusState))
+        if let focusState {
+            self
+                .textFieldStyle(CyberpunkTextFieldStyle(state: focusState))
+        } else {
+            CyberpunkTextFieldWithOwnFocus(textField: self)
+        }
     }
 }
 

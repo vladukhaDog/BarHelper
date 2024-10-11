@@ -20,7 +20,7 @@ struct MainScreenView: View {
                 }
             }
             NavigationLink(value: Destination.StoredCocktailsList) {
-                CocktailsHeader()
+                CocktailsHeader(cocktails: [])
             }
         }
         .padding(8)

@@ -29,7 +29,8 @@ class CookingMethodsViewModel: CookingMethodsViewModelProtocol {
         }
         cookingMethodRepository
             .getPublisher()
-            .sink { notification in
+            .sink {[weak self] notification in
+                guard let self else {return}
                 guard let action = notification.object as? CookingMethodRepository.Action
                 else {return}
                 self.updateList(action)
@@ -45,11 +46,11 @@ class CookingMethodsViewModel: CookingMethodsViewModelProtocol {
         DispatchQueue.main.async {
             withAnimation {
                 switch action {
-                case .Deleted(let cookingMethod):
+                case .deleted(let cookingMethod):
                     self.methods.removeAll(where: {$0.id == cookingMethod.id})
-                case .Added(let cookingMethod):
+                case .added(let cookingMethod):
                     self.methods.append(cookingMethod)
-                case .Changed(let cookingMethod):
+                case .updated(let cookingMethod):
                     if let index = self.methods.firstIndex(where: {$0.id == cookingMethod.id}){
                         self.methods[index] = cookingMethod
                     }
