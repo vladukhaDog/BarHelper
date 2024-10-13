@@ -31,14 +31,12 @@ struct IngredientsView<ViewModel>: View where ViewModel: IngredientsViewModelPro
         .backgroundWithoutSafeSpace(.darkPurple)
         .navigationTitle("Ingredients")
         .environmentObject(vm)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(vm.isEditing ? "Done" : "Edit") {
-                    vm.isEditing.toggle()
-                }
-                .cyberpunkFont(.body)
-            }
-        }
+        .customToolBar(id: "EditIngredients",
+                       text: vm.isEditing ? "Done" : "Edit",
+                       router: router,
+                       action: {
+            vm.isEditing.toggle()
+        })
     }
     
     @ViewBuilder

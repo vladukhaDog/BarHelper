@@ -45,6 +45,12 @@ struct CreateIngredientView: View {
             await vm.setup(router)
         }
         .navigationTitle("New Ingredient")
+        .customToolBar(id: "CreateIngredient",
+                       text: "Save",
+                       router: router,
+                       action: {
+            print("hihi")
+        })
     }
     
     private func parentInfo(_ parent: DBIngredient) -> some View {
