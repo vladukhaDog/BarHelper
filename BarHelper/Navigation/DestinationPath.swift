@@ -37,7 +37,6 @@ extension View {
                         .navigationBarHidden(true)
                 case .IngredientsSelector(_):
                     IngredientsView()
-                        .navigationTransition(.zoom(sourceID: route, in: namespace))
                         .navigationBarHidden(true)
                 case .IngredientsList:
                     IngredientsView()
@@ -48,6 +47,7 @@ extension View {
                         .navigationBarHidden(true)
                 case .CookingMethodsList:
                     CookingMethodsView()
+                        .navigationTransition(.zoom(sourceID: route, in: namespace))
                         .navigationBarHidden(true)
                 case .EditCocktail(let cocktail):
                     CreateCocktailView(editCocktail: cocktail)
@@ -57,6 +57,7 @@ extension View {
                         .navigationBarHidden(true)
                 case .StoredCocktailsList:
                     CocktailsView()
+                        .navigationTransition(.zoom(sourceID: route, in: namespace))
                         .navigationBarHidden(true)
                 case .CreateIngredientView(let parent):
                     CreateIngredientView(parent)

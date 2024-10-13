@@ -18,6 +18,7 @@ struct MainScreenView: View {
             HStack {
                 NavigationLink(value: Destination.CookingMethodsList) {
                     CookingMethodsHeader()
+                        .matchedTransitionSource(id: Destination.CookingMethodsList, in: namespace)
                 }
                 NavigationLink(value: Destination.IngredientsList) {
                     IngredientsHeader()
@@ -26,6 +27,7 @@ struct MainScreenView: View {
             }
             NavigationLink(value: Destination.StoredCocktailsList) {
                 CocktailsHeader(cocktails: [])
+                    .matchedTransitionSource(id: Destination.StoredCocktailsList, in: namespace)
             }
         }
         .padding(8)
