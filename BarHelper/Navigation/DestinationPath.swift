@@ -18,9 +18,9 @@ extension View {
             .onAppear(perform: { [weak router] in
                 router?.setToolBar(id: id, text: text)
             })
-            .onDisappear { [weak router] in
-                router?.removeToolbarItem(id: id)
-            }
+//            .onDisappear { [weak router] in
+//                router?.removeToolbarItem(id: id)
+//            }
             .onReceive(NotificationCenter.default
                 .publisher(for: Notification.Name("\(id)_toolbar_pressed"))) { _ in
                 action()
@@ -28,7 +28,7 @@ extension View {
     }
     
     /// wraps the view with navigation destination modifier and explains navigation destination views for each destination enumerator
-    func routePath() -> some View {
+    func routePath(_ namespace: Namespace.ID) -> some View {
         self
             .navigationDestination(for: Destination.self) { route in
                 switch route {
@@ -37,9 +37,11 @@ extension View {
                         .navigationBarHidden(true)
                 case .IngredientsSelector(_):
                     IngredientsView()
+                        .navigationTransition(.zoom(sourceID: route, in: namespace))
                         .navigationBarHidden(true)
                 case .IngredientsList:
                     IngredientsView()
+                        .navigationTransition(.zoom(sourceID: route, in: namespace))
                         .navigationBarHidden(true)
                 case .CreateCocktail:
                     CreateCocktailView()

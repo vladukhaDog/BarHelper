@@ -9,14 +9,19 @@ import SwiftUI
 
 /// Main screen of an app with links and previews
 struct MainScreenView: View {
+    let namespace: Namespace.ID
+    init(_ namespace: Namespace.ID) {
+        self.namespace = namespace
+    }
     var body: some View {
         VStack(spacing: 4){
             HStack {
                 NavigationLink(value: Destination.CookingMethodsList) {
                     CookingMethodsHeader()
-                    }
+                }
                 NavigationLink(value: Destination.IngredientsList) {
                     IngredientsHeader()
+                        .matchedTransitionSource(id: Destination.IngredientsList, in: namespace)
                 }
             }
             NavigationLink(value: Destination.StoredCocktailsList) {
@@ -29,9 +34,10 @@ struct MainScreenView: View {
 }
 
 #Preview {
+    @Previewable @Namespace var namespace
     NavigationStack {
-        MainScreenView()
-            .routePath()
+        MainScreenView(namespace)
+            .routePath(namespace)
     }
     .navigationBarTitleTextColor(.white)
     .tint(.mint)

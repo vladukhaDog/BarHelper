@@ -13,23 +13,17 @@ import Combine
 /// Class that controls the path for the navigationView
 final class Router: ObservableObject {
     /// path with navigation
-    @Published var path = [Destination]()
-    
-    @Published private(set) var toolbar: [(id: String, text: String)] = []
-    
-    
-    func setToolBar(id: String, text: String) {
-        if let index = toolbar.firstIndex(where: {$0.id == id}) {
-            toolbar[index] = (id, text)
-        } else {
-            toolbar.append((id, text))
+    @Published var path = [Destination]() {
+        willSet {
+            self.toolbar = nil
         }
     }
     
-    func removeToolbarItem(id: String) {
-        if let index = toolbar.firstIndex(where: {$0.id == id}) {
-            toolbar.remove(at: index)
-        }
+    @MainActor @Published private(set) var toolbar: (id: String, text: String)? = nil
+    private var cancellable = Set<AnyCancellable>()
+    
+    func setToolBar(id: String, text: String) {
+        self.toolbar = (id, text)
     }
     
     /// Add a destination to a path at the end of the list

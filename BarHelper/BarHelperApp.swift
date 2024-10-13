@@ -21,6 +21,7 @@ struct BarHelperApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(router)
+                .colorScheme(.dark)
         }
     }
 }
