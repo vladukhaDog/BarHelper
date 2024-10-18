@@ -21,10 +21,10 @@ enum IngredientFuseMode {
 }
 
 protocol IngredientsRepositoryProtocol {
-    func editIngredient(_ ingredient: DBIngredient) async throws
+    func editIngredient(_ ingredient: DBIngredient, newName: String) async throws
     func addIngredient(name: String, metric: String, parentIngredient: DBIngredient?) async throws -> DBIngredient
     func fuse(left: DBIngredient, right: DBIngredient, name: String, metric: String, mode: IngredientFuseMode) async throws -> DBIngredient
-    func assignParent(ingredient: DBIngredient, parent: DBIngredient) async throws -> DBIngredient
+    func assignParent(ingredient: DBIngredient, to parent: DBIngredient) async throws -> DBIngredient
     func fetchIngredients(search: String?) async throws -> [DBIngredient]
     func deleteIngredient(ingredient: DBIngredient) async throws
 }
@@ -32,15 +32,36 @@ protocol IngredientsRepositoryProtocol {
 /// Repository to change records about Cooking Methods
 final class IngredientsRepository: IngredientsDI {
     
-    func editIngredient(_ ingredient: DBIngredient) async throws {
+    func editIngredient(_ ingredient: DBIngredient, newName: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
             do {
                 try self.context.performAndWait{
-                    if self.context.hasChanges{
-                        try context.save()
+                    // checking if new name is already taken
+                    let request = DBIngredient.fetchRequest()
+                    let predicate = NSPredicate(format: "name == %@", newName)
+                    request.predicate = predicate
+                    request.fetchLimit = 1
+                    let items = (try? self.context.fetch(request)) ?? []
+                    if items.isEmpty {
+                        ingredient.name = newName
+                        if self.context.hasChanges{
+                            try context.save()
+                        }
+                        self.sendAction(.updated(ingredient))
+                        // if said ingredient has a parent, we update the set of said parent
+                        if let parent = ingredient.parentIngredient,
+                           var children = parent.alternatives as? Set<DBIngredient>,
+                        let index = children.firstIndex(where: {$0.id == ingredient.id}) {
+                            children.remove(at: index)
+                            children.insert(ingredient)
+                            parent.alternatives = children as NSSet
+                            self.sendAction(.updated(parent))
+                        }
+                        continuation.resume()
+                    }else{
+                        continuation.resume(throwing: RepositoryError.alreadyExists)
                     }
-                    self.sendAction(.updated(ingredient))
-                    continuation.resume()
+                    
                 }
             } catch(let contextError) {
                 continuation.resume(throwing: RepositoryError.contextError(contextError))
@@ -178,7 +199,7 @@ final class IngredientsRepository: IngredientsDI {
     }
     
     @discardableResult
-    func assignParent(ingredient: DBIngredient, parent: DBIngredient) async throws -> DBIngredient {
+    func assignParent(ingredient: DBIngredient, to parent: DBIngredient) async throws -> DBIngredient {
         try await withCheckedThrowingContinuation({ continuation in
             do {
                 try self.context.performAndWait{

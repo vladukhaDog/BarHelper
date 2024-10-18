@@ -44,6 +44,8 @@ extension View {
                 case .CreateIngredientView(let parent):
                     CreateIngredientView(parent)
                         .navigationBarHidden(true)
+                case .EditIngredient(let ingredient):
+                    EditIngredientView(ingredient: ingredient)
                 }
             }
     }

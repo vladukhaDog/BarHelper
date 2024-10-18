@@ -16,6 +16,8 @@
 		6176DC0C2CAF27E800387E5A /* EditcookingMethodViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6176DC0B2CAF27E800387E5A /* EditcookingMethodViewModelProtocol.swift */; };
 		6176DC0E2CAF280300387E5A /* EditCookingMethodViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6176DC0D2CAF280300387E5A /* EditCookingMethodViewModel.swift */; };
 		61784E3C2CC3025E00F7B325 /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61784E3B2CC3025E00F7B325 /* NavigationExtensions.swift */; };
+		61784E3E2CC3178F00F7B325 /* EditIngredientsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61784E3D2CC3178F00F7B325 /* EditIngredientsViewModel.swift */; };
+		61784E402CC317BB00F7B325 /* EditIngredientsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61784E3F2CC317BB00F7B325 /* EditIngredientsViewModelProtocol.swift */; };
 		61A2D7B92A4E17BC007FA201 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A2D7B82A4E17BC007FA201 /* Router.swift */; };
 		61A2D7BB2A4E181E007FA201 /* IngredientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A2D7BA2A4E181E007FA201 /* IngredientCell.swift */; };
 		61C2FB2B2CB41788004A2368 /* IngredientsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C2FB2A2CB41788004A2368 /* IngredientsRepository.swift */; };
@@ -75,6 +77,8 @@
 		6176DC0B2CAF27E800387E5A /* EditcookingMethodViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditcookingMethodViewModelProtocol.swift; sourceTree = "<group>"; };
 		6176DC0D2CAF280300387E5A /* EditCookingMethodViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCookingMethodViewModel.swift; sourceTree = "<group>"; };
 		61784E3B2CC3025E00F7B325 /* NavigationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationExtensions.swift; sourceTree = "<group>"; };
+		61784E3D2CC3178F00F7B325 /* EditIngredientsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIngredientsViewModel.swift; sourceTree = "<group>"; };
+		61784E3F2CC317BB00F7B325 /* EditIngredientsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditIngredientsViewModelProtocol.swift; sourceTree = "<group>"; };
 		61A2D7B82A4E17BC007FA201 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		61A2D7BA2A4E181E007FA201 /* IngredientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCell.swift; sourceTree = "<group>"; };
 		61C2FB2A2CB41788004A2368 /* IngredientsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsRepository.swift; sourceTree = "<group>"; };
@@ -140,7 +144,7 @@
 		6121B33C2A116F3A0029E65D /* Ingredients */ = {
 			isa = PBXGroup;
 			children = (
-				61CFFFD32A3F6868002D87B8 /* EditIngredientsView.swift */,
+				61784E412CC3181C00F7B325 /* EditIngredients */,
 				61F91E182A0D6A6B00D320D8 /* CreateIngredients */,
 				61E340132A0AE239009B9725 /* IngredientsView */,
 			);
@@ -200,6 +204,16 @@
 				6176DC0B2CAF27E800387E5A /* EditcookingMethodViewModelProtocol.swift */,
 			);
 			path = EditCookingMethod;
+			sourceTree = "<group>";
+		};
+		61784E412CC3181C00F7B325 /* EditIngredients */ = {
+			isa = PBXGroup;
+			children = (
+				61CFFFD32A3F6868002D87B8 /* EditIngredientsView.swift */,
+				61784E3D2CC3178F00F7B325 /* EditIngredientsViewModel.swift */,
+				61784E3F2CC317BB00F7B325 /* EditIngredientsViewModelProtocol.swift */,
+			);
+			path = EditIngredients;
 			sourceTree = "<group>";
 		};
 		61DCFBE42CA1AC0D001019B0 /* Navigation */ = {
@@ -435,6 +449,7 @@
 				61E340102A0ADF37009B9725 /* CookingMethodsView.swift in Sources */,
 				61E33FD82A085B47009B9725 /* ContentView.swift in Sources */,
 				61F91E172A0D3FBA00D320D8 /* CPButtonView.swift in Sources */,
+				61784E3E2CC3178F00F7B325 /* EditIngredientsViewModel.swift in Sources */,
 				61DEBB022CB2048E0091AFE2 /* AddCookingMethodViewModelProtocol.swift in Sources */,
 				61DCFBFB2CA32C5E001019B0 /* CookingMethodRepository.swift in Sources */,
 				61DEBAFE2CB201900091AFE2 /* AddCookingMethodView.swift in Sources */,
@@ -442,6 +457,7 @@
 				61E340122A0ADF3F009B9725 /* CookingMethodsViewModel.swift in Sources */,
 				61F91E1C2A11594E00D320D8 /* CocktailCellView.swift in Sources */,
 				61DCFBF32CA1D376001019B0 /* CocktailsHeader.swift in Sources */,
+				61784E402CC317BB00F7B325 /* EditIngredientsViewModelProtocol.swift in Sources */,
 				61E340192A0B9187009B9725 /* CocktailsView.swift in Sources */,
 				61CFFFD42A3F6868002D87B8 /* EditIngredientsView.swift in Sources */,
 				61DEBB002CB2047B0091AFE2 /* AddCookingMethodViewModel.swift in Sources */,

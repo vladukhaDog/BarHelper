@@ -11,6 +11,8 @@ struct IngredientCell<ViewModel>: View where ViewModel: IngredientsViewModelProt
     let ingredient: DBIngredient
     let children: [DBIngredient]
     @EnvironmentObject var vm: ViewModel
+    @EnvironmentObject private var router: Router
+    
     init(ingredient: DBIngredient) {
         self.ingredient = ingredient
         let ingredientsSet = ingredient.alternatives
@@ -47,7 +49,7 @@ struct IngredientCell<ViewModel>: View where ViewModel: IngredientsViewModelProt
     
     private func titleButton(_ ingredient: DBIngredient) -> some View {
         Button {
-            
+            router.push(.EditIngredient(ingredient))
         } label: {
             Text(ingredient.name ?? "")
                 .cyberpunkFont(ingredient.parentIngredient == nil ? .smallTitle : .body)
@@ -162,6 +164,6 @@ fileprivate final class MockIngredientsViewModel: IngredientsViewModelProtocol {
     }
 
         .environmentObject(vm)
-        
+        .environmentObject(Router())
         .background(Color.darkPurple)
 }

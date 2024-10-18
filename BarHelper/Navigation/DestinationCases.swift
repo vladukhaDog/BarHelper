@@ -18,6 +18,8 @@ enum Destination: Hashable {
     case IngredientsSelector(Binding<[DBIngredient: Int]>)
     /// List of all stored ingridients
     case IngredientsList
+    /// View to edit an ingredient
+    case EditIngredient(DBIngredient)
     /// Screen for creating a cocktail
     case CreateCocktail
     /// Screen of cocktail Cooking methods
