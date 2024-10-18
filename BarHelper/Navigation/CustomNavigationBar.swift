@@ -16,7 +16,6 @@ struct CustomNavigationBar: View {
         HStack {
             Color.clear
                 .overlay {
-                    if !router.path.isEmpty {
                         Button {
                             router.back()
                         } label: {
@@ -26,7 +25,8 @@ struct CustomNavigationBar: View {
                         }
                         .padding(8)
                         .transition(.opacity)
-                    }
+                        .disabled(router.path.isEmpty)
+                        .opacity(router.path.isEmpty ? 0.8 : 1)
                 }
                 .animation(.default, value: router.path.isEmpty)
             Color.clear

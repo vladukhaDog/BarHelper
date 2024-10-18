@@ -20,7 +20,6 @@ final class Router: ObservableObject {
     }
     
     @MainActor @Published private(set) var toolbar: (id: String, text: String)? = nil
-    private var cancellable = Set<AnyCancellable>()
     
     func setToolBar(id: String, text: String) {
         self.toolbar = (id, text)
