@@ -18,11 +18,11 @@ struct IngredientsView<ViewModel>: View where ViewModel: IngredientsViewModelPro
         VStack(spacing: 5) {
             if !vm.ingredients.isEmpty{
                 searchField
+                    .padding(.horizontal, 5)
             }
             list
             addButton
         }
-        .padding(5)
         .backgroundWithoutSafeSpace(.darkPurple)
         .navigationTitle("Ingredients")
         .environmentObject(vm)
@@ -36,17 +36,15 @@ struct IngredientsView<ViewModel>: View where ViewModel: IngredientsViewModelPro
     
     private var list: some View {
         ScrollView {
-            LazyVStack(spacing: 5, pinnedViews: [.sectionHeaders]) {
-                    ForEach(vm.ingredients, id: \.id) { ingredient in
-                        IngredientCell<ViewModel>(ingredient: ingredient)
-                    }
+            VStack(spacing: 5) {
+                ForEach(vm.ingredients, id: \.id) { ingredient in
+                    IngredientCell<ViewModel>(ingredient: ingredient)
+                }
             }
             .padding(5)
             .animation(.default, value: vm.ingredients.isEmpty)
         }
-        .background(Color.black)
-        .padding(5)
-        .depthBorder()
+        .frame(maxWidth: .infinity)
     }
     
     
