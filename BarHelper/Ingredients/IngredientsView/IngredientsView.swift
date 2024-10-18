@@ -15,17 +15,12 @@ struct IngredientsView<ViewModel>: View where ViewModel: IngredientsViewModelPro
     }
     
     var body: some View {
-        ZStack {
-            VStack {
-                
-                list
-                addButton
+        VStack(spacing: 5) {
+            if !vm.ingredients.isEmpty{
+                searchField
             }
-            .padding()
-            .background(Color.darkPurple)
-            .depthBorderUp()
-            .padding(5)
-            bits
+            list
+            addButton
         }
         .padding(5)
         .backgroundWithoutSafeSpace(.darkPurple)
@@ -39,43 +34,17 @@ struct IngredientsView<ViewModel>: View where ViewModel: IngredientsViewModelPro
         })
     }
     
-    @ViewBuilder
-    private var bits: some View {
-        Color.darkPurple.frame(width: 30, height: 20)
-                .depthBorderUp()
-                .padding(.bottom, 20)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        Color.darkPurple.frame(width: 30, height: 20)
-                .depthBorderUp()
-                .padding(.top, 20)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-        Color.darkPurple.frame(width: 30, height: 40)
-                .depthBorderUp()
-                .padding(.top, 20)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        
-        Color.darkPurple.frame(width: 20, height: 20)
-            .depthBorderUp()
-                .padding(.leading, 120)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-    }
-    
     private var list: some View {
         ScrollView {
             LazyVStack(spacing: 5, pinnedViews: [.sectionHeaders]) {
-                Section {
                     ForEach(vm.ingredients, id: \.id) { ingredient in
                         IngredientCell<ViewModel>(ingredient: ingredient)
                     }
-                } header: {
-                    if !vm.ingredients.isEmpty{
-                        searchField
-                    }
-                }
             }
             .padding(5)
             .animation(.default, value: vm.ingredients.isEmpty)
         }
+        .background(Color.black)
         .padding(5)
         .depthBorder()
     }
@@ -101,8 +70,6 @@ struct IngredientsView<ViewModel>: View where ViewModel: IngredientsViewModelPro
         .clipped()
         .animation(.bouncy, value: vm.search)
         .animation(.bouncy, value: searchFieldFocus)
-        .padding(.bottom, 5)
-        .background(Color.darkPurple)
     }
     
     private var addButton: some View {
@@ -150,14 +117,7 @@ fileprivate final class MockIngredientsViewModel: IngredientsViewModelProtocol {
 }
 
 #Preview {
-    NavigationStack(path: .constant([Destination.IngredientsList])) {
-        Color.blue
-            .navigationDestination(for: Destination.self) { route in
-                IngredientsView(vm: MockIngredientsViewModel())
-                    .navigationBarTitleDisplayMode(.inline)
-            }
-    }
-    .navigationBarTitleTextColor(.white)
-    .tint(.mint)
+    IngredientsView(vm: MockIngredientsViewModel())
+        .previewWrapper()
     
 }

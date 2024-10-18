@@ -9,24 +9,6 @@ import Foundation
 import SwiftUI
 
 extension View {
-    
-    func customToolBar(id: String, text: String, router: Router, action: @escaping () -> Void) -> some View {
-        self
-            .onChange(of: text, {[weak router] oldValue, newValue in
-                router?.setToolBar(id: id, text: text)
-            })
-            .onAppear(perform: { [weak router] in
-                router?.setToolBar(id: id, text: text)
-            })
-//            .onDisappear { [weak router] in
-//                router?.removeToolbarItem(id: id)
-//            }
-            .onReceive(NotificationCenter.default
-                .publisher(for: Notification.Name("\(id)_toolbar_pressed"))) { _ in
-                action()
-            }
-    }
-    
     /// wraps the view with navigation destination modifier and explains navigation destination views for each destination enumerator
     func routePath(_ namespace: Namespace.ID) -> some View {
         self

@@ -22,17 +22,11 @@ struct IngredientCell<ViewModel>: View where ViewModel: IngredientsViewModelProt
     }
     var body: some View{
         HStack(alignment: .top, spacing: 0) {
-            VStack(alignment: .leading){
-                HStack {
-                    titleButton(ingredient)
-                }
-                .frame(maxWidth: .infinity, minHeight: 42, alignment: .leading)
+            VStack(alignment: .leading, spacing: 2) {
+                titleButton(ingredient)
                 childrenList
             }
-            .padding(5)
-            .background(Color.black)
-            .padding(5)
-            .depthBorder()
+            .frame(maxWidth: .infinity, minHeight: 40, alignment: .leading)
             .zIndex(1)
             
             if vm.isEditing {
@@ -60,50 +54,40 @@ struct IngredientCell<ViewModel>: View where ViewModel: IngredientsViewModelProt
         }
     }
     
- 
+    
     private var editButtons: some View {
         HStack(spacing: 0) {
-           
-            Color.darkPurple.frame(width: 20, height: 20)
-                    .depthBorderUp()
-                    .frame(maxHeight: 40 + 10 + 10, alignment: .center) // height of buttons + their padding
-                    .padding(.horizontal, -7.5)
-                    .zIndex(3)
-                HStack {
-                    if ingredient.parentIngredient == nil {
-                        addButton
-                    }
-                    deleteButton
+            HStack {
+                if ingredient.parentIngredient == nil {
+                    addButton
                 }
-                .padding(5)
-                .background(Color.black)
-                .padding(5)
-                .depthBorder()
+                deleteButton
+            }
         }
     }
     
     private var childrenList: some View {
-        VStack{
+        VStack(spacing: 4) {
             ForEach(children, id: \.id){ ingredientAlternative in
                 HStack(spacing: 8) {
                     ZStack {
-                            Button {
-                                Task {
-                                    await vm.deleteIngredient(ingredientAlternative)
-                                }
-                            } label: {
-                                Text("X")
-                                    .cyberpunkFont(.smallTitle)
-                                    .foregroundColor(.red)
-                                    
+                        Button {
+                            Task {
+                                await vm.deleteIngredient(ingredientAlternative)
                             }
-                            .opacity(vm.isEditing ? 1 : 0)
-                            .disabled(!vm.isEditing)
-                            Text("-")
+                        } label: {
+                            Text("X")
                                 .cyberpunkFont(.smallTitle)
-                                .foregroundColor(.white)
-                                .transition(.opacity.combined(with: .scale))
-                                .opacity(vm.isEditing ? 0 : 1)
+                                .foregroundColor(.red)
+                            
+                        }
+                        .opacity(vm.isEditing ? 1 : 0)
+                        .disabled(!vm.isEditing)
+                        Text("-")
+                            .cyberpunkFont(.smallTitle)
+                            .foregroundColor(.white)
+                            .transition(.opacity.combined(with: .scale))
+                            .opacity(vm.isEditing ? 0 : 1)
                     }
                     titleButton(ingredientAlternative)
                 }
@@ -158,6 +142,13 @@ fileprivate final class MockIngredientsViewModel: IngredientsViewModelProtocol {
 
 #Preview {
     @Previewable @StateObject var vm = MockIngredientsViewModel()
-    IngredientCell<MockIngredientsViewModel>(ingredient: MockData.mockIngredient())
-        .environmentObject(vm)
+    Toggle(isOn: $vm.isEditing, label: {Text("edit")})
+    VStack {
+        IngredientCell<MockIngredientsViewModel>(ingredient: vm.ingredients.last ?? MockData.mockIngredient())
+        IngredientCell<MockIngredientsViewModel>(ingredient: MockData.mockIngredient())
+    }
+    .padding()
+    .environmentObject(vm)
+    
+    .background(Color.black)
 }
