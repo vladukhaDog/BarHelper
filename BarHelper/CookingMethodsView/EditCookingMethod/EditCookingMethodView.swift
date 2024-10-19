@@ -35,7 +35,7 @@ struct EditCookingMethodView<VM>: View where VM: EditCookingMethodViewModelProto
                     nameIsFocused = true
                 }
             }
-            CPTextEditor(text: $vm.description, placeholder: "Method description")
+            CyberpunkTextField(text: $vm.description, placeholder: "Method description")
             HStack {
                 Button(deleting ? "Confirm" : "Delete") {
                     if deleting {

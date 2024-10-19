@@ -21,8 +21,8 @@ enum IngredientFuseMode {
 }
 
 protocol IngredientsRepositoryProtocol {
-    func editIngredient(_ ingredient: DBIngredient, newName: String) async throws
-    func addIngredient(name: String, metric: String, parentIngredient: DBIngredient?) async throws -> DBIngredient
+    func editIngredient(_ ingredient: DBIngredient, newName: String, newDescription: String) async throws
+    func addIngredient(name: String, metric: String, description: String?, parentIngredient: DBIngredient?) async throws -> DBIngredient
     func fuse(left: DBIngredient, right: DBIngredient, name: String, metric: String, mode: IngredientFuseMode) async throws -> DBIngredient
     func assignParent(ingredient: DBIngredient, to parent: DBIngredient) async throws -> DBIngredient
     func fetchIngredients(search: String?) async throws -> [DBIngredient]
@@ -32,7 +32,7 @@ protocol IngredientsRepositoryProtocol {
 /// Repository to change records about Cooking Methods
 final class IngredientsRepository: IngredientsDI {
     
-    func editIngredient(_ ingredient: DBIngredient, newName: String) async throws {
+    func editIngredient(_ ingredient: DBIngredient, newName: String, newDescription: String) async throws {
         try await withCheckedThrowingContinuation { continuation in
             do {
                 try self.context.performAndWait{
@@ -42,8 +42,10 @@ final class IngredientsRepository: IngredientsDI {
                     request.predicate = predicate
                     request.fetchLimit = 1
                     let items = (try? self.context.fetch(request)) ?? []
-                    if items.isEmpty {
+                    // if its an old name, it exists but we still want to update the ingredient
+                    if items.isEmpty || ingredient.name == newName {
                         ingredient.name = newName
+                        ingredient.desc = newDescription
                         if self.context.hasChanges{
                             try context.save()
                         }
@@ -70,7 +72,7 @@ final class IngredientsRepository: IngredientsDI {
     }
     
     @discardableResult
-    func addIngredient(name: String, metric: String, parentIngredient: DBIngredient? = nil) async throws -> DBIngredient {
+    func addIngredient(name: String, metric: String, description: String?, parentIngredient: DBIngredient? = nil) async throws -> DBIngredient {
         try await withCheckedThrowingContinuation({ continuation in
             do {
                 try self.context.performAndWait{
@@ -87,6 +89,7 @@ final class IngredientsRepository: IngredientsDI {
                         newIngredient.id = .init()
                         newIngredient.name = name
                         newIngredient.metric = metric
+                        newIngredient.desc = description
                         try context.save()
                         continuation.resume(returning: newIngredient)
                         self.sendAction(.added(newIngredient))

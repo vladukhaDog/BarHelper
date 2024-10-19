@@ -25,6 +25,7 @@ struct EditIngredientView<ViewModel>: View where ViewModel: EditIngredientsViewM
         VStack{
             TextField("Ingredient name", text: $vm.name)
                 .cyberpunkStyle()
+            CyberpunkTextField(text: $vm.description, placeholder: "Description")
             HStack{
                 Button("Cancel") {
                     vm.cancel()
@@ -50,6 +51,8 @@ struct EditIngredientView<ViewModel>: View where ViewModel: EditIngredientsViewM
 }
 
 private final class MockViewModel: EditIngredientsViewModelProtocol {
+    @Published  var description: String = "Description of an ingredient"
+    
     func save() {
     }
     

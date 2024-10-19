@@ -72,7 +72,7 @@ struct CreateCocktailView: View {
     }
     
     private var descriptionTextField: some View{
-        CPTextEditor(text: $vm.description, placeholder: "Description")
+        CyberpunkTextField(text: $vm.description, placeholder: "Description")
     }
     
     private var confirmButton: some View{

@@ -33,7 +33,7 @@ struct AddCookingMethodView<VM>: View where VM: AddCookingMethodViewModelProtoco
                     nameIsFocused = true
                 }
             }
-            CPTextEditor(text: $vm.description, placeholder: "Method description")
+            CyberpunkTextField(text: $vm.description, placeholder: "Method description")
             
             Button("Save") {
                 self.vm.addMethod()

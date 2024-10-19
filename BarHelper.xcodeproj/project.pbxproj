@@ -61,7 +61,7 @@
 		61E340262A0D1CA3009B9725 /* CyberpunkWaifus.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 61E3401E2A0D0D4E009B9725 /* CyberpunkWaifus.ttf */; };
 		61E340282A0D1DBC009B9725 /* View + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E340272A0D1DBC009B9725 /* View + extension.swift */; };
 		61E3402A2A0D210B009B9725 /* Color + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E340292A0D210B009B9725 /* Color + extension.swift */; };
-		61F399562A4B127D0058DA30 /* CPTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F399552A4B127D0058DA30 /* CPTextEditor.swift */; };
+		61F399562A4B127D0058DA30 /* CyberpunkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F399552A4B127D0058DA30 /* CyberpunkTextField.swift */; };
 		61F91E102A0D34A800D320D8 /* Keyboard + extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F91E0F2A0D34A800D320D8 /* Keyboard + extension.swift */; };
 		61F91E132A0D373200D320D8 /* CreateIngredientViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F91E122A0D373200D320D8 /* CreateIngredientViewModel.swift */; };
 		61F91E152A0D3E7D00D320D8 /* CreateIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F91E142A0D3E7D00D320D8 /* CreateIngredientView.swift */; };
@@ -127,7 +127,7 @@
 		61E340202A0D1615009B9725 /* Font + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font + extension.swift"; sourceTree = "<group>"; };
 		61E340272A0D1DBC009B9725 /* View + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View + extension.swift"; sourceTree = "<group>"; };
 		61E340292A0D210B009B9725 /* Color + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color + extension.swift"; sourceTree = "<group>"; };
-		61F399552A4B127D0058DA30 /* CPTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPTextEditor.swift; sourceTree = "<group>"; };
+		61F399552A4B127D0058DA30 /* CyberpunkTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CyberpunkTextField.swift; sourceTree = "<group>"; };
 		61F91E0F2A0D34A800D320D8 /* Keyboard + extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keyboard + extension.swift"; sourceTree = "<group>"; };
 		61F91E122A0D373200D320D8 /* CreateIngredientViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIngredientViewModel.swift; sourceTree = "<group>"; };
 		61F91E142A0D3E7D00D320D8 /* CreateIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateIngredientView.swift; sourceTree = "<group>"; };
@@ -180,7 +180,7 @@
 		612E26F12A166ED7001F5539 /* UIElements */ = {
 			isa = PBXGroup;
 			children = (
-				61F399552A4B127D0058DA30 /* CPTextEditor.swift */,
+				61F399552A4B127D0058DA30 /* CyberpunkTextField.swift */,
 				6137F3512CAEF68900621744 /* CyberpunkTextFieldStyle.swift */,
 				61F91E162A0D3FBA00D320D8 /* CPButtonView.swift */,
 				61F91E192A0E826400D320D8 /* PlusView.swift */,
@@ -448,7 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6176DC0C2CAF27E800387E5A /* EditcookingMethodViewModelProtocol.swift in Sources */,
-				61F399562A4B127D0058DA30 /* CPTextEditor.swift in Sources */,
+				61F399562A4B127D0058DA30 /* CyberpunkTextField.swift in Sources */,
 				61E3401B2A0BFC77009B9725 /* ImagePicker.swift in Sources */,
 				61DCFBE82CA1AC84001019B0 /* DestinationCases.swift in Sources */,
 				61F91E152A0D3E7D00D320D8 /* CreateIngredientView.swift in Sources */,

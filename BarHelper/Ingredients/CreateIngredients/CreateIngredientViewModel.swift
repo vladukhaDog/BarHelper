@@ -11,6 +11,7 @@ class CreateIngredientViewModel: ObservableObject{
     private let ingredientRepository: IngredientsRepository = .init()
     
     @Published var name = ""
+    @Published var description = ""
     @Published var metric = "ml"
     let parent: DBIngredient?
     private var router: Router? = nil
@@ -29,6 +30,7 @@ class CreateIngredientViewModel: ObservableObject{
             do {
                 try await ingredientRepository.addIngredient(name: self.name,
                                                              metric: parent?.metric ?? self.metric,
+                                                             description: self.description,
                                                              parentIngredient: self.parent)
                 await MainActor.run {
                     self.router?.back()

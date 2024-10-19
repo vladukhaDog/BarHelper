@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CPTextEditor: View {
+struct CyberpunkTextField: View {
     
     @Binding var text: String
     let placeholder: String
@@ -62,8 +62,8 @@ struct ViewHeightKey: PreferenceKey {
 struct CPTextEditor_Previews: PreviewProvider {
     static var previews: some View {
         VStack{
-            CPTextEditor(text: .constant("a"), placeholder: "Placeholder")
-            CPTextEditor(text: .constant(""), placeholder: "Placeholder")
+            CyberpunkTextField(text: .constant("a"), placeholder: "Placeholder")
+            CyberpunkTextField(text: .constant(""), placeholder: "Placeholder")
         }
         .padding()
         .background(Color.darkPurple)

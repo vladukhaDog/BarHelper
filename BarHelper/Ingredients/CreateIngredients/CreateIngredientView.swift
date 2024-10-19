@@ -29,7 +29,7 @@ struct CreateIngredientView: View {
                     nameIsFocused = true
                 }
             }
-            
+            CyberpunkTextField(text: $vm.description, placeholder: "Description")
             if vm.parent == nil{
                 metricSelect
             }

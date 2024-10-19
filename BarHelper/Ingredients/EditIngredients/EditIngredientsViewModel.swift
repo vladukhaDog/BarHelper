@@ -11,7 +11,9 @@ final class EditIngredientsViewModel: EditIngredientsViewModelProtocol {
     private var router: Router? = nil
     let ingredient: DBIngredient
     private let ingredientsRepository: IngredientsRepository
+    
     @Published var name: String
+    @Published var description: String
     
     func setup(_ router: Router) async {
         await MainActor.run {
@@ -22,13 +24,13 @@ final class EditIngredientsViewModel: EditIngredientsViewModelProtocol {
     func save() {
         Task {
             do {
-                try await ingredientsRepository.editIngredient(ingredient, newName: name)
+                try await ingredientsRepository.editIngredient(ingredient, newName: name, newDescription: description)
                 await router?.back()
             } catch RepositoryError.alreadyExists{
                 AlertsManager.shared.alert("That name already exists")
             } catch RepositoryError.contextError(let error) {
                 AlertsManager.shared.alert("Database error occured")
-                print("failed to edit ingredient", error)
+                print("Failed to edit ingredient", error)
             }  catch {
                 AlertsManager.shared.alert("Something went wrong")
                 print("Something bad happened", error)
@@ -46,5 +48,6 @@ final class EditIngredientsViewModel: EditIngredientsViewModelProtocol {
         self.ingredient = ingredient
         self.name = ingredient.name ?? ""
         self.ingredientsRepository = .init()
+        self.description = ingredient.desc ?? ""
     }
 }
