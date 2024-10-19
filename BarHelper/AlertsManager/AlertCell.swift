@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-private struct AlertCell: View {
-    let alert: Alert
+/// Cell of a single alert
+struct AlertCell: View {
+    private let alert: Alert
     @State private var bottomCoordinate: CGFloat = .zero
     
     init(_ alert: Alert) {
         self.alert = alert
     }
+    
     var body: some View {
         Text(alert.text)
             .cyberpunkFont(.title)
@@ -39,6 +41,7 @@ private struct AlertCell: View {
                                         bottomCoordinate = top
                                     }
                             })
+        // we capture the coordinate of a bottom point of the cell, to move it all the way up on deletion
             .transition(.asymmetric(insertion: .move(edge: .top),
                                     removal: .offset(y: -bottomCoordinate)
                 .combined(with: .opacity)

@@ -9,11 +9,13 @@ import Foundation
 import SwiftUI
 
 extension View {
+    /// Adds an overlay for alerts to appear
     func alertsOverlay() -> some View {
         AlertsView(view: self)
     }
 }
 
+/// Alerts overlay
 private struct AlertsView<Content: View>: View {
     @ObservedObject var alerts: AlertsManager = .shared
     let view: Content
@@ -27,7 +29,7 @@ private struct AlertsView<Content: View>: View {
                                 DragGesture(minimumDistance: 10) // Customize the swipe threshold
                                     .onEnded { value in
                                         if value.translation.height < 0 && abs(value.translation.width) < abs(value.translation.height) {
-                                            // Swipe up detected
+                                            // Swipe up detected, fast delete
                                             alerts.removeAlert(id: alert.id)
                                         }
                                     }
