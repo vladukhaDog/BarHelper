@@ -18,8 +18,14 @@ final class AddCookingMethodViewModel: AddCookingMethodViewModelProtocol {
         Task {
             do {
                 try await self.cookingMethodRepository.addCookingMethod(name: methodName, description: description)
+            } catch RepositoryError.alreadyExists{
+                AlertsManager.shared.alert("That name already exists")
+            } catch RepositoryError.contextError(let error) {
+                AlertsManager.shared.alert("Database error occured")
+                print("failed to edit ingredient", error)
             } catch {
-                print("Failed to add cooking method: \(error.localizedDescription)")
+                AlertsManager.shared.alert("Something went wrong")
+                print("Something bad happened", error)
             }
         }
     }

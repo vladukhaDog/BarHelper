@@ -26,8 +26,12 @@ final class EditCookingMethodViewModel: EditCookingMethodViewModelProtocol {
         Task {
             do {
                 try await self.cookingMethodRepository.deleteCookingMethod(cookingMethod: method)
+            } catch RepositoryError.contextError(let error) {
+                AlertsManager.shared.alert("Database error occured")
+                print("failed to edit ingredient", error)
             } catch {
-                print("Failed to delete cooking method: \(error.localizedDescription)")
+                AlertsManager.shared.alert("Something went wrong")
+                print("Something bad happened", error)
             }
         }
     }
@@ -39,8 +43,14 @@ final class EditCookingMethodViewModel: EditCookingMethodViewModelProtocol {
         Task {
             do {
                 try await self.cookingMethodRepository.editCookingMethod(editedMethod)
+            } catch RepositoryError.alreadyExists{
+                AlertsManager.shared.alert("That name already exists")
+            } catch RepositoryError.contextError(let error) {
+                AlertsManager.shared.alert("Database error occured")
+                print("failed to edit ingredient", error)
             } catch {
-                print("Failed to edit cooking method: \(error.localizedDescription)")
+                AlertsManager.shared.alert("Something went wrong")
+                print("Something bad happened", error)
             }
         }
     }

@@ -67,16 +67,24 @@ final class IngredientsViewModel: IngredientsViewModelProtocol {
             await MainActor.run {
                 self.ingredients = ingredients
             }
+        } catch RepositoryError.contextError(let error) {
+            AlertsManager.shared.alert("Database error occured")
+            print("failed to edit ingredient", error)
         } catch {
-            print(error.localizedDescription)
+            AlertsManager.shared.alert("Something went wrong")
+            print("Something bad happened", error)
         }
     }
     
     func deleteIngredient(_ ingredient: DBIngredient) async {
         do{
             try await ingredientsRepository.deleteIngredient(ingredient: ingredient)
+        } catch RepositoryError.contextError(let error) {
+            AlertsManager.shared.alert("Database error occured")
+            print("failed to edit ingredient", error)
         } catch {
-            print(error.localizedDescription)
+            AlertsManager.shared.alert("Something went wrong")
+            print("Something bad happened", error)
         }
     }
     

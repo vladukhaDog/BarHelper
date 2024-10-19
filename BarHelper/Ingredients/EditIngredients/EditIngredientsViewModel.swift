@@ -24,8 +24,14 @@ final class EditIngredientsViewModel: EditIngredientsViewModelProtocol {
             do {
                 try await ingredientsRepository.editIngredient(ingredient, newName: name)
                 await router?.back()
-            } catch {
-                print("Failed to save ingredient: \(error)")
+            } catch RepositoryError.alreadyExists{
+                AlertsManager.shared.alert("That name already exists")
+            } catch RepositoryError.contextError(let error) {
+                AlertsManager.shared.alert("Database error occured")
+                print("failed to edit ingredient", error)
+            }  catch {
+                AlertsManager.shared.alert("Something went wrong")
+                print("Something bad happened", error)
             }
         }
     }

@@ -33,8 +33,16 @@ class CreateIngredientViewModel: ObservableObject{
                 await MainActor.run {
                     self.router?.back()
                 }
+            } catch RepositoryError.alreadyExists{
+                AlertsManager.shared.alert("That name already exists")
+            } catch RepositoryError.contextError(let error) {
+                AlertsManager.shared.alert("Database error occured")
+                print("failed to edit ingredient", error)
+            } catch RepositoryError.cannotHaveAParent{
+                AlertsManager.shared.alert("Ingredient cannot be a parent")
             } catch {
-                print(error.localizedDescription)
+                AlertsManager.shared.alert("Something went wrong")
+                print("Something bad happened", error)
             }
         }
     }
