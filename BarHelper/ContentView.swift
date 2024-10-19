@@ -23,7 +23,9 @@ struct ContentView: View {
             .navigationBarTitleTextColor(.white)
             CustomNavigationBar()
         }
+        .alertsOverlay()
         .tint(.mint)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 
