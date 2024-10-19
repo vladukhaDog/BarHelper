@@ -45,5 +45,6 @@ extension View {
             CustomNavigationBar()
         }
         .environmentObject(router)
+        .colorScheme(.dark)
     }
 }
