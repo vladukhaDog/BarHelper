@@ -7,25 +7,34 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
-class CocktailsViewModel: ObservableObject{
-    let db = DBManager.shared
+protocol CocktailsViewModelProtocol: ObservableObject {
+    var search: String {get set}
+    var cocktails: [Cocktail] {get set}
+    var cocktailsFromDB: [UUID?: DBCocktail] {get set}
+}
+
+class CocktailsViewModel: CocktailsViewModelProtocol{
+    private let cocktailsRepository: CocktailsDI = CocktailsRepository()
     @Published var search = ""
-    @Published var cocktails: [DBCocktail] = []
-    @Published var searchEnabled = true
+    @Published var cocktails: [Cocktail] = []
+    var cocktailsFromDB: [UUID?: DBCocktail] = [:]
+    @Published var localSearch = false
     private var cancellable = Set<AnyCancellable>()
     
     init(_ cocktails: [DBCocktail]?){
         if let cocktails{
-            self.cocktails = cocktails
-            self.searchEnabled = false
+            self.cocktails = cocktails.map({$0.structCocktail()})
+            self.cocktailsFromDB = .init(uniqueKeysWithValues: cocktails.map{($0.id, $0)})
+            self.localSearch = true
         }else{
             Task{
                 await fetchCocktails()
             }
         }
         $search
-            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
+            .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
             .dropFirst()
             .sink { newSearch in
             Task{
@@ -34,40 +43,53 @@ class CocktailsViewModel: ObservableObject{
             }
         }
         .store(in: &cancellable)
+        
+        cocktailsRepository
+            .getPublisher()
+            .sink {[weak self] notification in
+                guard let self else {return}
+                guard let action = notification.object as? CocktailsDI.Action
+                else {return}
+                self.updateList(action)
+            }
+            .store(in: &cancellable)
     }
     
-    
-    
-    private func delete(_ cocktail: DBCocktail){
-        Task{
-            print("starting delete")
-            await db.deleteCocktail(cocktail: cocktail)
-            print("finished delete")
-            if let index = self.cocktails.firstIndex(of: cocktail){
-                DispatchQueue.main.async {
-                    print("updating deleted cocktail list")
-                    self.cocktails.remove(at: index)
-                    self.objectWillChange.send()
+    internal func updateList(_ action: CocktailsDI.Action) {
+        DispatchQueue.main.async {
+            withAnimation {
+                switch action {
+                case .deleted(let cocktail):
+                    self.cocktails.removeAll(where: {$0.id == cocktail.id})
+                case .added(let cocktail):
+                    let index = self.cocktails.map({$0.name ?? ""})
+                        .findAlphabeticalOrderIndex(for: cocktail.name ?? "")
+                    self.cocktails.insert(cocktail.structCocktail(), at: index)
+                    self.cocktailsFromDB[cocktail.id] = cocktail
+                case .updated(let cocktail):
+                    if let index = self.cocktails.firstIndex(where: {$0.id == cocktail.id}) {
+                        self.objectWillChange.send()
+                        self.cocktails[index] = cocktail.structCocktail()
+                        self.cocktailsFromDB[cocktail.id] = cocktail
+                    }
                 }
             }
         }
     }
-    
-    func didUpdate(_ cocktail: DBCocktail){
-        if cocktail.deletedByUser {
-            self.delete(cocktail)
-        } else if let index = cocktails.firstIndex(of: cocktail){
-            DispatchQueue.main.async {
-                self.cocktails[index] = cocktail
-            }
-        }
-    }
-  
 
     private func fetchCocktails(search: String? = nil) async{
-        let cocktails = await db.fetchCocktails(search: search)
-        DispatchQueue.main.async {
-            self.cocktails = cocktails
+        do{
+            let cocktails = try await cocktailsRepository.fetchCocktails(search: search)
+            await MainActor.run {
+                self.cocktails = cocktails.map({$0.structCocktail()})
+                self.cocktailsFromDB = .init(uniqueKeysWithValues: cocktails.map{($0.id, $0)})
+            }
+        } catch RepositoryError.contextError(let error) {
+            AlertsManager.shared.alert("Database error occured")
+            print("failed to fetch cocktails", error)
+        } catch {
+            AlertsManager.shared.alert("Something went wrong")
+            print("Something bad happened", error)
         }
     }
 }

@@ -14,8 +14,8 @@ extension View {
         self
             .navigationDestination(for: Destination.self) { route in
                 switch route {
-                case .CocktailsList(let cocktails):
-                    CocktailsView(cocktails)
+                case .CocktailsList:
+                    CocktailsView()
                         .navigationBarHidden(true)
                 case .IngredientsSelector(_):
                     IngredientsView()
@@ -35,7 +35,7 @@ extension View {
                     CreateCocktailView(editCocktail: cocktail)
                         .navigationBarHidden(true)
                 case .CocktailView(let cocktail):
-                    CocktailView(cocktail: cocktail)
+                    CocktailView(cocktail)
                         .navigationBarHidden(true)
                 case .StoredCocktailsList:
                     CocktailsView()

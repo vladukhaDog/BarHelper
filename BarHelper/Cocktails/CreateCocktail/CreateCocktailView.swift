@@ -62,13 +62,8 @@ struct CreateCocktailView: View {
     }
     
     private var nameTextField: some View{
-        TextField("", text: $vm.name, prompt: Text("Cocktail Name"))
-            .font(.CBTitle)
-            .foregroundColor(.white)
-            .tint(.white)
-            .padding(5)
-            .background(Color.darkPurple)
-            .depthBorder()
+        TextField("Cocktail Name", text: $vm.name)
+            .cyberpunkStyle()
     }
     
     private var descriptionTextField: some View{
@@ -216,7 +211,7 @@ struct CreateCocktailView: View {
             if vm.types.isEmpty {
                 VStack {
                     Text("No cocktail types")
-                        .font(.smallTitle)
+                        .cyberpunkFont(.smallTitle)
                     Button {
 #warning("DISABLED NAVIGATION")
 //                        Router.shared.path.removeLast()
@@ -239,7 +234,7 @@ struct CreateCocktailView: View {
                         } label: {
                             HStack{
                                 Text(type.name ?? "type")
-                                    .font(.smallTitle)
+                                    .cyberpunkFont(.smallTitle)
                                     .foregroundColor(.white.opacity(vm.cookType == type ? 1 : 0.4))
                             }
                             .padding(.vertical, 5)

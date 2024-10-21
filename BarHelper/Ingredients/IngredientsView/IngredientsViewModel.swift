@@ -37,7 +37,7 @@ final class IngredientsViewModel: IngredientsViewModelProtocol {
         
         $search
             .dropFirst()
-            .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+            .debounce(for: .milliseconds(300), scheduler: RunLoop.main)
             .sink {[weak self] search in
                 guard let self else {return}
                 guard !search.isEmpty else {
@@ -96,7 +96,8 @@ final class IngredientsViewModel: IngredientsViewModelProtocol {
                     self.ingredients.removeAll(where: {$0.id == ingredient.id})
                 case .added(let ingredient):
                     guard ingredient.parentIngredient == nil else {return}
-                    let index = self.findAlphabeticalOrderIndex(array: self.ingredients.map({$0.name ?? ""}), for: ingredient.name ?? "")
+                    let index = self.ingredients.map({$0.name ?? ""})
+                        .findAlphabeticalOrderIndex(for: ingredient.name ?? "")
                     self.ingredients.insert(ingredient, at: index)
                 case .updated(let ingredient):
                     if let index = self.ingredients.firstIndex(where: {$0.id == ingredient.id}) {
@@ -106,20 +107,4 @@ final class IngredientsViewModel: IngredientsViewModelProtocol {
             }
         }
     }
-    
-    private func findAlphabeticalOrderIndex(array: [String], for character: String) -> Int {
-        var low = 0
-        var high = array.count
-        while low != high {
-            let mid = (high+low)/2
-            if array[mid] < character {
-                low = array.index(after: mid)
-            } else {
-                high = mid
-            }
-        }
-        return low
-    }
-
-
 }

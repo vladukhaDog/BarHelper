@@ -13,7 +13,7 @@ enum Destination: Hashable {
     /// List of all stored cocktails
     case StoredCocktailsList
     /// List of pre determined cocktails
-    case CocktailsList([DBCocktail])
+    case CocktailsList
     /// Bindable list of ingredients to add to in parent view if ingredient is tapped or created
     case IngredientsSelector(Binding<[DBIngredient: Int]>)
     /// List of all stored ingridients
@@ -26,8 +26,8 @@ enum Destination: Hashable {
     case CookingMethodsList
     /// Screen for editing a cocktail
     case EditCocktail(Binding<DBCocktail>)
-    /// Screen for viewing a cocktail, binding in case the cocktail was edited
-    case CocktailView(Binding<DBCocktail>)
+    /// Screen for viewing a cocktail
+    case CocktailView(DBCocktail)
     /// Screen to add new ingredient
     ///  - Parameter DBIngredient: Родительский ингредиент
     case CreateIngredientView(DBIngredient?)

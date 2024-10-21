@@ -32,7 +32,7 @@ struct FavouritesHeader: View {
     private var grid: some View {
         LazyHGrid(rows: favourites.count > 3 ? twoRows : oneRow) {
             ForEach(favourites, id: \.id) { cocktail in
-                NavigationLink(value: Destination.CocktailView(.constant(cocktail))) {
+                NavigationLink(value: Destination.CocktailView(cocktail)) {
                     CocktailTile(cocktail)
                 }
             }

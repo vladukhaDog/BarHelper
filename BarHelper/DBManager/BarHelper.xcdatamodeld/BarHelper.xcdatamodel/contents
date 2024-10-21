@@ -7,9 +7,9 @@
         <relationship name="cocktails" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DBCocktail" inverseName="cookingMethod" inverseEntity="DBCocktail"/>
     </entity>
     <entity name="DBCocktail" representedClassName="DBCocktail" syncable="YES" codeGenerationType="class">
-        <attribute name="deletedByUser" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="isFavourite" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="cookingMethod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CookingMethod" inverseName="cocktails" inverseEntity="CookingMethod"/>
         <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ImageEntry" inverseName="cocktail" inverseEntity="ImageEntry"/>

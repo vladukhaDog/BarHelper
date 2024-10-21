@@ -11,30 +11,45 @@ struct CocktailCellView: View {
     let cocktail: DBCocktail
     var body: some View {
         
-        HStack{
+        HStack(alignment: .center) {
             image
-            VStack{
+                .overlay(alignment: .topLeading) {
+                    fav
+                        .id(cocktail.isFavourite)
+                }
+            VStack(alignment: .leading) {
                 Text(cocktail.name ?? "No Name")
-                    .font(.smallTitle)
-                    .foregroundColor(.white)
-                
+                    .cyberpunkFont(30)
+                if let method = cocktail.cookingMethod?.name {
+                    Text(method)
+                        .cyberpunkFont(25)
+                        .opacity(0.8)
+                }
             }
-            .frame(maxWidth: .infinity)
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-            .padding(10)
-            .background(Color.black)
-            .padding(5)
-            .depthBorder()
+        .padding(10)
+        .background(Color.black)
+        .padding(5)
+        .depthBorder()
+        .frame(height: 150)
         
-            
+    }
+    
+    @ViewBuilder
+    private var fav: some View {
+        if cocktail.isFavourite {
+            Image("star-filled")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 30, height: 30)
+        }
     }
     
     private var image: some View{
         HStack{
-            
-            if let imageName = cocktail.image?.fileName,
-               let imageData = try? Data(contentsOf: FileManager.default.temporaryDirectory.appendingPathComponent(imageName)),
-               let image = UIImage(data: imageData){
+            if let image = cocktail.image?.getImage() {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
@@ -43,13 +58,23 @@ struct CocktailCellView: View {
             }
 
         }
-        .frame(maxWidth: 150, maxHeight: 150)
         .clipShape(Rectangle())
+        .frame(width: 100)
     }
 }
 
-struct CocktailCellView_Previews: PreviewProvider {
-    static var previews: some View {
-        CocktailCellView(cocktail: .init(context: DBManager.shared.backgroundContext))
+#Preview {
+    ZStack{
+        Color.darkPurple
+            .ignoresSafeArea()
+        VStack {
+            CocktailCellView(cocktail: MockData.mockCocktail())
+                .padding()
+            let co = MockData.mockCocktail()
+            let _ = co.isFavourite = true
+            CocktailCellView(cocktail: co)
+                .padding()
+        }
     }
+        
 }

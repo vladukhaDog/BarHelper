@@ -30,10 +30,11 @@ final class MockData {
         return array
     }
     
-    static func mockIngredient(_ name: String = "Ingredient name") -> DBIngredient {
+    static func mockIngredient(_ name: String = "Ingredient name", parent: DBIngredient? = nil) -> DBIngredient {
         let ingredient = DBIngredient(context: DBManager.shared.backgroundContext)
         ingredient.id = UUID()
         ingredient.name = name
+        ingredient.parentIngredient = parent
         return ingredient
     }
     
@@ -69,10 +70,15 @@ final class MockData {
         cocktail.id = .init()
         cocktail.name = "Cocktail name"
         cocktail.desc = "Description lognga nfksjelfnajck nbjfkaewljndkvsjernva ejk"
+        cocktail.cookingMethod = self.mockCookingMethod()
         let ingredientRecord = DBIngredientRecord(context: DBManager.shared.backgroundContext)
         ingredientRecord.ingredient = Self.mockIngredient()
         ingredientRecord.ingredientValue = 30
+        let ingredientRecord2 = DBIngredientRecord(context: DBManager.shared.backgroundContext)
+        ingredientRecord2.ingredient = Self.mockIngredient(parent: Self.mockIngredient())
+        ingredientRecord2.ingredientValue = 15
         cocktail.addToRecipe(ingredientRecord)
+        cocktail.addToRecipe(ingredientRecord2)
         let image = ImageEntry(context: DBManager.shared.backgroundContext)
         image.fileName = "mockImage.png"
         cocktail.image = image

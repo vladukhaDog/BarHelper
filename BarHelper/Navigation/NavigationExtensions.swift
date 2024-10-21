@@ -16,12 +16,9 @@ extension View {
             .onChange(of: text, {[weak router] oldValue, newValue in
                 router?.setToolBar(id: id, text: text)
             })
-            .onAppear(perform: { [weak router] in
+            .task { [weak router] in
                 router?.setToolBar(id: id, text: text)
-            })
-//            .onDisappear { [weak router] in
-//                router?.removeToolbarItem(id: id)
-//            }
+            }
             .onReceive(NotificationCenter.default
                 .publisher(for: Notification.Name("\(id)_toolbar_pressed"))) { _ in
                 action()

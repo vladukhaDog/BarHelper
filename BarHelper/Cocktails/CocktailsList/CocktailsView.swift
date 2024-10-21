@@ -7,70 +7,80 @@
 
 import SwiftUI
 
-struct CocktailsView: View {
-    @StateObject private var vm: CocktailsViewModel
-    init(_ cocktails: [DBCocktail]? = nil){
-        self._vm = .init(wrappedValue: .init(cocktails))
+extension CocktailsView where ViewModel == CocktailsViewModel {
+    init() {
+        self.init(vm: CocktailsViewModel(nil))
+    }
+}
+
+struct CocktailsView<ViewModel: CocktailsViewModelProtocol>: View {
+    @StateObject private var vm: ViewModel
+    
+    init(vm: ViewModel){
+        self._vm = .init(wrappedValue: vm)
     }
     var body: some View {
-        VStack{
-            if vm.searchEnabled{
-                searchField
-                    .transition(.push(from: .top))
-            }
-            ScrollView{
-                LazyVStack{
+        VStack {
+            searchField
+                .padding(.horizontal, 5)
+            ScrollView {
+                LazyVStack {
                     ForEach(vm.cocktails, id: \.id){ cocktail in
-                        NavigationLink(value: Destination.CocktailView(
-                            .init(get: {
-                                cocktail
-                            }, set: { new in
-                                self.vm.didUpdate(new)
-                            }))
-                        ) {
-                            CocktailCellView(cocktail: cocktail)
-                                .id("\(cocktail.image?.fileName ?? "")+\(cocktail.name ?? "")")
-                                
-                        }
+                       if let dbCocktail = vm.cocktailsFromDB[cocktail.id] {
+                            NavigationLink(value: Destination.CocktailView(dbCocktail)) {
+                                CocktailCellView(cocktail: dbCocktail)
+                            }
+                            .id(cocktail.hashValue)
+                       }
                     }
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 5)
             }
-            .padding(5)
         }
         .backgroundWithoutSafeSpace(.darkPurple)
         .navigationTitle("Cocktails")
     }
     
-    private var searchField: some View{
-        HStack{
+    @FocusState private var searchFieldFocus: Bool
+    private var searchField: some View {
+        HStack {
             TextField("Search", text: $vm.search)
-                .font(.smallTitle)
-                .foregroundColor(.white)
-                .tint(.white)
-                .padding(5)
-                .depthBorder()
-            if !vm.search.isEmpty{
-                Button {
+                .cyberpunkStyle(focusState: $searchFieldFocus)
+                .zIndex(1)
+            if searchFieldFocus || !vm.search.isEmpty {
+                Button("Cancel") {
                     vm.search = ""
-                } label: {
-                    Text("Clear")
-                        .foregroundColor(.white)
-                        .font(.normal)
+                    searchFieldFocus = false
                 }
-
+                .cyberpunkFont(.smallTitle)
+                .zIndex(0)
+                .transition(.move(edge: .trailing)
+                    .combined(with: .opacity))
             }
         }
-        .padding(.horizontal)
+        .clipped()
+        .animation(.bouncy, value: vm.search)
+        .animation(.bouncy, value: searchFieldFocus)
     }
 }
 
 
 
-
-struct CocktailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        CocktailsView()
-            .preferredColorScheme(.dark)
+fileprivate final class MockViewModel: CocktailsViewModelProtocol {
+    
+    @Published var search: String = ""
+    
+    @Published var cocktails: [Cocktail] = []
+    var cocktailsFromDB: [UUID? : DBCocktail] = [:]
+    init() {
+        let ar = MockData.mockCocktails(5)
+        cocktails = ar.map({$0.structCocktail()})
+        cocktailsFromDB = .init(uniqueKeysWithValues: ar.map{($0.id, $0)})
     }
+    
+}
+
+#Preview {
+    CocktailsView(vm: MockViewModel())
+        .previewWrapper()
 }

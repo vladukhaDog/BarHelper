@@ -78,7 +78,7 @@ struct CocktailsHeader: View {
             HStack {
                 addButton
                 ForEach(cocktails, id: \.id) { cocktail in
-                    NavigationLink(value: Destination.CocktailView(.constant(cocktail))) {
+                    NavigationLink(value: Destination.CocktailView(cocktail)) {
                         CocktailTile(cocktail)
                     }
                 }
