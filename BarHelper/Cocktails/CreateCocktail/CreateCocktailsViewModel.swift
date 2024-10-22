@@ -7,155 +7,177 @@
 
 import Foundation
 import SwiftUI
+import Combine
 
-class CreateCocktailsViewModel: ObservableObject{
+enum CocktailEditMode {
+    case create
+    case edit
+}
+
+class CreateCocktailsViewModel: ObservableObject {
     let db = DBManager.shared
-    
+    private let cocktailsRepository: CocktailsDI = CocktailsRepository()
+    private let cookingMethodsRepository: CookingMethodDI = CookingMethodRepository()
+    private let imagesRepository: ImagesDI = ImagesRepository()
 
-    @Published var types: [CookingMethod] = []
+    @Published var methods: [CookingMethod] = []
     
     @Published var recipe: [DBIngredient: Int] = [:]
     @Published var name = ""
     @Published var description = ""
     @Published var cookType: CookingMethod? = nil
     @Published var image: UIImage? = nil
-    
     @Published var imagePlaceholer: String = ((1...8).randomElement() ?? 1).description
+    private var router: Router?
     
-    @Binding var toEditCocktail: DBCocktail?
+    let mode: CocktailEditMode
+    private let cocktailToEdit: DBCocktail?
     
     init() {
-        self._toEditCocktail = .constant(nil)
-        Task{
-            await fetchTypes()
+        self.mode = .create
+        self.cocktailToEdit = nil
+        Task {
+            await fetchMethods()
         }
     }
     
-    init(editCocktail: Binding<DBCocktail?>){
-        self._toEditCocktail = editCocktail
-        if let cocktail = editCocktail.wrappedValue{
-            name = cocktail.name ?? ""
-            description = cocktail.desc ?? ""
-            cookType = cocktail.cookingMethod
-            if let imageName = cocktail.image?.fileName,
-               let imageData = try? Data(contentsOf: FileManager.default.temporaryDirectory.appendingPathComponent(imageName)),
-               let uiImage = UIImage(data: imageData){
-                image = uiImage
+    init(editCocktail: DBCocktail) {
+        self.mode = .edit
+        self.cocktailToEdit = editCocktail
+        name = editCocktail.name ?? ""
+        description = editCocktail.desc ?? ""
+        cookType = editCocktail.cookingMethod
+        if let image = editCocktail.image?.getImage(){
+            self.image = image
+        }
+        
+        if let recipeNSSet = editCocktail.recipe,
+           let recipeSet = recipeNSSet as? Set<DBIngredientRecord>{
+            let recipeSorted = recipeSet.sorted { l, r in
+                (l.ingredient?.name ?? "") < (r.ingredient?.name ?? "")
             }
-            
-            if let recipeNSSet = cocktail.recipe,
-               let recipeSet = recipeNSSet as? Set<DBIngredientRecord>{
-                let recipeSorted = recipeSet.sorted { l, r in
-                    (l.ingredient?.name ?? "") < (r.ingredient?.name ?? "")
+            recipe = recipeSorted.reduce(into: [DBIngredient: Int](), { partialResult, ingr in
+                if let ingredient = ingr.ingredient{
+                    partialResult[ingredient] = Int(ingr.ingredientValue)
                 }
-                recipe = recipeSorted.reduce(into: [DBIngredient: Int](), { partialResult, ingr in
-                    if let ingredient = ingr.ingredient{
-                        partialResult[ingredient] = Int(ingr.ingredientValue)
+            })
+        }
+        
+        Task {
+            await fetchMethods()
+        }
+    }
+    
+    internal func updateList(_ action: CookingMethodDI.Action) {
+        DispatchQueue.main.async {
+            withAnimation {
+                switch action {
+                case .deleted(let cookingMethod):
+                    self.methods.removeAll(where: {$0.id == cookingMethod.id})
+                case .added(let cookingMethod):
+                    self.methods.append(cookingMethod)
+                case .updated(let cookingMethod):
+                    if let index = self.methods.firstIndex(where: {$0.id == cookingMethod.id}){
+                        self.methods[index] = cookingMethod
                     }
-                })
+                }
             }
-        }
-        Task{
-            await fetchTypes()
         }
     }
     
-
+    func setup(router: Router) {
+        self.router = router
+    }
     
-    
-    func save(){
-        Task{
-            guard let editedCocktail = toEditCocktail else {return}
-            if let oldImage = editedCocktail.image, let oldImageName = oldImage.fileName{
-                try? FileManager.default.removeItem(at: FileManager.default.temporaryDirectory.appendingPathComponent(oldImageName))
-                await db.deleteImage(image: oldImage)
-            }
-            var imageEntry: ImageEntry? = nil
+    func save() {
+        Task {
             do {
-                // get the documents directory url
-                let documentsDirectory = FileManager.default.temporaryDirectory
-                print("documentsDirectory:", documentsDirectory.path)
-                // choose a name for your image
-                let fileName = "\(name)_\(UUID().uuidString).jpg"
-                // create the destination file url to save your image
-                let fileURL = documentsDirectory.appendingPathComponent(fileName)
-                // get your UIImage jpeg data representation and check if the destination file url already exist
-                let image = self.image ?? UIImage(named: self.imagePlaceholer)
-                if let image, let data = image.pngData(),
-                    !FileManager.default.fileExists(atPath: fileURL.path) {
-                    // writes the image data to disk
-                    try data.write(to: fileURL)
-                    imageEntry = await db.addImage(name: fileName)
+                guard let uiImage = self.image ?? UIImage(named: self.imagePlaceholer) else {
+                    AlertsManager.shared.alert("Please select an image")
+                    return
                 }
+                guard let cookType else {
+                    AlertsManager.shared.alert("Please select the cooking type")
+                    return}
+                guard let original = self.cocktailToEdit else {
+                    AlertsManager.shared.alert("No original cocktail")
+                    return}
+                let image = try await self.imagesRepository.createImage(image: uiImage)
+                let oldImage = original.image
+                try await self.cocktailsRepository.editCocktail(originCocktail: original,
+                                                                name: self.name,
+                                                               description: self.description,
+                                                               cookingMethod: cookType,
+                                                               recipe: self.recipe,
+                                                               image: image)
+                // delete old
+                if let oldImage,
+                let fileName = oldImage.fileName,
+                let documentsDirectory = FileManager.default
+                    .urls(for: .documentDirectory, in: .userDomainMask)
+                    .first {
+                        try? FileManager.default.removeItem(at: documentsDirectory.appendingPathComponent(fileName))
+                }
+                await MainActor.run {
+                    self.router?.back()
+                }
+            } catch RepositoryError.alreadyExists{
+                AlertsManager.shared.alert("That name already exists")
+            } catch RepositoryError.contextError(let error) {
+                AlertsManager.shared.alert("Database error occured")
+                print("failed to edit ingredient", error)
             } catch {
-                print("error creating image cocktail for edit cocktail:", error)
+                AlertsManager.shared.alert("Something went wrong")
+                print("Something bad happened", error)
             }
-            editedCocktail.image = imageEntry
-            editedCocktail.name = name
-            editedCocktail.desc = description
-            editedCocktail.cookingMethod = cookType
-            if let recipeNSSet = editedCocktail.recipe,
-               let recipeSet = recipeNSSet as? Set<DBIngredientRecord>{
-                let recipeSorted = recipeSet.sorted { l, r in
-                    (l.ingredient?.name ?? "") < (r.ingredient?.name ?? "")
-                }
-                for inr in recipeSorted{
-                    await db.deleteIngredientRecord(ing: inr)
-                }
-            }
-            
-            for ingredient in recipe{
-                let ingredientRecord = DBIngredientRecord(context: db.backgroundContext)
-                ingredientRecord.ingredientValue = Int64(ingredient.value)
-                ingredientRecord.ingredient = ingredient.key
-                editedCocktail.addToRecipe(ingredientRecord)
-            }
-            await db.saveContext()
-            self.toEditCocktail = editedCocktail
         }
     }
     
     func add(){
-        Task{
-            var imageEntry: ImageEntry? = nil
+        Task {
             do {
-                // get the documents directory url
-                let documentsDirectory = FileManager.default.temporaryDirectory
-                print("documentsDirectory for new Image:", documentsDirectory.path)
-                // choose a name for your image
-                let fileName = "\(name)_\(UUID().uuidString).jpg"
-                // create the destination file url to save your image
-                let fileURL = documentsDirectory.appendingPathComponent(fileName)
-                // get your UIImage jpeg data representation and check if the destination file url already exists
-                let image = self.image ?? UIImage(named: self.imagePlaceholer)
-                if let image, let data = image.pngData(),
-                    !FileManager.default.fileExists(atPath: fileURL.path) {
-                    // writes the image data to disk
-                    try data.write(to: fileURL)
-                    imageEntry = await db.addImage(name: fileName)
+                guard let uiImage = self.image ?? UIImage(named: self.imagePlaceholer) else {
+                    AlertsManager.shared.alert("Please select an image")
+                    return
                 }
+                guard let cookType else {
+                    AlertsManager.shared.alert("Please select the cooking type")
+                    return}
+                let image = try await self.imagesRepository.createImage(image: uiImage)
+                try await self.cocktailsRepository.addCocktail(name: self.name,
+                                                               description: self.description,
+                                                               cookingMethod: cookType,
+                                                               recipe: self.recipe,
+                                                               image: image)
+                await MainActor.run {
+                    self.router?.back()
+                }
+            } catch RepositoryError.alreadyExists{
+                AlertsManager.shared.alert("That name already exists")
+            } catch RepositoryError.contextError(let error) {
+                AlertsManager.shared.alert("Database error occured")
+                print("failed to edit ingredient", error)
             } catch {
-                print("error Creating image cocktail:", error)
+                AlertsManager.shared.alert("Something went wrong")
+                print("Something bad happened", error)
             }
-            guard let cookType else {return}
-            await db.addCocktail(name: name,
-                                 description: description,
-                                 cookingMethod: cookType,
-                                 recipe: recipe,
-            image: imageEntry)
         }
     }
   
 
-    private func fetchTypes() async{
-#warning("NO FETCH FOR COOOKING METHODS")
-//        let types = await db.fetchCookingMethods()
-//        DispatchQueue.main.async {
-//            self.types = types
-//            if self.cookType == nil{
-//                self.cookType = self.types.first
-//            }
-//        }
+    private func fetchMethods() async {
+        do {
+            let methods = try await self.cookingMethodsRepository.fetchCookingMethods()
+            await MainActor.run {
+                self.methods = methods
+            }
+        } catch RepositoryError.contextError(let error) {
+           AlertsManager.shared.alert("Failed to get cooking methods")
+           print("failed to fetch cocktails", error)
+       } catch {
+           AlertsManager.shared.alert("Failed to get cooking methods")
+           print("Something bad happened", error)
+       }
     }
 
 }

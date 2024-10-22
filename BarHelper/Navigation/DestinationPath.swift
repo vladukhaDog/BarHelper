@@ -17,8 +17,8 @@ extension View {
                 case .CocktailsList:
                     CocktailsView()
                         .navigationBarHidden(true)
-                case .IngredientsSelector(_):
-                    IngredientsView()
+                case .IngredientsSelector(let selects):
+                    SelectIngredientsView(selects)
                         .navigationBarHidden(true)
                 case .IngredientsList:
                     IngredientsView()

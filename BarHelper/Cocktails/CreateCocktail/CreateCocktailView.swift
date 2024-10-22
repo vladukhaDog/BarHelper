@@ -6,23 +6,16 @@
 //
 
 import SwiftUI
-
+import Vision
 
 
 struct CreateCocktailView: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject private var router: Router
     @StateObject private var vm: CreateCocktailsViewModel
     @State private var showSheet = false
     
-    init(editCocktail: Binding<DBCocktail>){
-        let proxyBinding: Binding<DBCocktail?> = .init(get: {
-            editCocktail.wrappedValue
-        }, set: { new in
-            if let new {
-                editCocktail.wrappedValue = new
-            }
-        })
-        self._vm = .init(wrappedValue: .init(editCocktail: proxyBinding))
+    init(editCocktail: DBCocktail){
+        self._vm = .init(wrappedValue: .init(editCocktail: editCocktail))
     }
     
     init() {
@@ -51,7 +44,9 @@ struct CreateCocktailView: View {
             .padding(.horizontal)
         }
         .backgroundWithoutSafeSpace(.darkPurple)
-        .navigationTitle(vm.toEditCocktail == nil ? "New Cocktail" : "Edit Cocktail")
+        .task {
+            vm.setup(router: router)
+        }
         .sheet(isPresented: $showSheet) {
             ImagePicker(sourceType: .photoLibrary, selectedImage: .init(get: {
                 UIImage()
@@ -72,25 +67,23 @@ struct CreateCocktailView: View {
     
     private var confirmButton: some View{
         Group{
-            if vm.toEditCocktail == nil {
+            if vm.mode == .create {
                 Button("Add Cocktail") {
                     vm.add()
-                    self.presentationMode.wrappedValue.dismiss()
                 }
                 .cyberpunkStyle(.green)
-                .disabled(vm.name.isEmpty || vm.recipe.isEmpty)
             } else {
                 Button("Save Cocktail") {
                     vm.save()
-                    self.presentationMode.wrappedValue.dismiss()
                 }
                 .cyberpunkStyle(.green)
             }
         }
         .frame(height: 80)
+        .disabled(vm.name.isEmpty || vm.recipe.isEmpty)
     }
     
-    private var imageView: some View{
+    private var imageView: some View {
         VStack{
             HStack{
                 ForEach((1..<9)){ number in
@@ -125,7 +118,25 @@ struct CreateCocktailView: View {
                     self.showSheet.toggle()
                 }
                 .onLongPressGesture {
-                    self.vm.image = UIPasteboard.general.image
+                    guard let cgImage = UIPasteboard.general.image?.cgImage else {
+                            return
+                        }
+                    let request = VNGenerateForegroundInstanceMaskRequest()
+                    let handler = VNImageRequestHandler(cgImage: cgImage)
+                    try? handler.perform([request])
+                    guard let result = request.results?.first else {return}
+                    guard let maskedImage = try? result.generateMaskedImage(
+                        ofInstances: result.allInstances,
+                                from: handler,
+                                croppedToInstancesExtent: true
+                    ) else {return}
+                            
+                    
+                    let img = UIImage(ciImage: CIImage(cvPixelBuffer: maskedImage))
+                    guard let data = img.pngData(), let uiImage = UIImage(data: data) else {return}
+                    DispatchQueue.main.async {
+                        self.vm.image = uiImage
+                    }
                 }
                 Spacer()
             }
@@ -136,17 +147,18 @@ struct CreateCocktailView: View {
         .depthBorder()
     }
     
-    private var addedIngredients: some View{
+    private var addedIngredients: some View {
         VStack{
             HStack{
                 Text("Ingredients:")
-                    .font(.smallTitle)
+                    .cyberpunkFont(.smallTitle)
                     .foregroundColor(.white)
                 Spacer()
-                
-                NavigationLink(value: Destination.IngredientsSelector($vm.recipe)) {
+                Button {
+                    router.push(Destination.IngredientsSelector($vm.recipe))
+                } label: {
                     PlusView()
-                        .frame(height: 40)
+                        .frame(height: 50)
                 }
                 
             }
@@ -157,11 +169,11 @@ struct CreateCocktailView: View {
                     
                     HStack{
                         Text(ingredient.metric ?? "")
-                            .font(.normal)
+                            .cyberpunkFont(.body)
                             .foregroundColor(.white.opacity(0.5))
                         Spacer()
                         Text(ingredient.name ?? "")
-                            .font(.smallTitle)
+                            .cyberpunkFont(.smallTitle)
                             .foregroundColor(.white)
                             .minimumScaleFactor(0.1)
                         Spacer()
@@ -174,7 +186,7 @@ struct CreateCocktailView: View {
                             vm.recipe[ingredient] = Int(newVal) ?? 0
                         }) )
                         .keyboardType(.numberPad)
-                        .font(.normal)
+                        .cyberpunkFont(.body)
                         .foregroundColor(.pinkPurple)
                         .tint(.pinkPurple)
                         .padding(5)
@@ -182,9 +194,7 @@ struct CreateCocktailView: View {
                         .frame(width: 40)
                         Spacer()
                         Button {
-                            //                            withAnimation {
                             self.vm.recipe.removeValue(forKey: ingredient)
-                            //                            }
                         } label: {
                             Rectangle()
                                 .fill(Color.pinkPurple)
@@ -206,19 +216,15 @@ struct CreateCocktailView: View {
     
  
     
+    @State private var showAddCookingMethod = false
     private var typeSelector: some View{
         Group {
-            if vm.types.isEmpty {
+            if vm.methods.isEmpty {
                 VStack {
                     Text("No cocktail types")
                         .cyberpunkFont(.smallTitle)
                     Button {
-#warning("DISABLED NAVIGATION")
-//                        Router.shared.path.removeLast()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-//                            Router.shared.path
-//                                .append(.CookingMethods)
-                        }
+                        showAddCookingMethod.toggle()
                     } label: {
                         PlusView()
                             .frame(width: 40, height: 40)
@@ -226,7 +232,7 @@ struct CreateCocktailView: View {
                 }
             } else {
                 LazyVGrid(columns: columns){
-                    ForEach(vm.types, id: \.id){type in
+                    ForEach(vm.methods, id: \.id){type in
                         Button {
                             withAnimation() {
                                 self.vm.cookType = type
@@ -248,34 +254,16 @@ struct CreateCocktailView: View {
         .background(Color.black)
         .padding(4)
         .depthBorder()
-    }
-}
-
-
-
-struct CreateCocktailView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView{
-            CreateCocktailView()
-            
+        .sheet(isPresented: $showAddCookingMethod) {
+            AddCookingMethodView()
+                .presentationDetents([.medium, .large])
         }
-        .preferredColorScheme(.dark)
     }
 }
 
 
-//ForEach(vm.cocktails, id: \.id){cocktail in
-//    VStack{
-//        Text(cocktail.name ?? "aa")
-//        if let recipeSet = cocktail.recipe, let recipe = (recipeSet as? Set<DBIngredientRecord>){
-//            ForEach(recipe.sorted(by: { l, r in
-//                (l.ingredient?.name ?? "") > (r.ingredient?.name ?? "")
-//            })){ ingredient in
-//                HStack{
-//                    Text(ingredient.ingredient?.name ?? "name")
-//                    Text(ingredient.ingredientValue.description)
-//                }
-//            }
-//        }
-//    }
-//}
+
+#Preview {
+    CreateCocktailView()
+        .previewWrapper()
+}

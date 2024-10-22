@@ -60,7 +60,6 @@ final class CocktailViewModel: CocktailViewModelProtocol {
         Task {
             do {
                 try await cocktailsRepository.favCocktail(cocktail, isFav: !cocktail.isFavourite)
-                await router?.back()
             } catch RepositoryError.contextError(let error) {
                 AlertsManager.shared.alert("Database error occured")
                 print("failed to fetch cocktails", error)
@@ -87,7 +86,9 @@ final class CocktailViewModel: CocktailViewModelProtocol {
     }
     
     func edit() {
-        
+        Task {
+            await router?.push(.EditCocktail(cocktail))
+        }
     }
     
     func setup(router: Router) {

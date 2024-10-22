@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CocktailsHeader: View {
     let cocktails: [DBCocktail]
+    @EnvironmentObject private var route: Router
     
     init(cocktails: [DBCocktail] = [MockData.mockCocktail(), MockData.mockCocktail()]) {
         self.cocktails = cocktails
@@ -94,7 +95,7 @@ struct CocktailsHeader: View {
     
     private var addButton: some View {
         Button{
-            
+            route.push(.CreateCocktail)
         } label: {
             PlusView()
         }

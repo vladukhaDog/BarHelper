@@ -12,6 +12,8 @@ import os
 enum RepositoryError: Error {
     case alreadyExists
     case contextError(Error)
+    case failedToFindSaveRepository
+    case failedToGeneratePNG
     case cannotBeAParent
     case cannotHaveAParent
 }

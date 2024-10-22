@@ -25,7 +25,7 @@ protocol IngredientsRepositoryProtocol {
     func addIngredient(name: String, metric: String, description: String?, parentIngredient: DBIngredient?) async throws -> DBIngredient
     func fuse(left: DBIngredient, right: DBIngredient, name: String, metric: String, mode: IngredientFuseMode) async throws -> DBIngredient
     func assignParent(ingredient: DBIngredient, to parent: DBIngredient) async throws -> DBIngredient
-    func fetchIngredients(search: String?) async throws -> [DBIngredient]
+    func fetchIngredients(search: String?, all: Bool) async throws -> [DBIngredient]
     func deleteIngredient(ingredient: DBIngredient) async throws
 }
 
@@ -223,19 +223,25 @@ final class IngredientsRepository: IngredientsDI {
         })
     }
     
-    func fetchIngredients(search: String? = nil) async throws -> [DBIngredient] {
+    /// Fetches ingredients, but without children, because they are inside their parents or fetches `All` ingredients
+    func fetchIngredients(search: String? = nil, all: Bool = false) async throws -> [DBIngredient] {
        try await withCheckedThrowingContinuation({ continuation in
             self.context.performAndWait{
                 let request = DBIngredient.fetchRequest()
                 request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
                 var predicates: [NSPredicate] = []
                 if let search{
-                    predicates.append(NSCompoundPredicate.init(type: .or, subpredicates: [
-                        NSPredicate(format: "name CONTAINS[c] %@", search.lowercased()),
-                        NSPredicate(format: "ANY alternatives.name CONTAINS[c] %@", search.lowercased()),
-                    ]))
+                    var subs = [
+                        NSPredicate(format: "name CONTAINS[c] %@", search.lowercased())
+                    ]
+                    if !all {
+                        subs.append(NSPredicate(format: "ANY alternatives.name CONTAINS[c] %@", search.lowercased()))
+                    }
+                    predicates.append(NSCompoundPredicate.init(type: .or, subpredicates: subs))
                 }
-                predicates.append(NSPredicate(format: "parentIngredient == nil"))
+                if !all {
+                    predicates.append(NSPredicate(format: "parentIngredient == nil"))
+                }
                 request.predicate = NSCompoundPredicate.init(type: .and, subpredicates: predicates)
                 do {
                     let items = try self.context.fetch(request)

@@ -20,3 +20,4 @@ extension Binding: @retroactive Hashable where Value: Hashable{
         return hasher.combine(self.wrappedValue)
     }
 }
+

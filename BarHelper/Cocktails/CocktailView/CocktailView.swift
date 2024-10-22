@@ -39,6 +39,9 @@ struct CocktailView<ViewModel: CocktailViewModelProtocol>: View {
                        router: router) {
             vm.toggleFavourite()
         }
+                       .task {
+                           vm.setup(router: router)
+                       }
         .scrollBounceBehavior(.basedOnSize)
         .backgroundWithoutSafeSpace(.darkPurple)
     }
