@@ -29,6 +29,7 @@
 		61784E562CC7266000F7B325 /* SelectIngredientsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61784E552CC7266000F7B325 /* SelectIngredientsView.swift */; };
 		61784E582CC7EE9B00F7B325 /* SelectIngredientsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61784E572CC7EE9B00F7B325 /* SelectIngredientsViewModelProtocol.swift */; };
 		61784E5A2CC7EEA900F7B325 /* SelectIngredientsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61784E592CC7EEA900F7B325 /* SelectIngredientsViewModel.swift */; };
+		61784E5D2CCBE5F600F7B325 /* SelectImageOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61784E5C2CCBE5F600F7B325 /* SelectImageOptionsView.swift */; };
 		61A2D7B92A4E17BC007FA201 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A2D7B82A4E17BC007FA201 /* Router.swift */; };
 		61A2D7BB2A4E181E007FA201 /* IngredientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61A2D7BA2A4E181E007FA201 /* IngredientCell.swift */; };
 		61C2FB2B2CB41788004A2368 /* IngredientsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61C2FB2A2CB41788004A2368 /* IngredientsRepository.swift */; };
@@ -101,6 +102,7 @@
 		61784E552CC7266000F7B325 /* SelectIngredientsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectIngredientsView.swift; sourceTree = "<group>"; };
 		61784E572CC7EE9B00F7B325 /* SelectIngredientsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectIngredientsViewModelProtocol.swift; sourceTree = "<group>"; };
 		61784E592CC7EEA900F7B325 /* SelectIngredientsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectIngredientsViewModel.swift; sourceTree = "<group>"; };
+		61784E5C2CCBE5F600F7B325 /* SelectImageOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageOptionsView.swift; sourceTree = "<group>"; };
 		61A2D7B82A4E17BC007FA201 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		61A2D7BA2A4E181E007FA201 /* IngredientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCell.swift; sourceTree = "<group>"; };
 		61C2FB2A2CB41788004A2368 /* IngredientsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsRepository.swift; sourceTree = "<group>"; };
@@ -380,6 +382,7 @@
 		61E340172A0B9166009B9725 /* CreateCocktail */ = {
 			isa = PBXGroup;
 			children = (
+				61784E5C2CCBE5F600F7B325 /* SelectImageOptionsView.swift */,
 				61E3400B2A0AD37E009B9725 /* CreateCocktailView.swift */,
 				61E340152A0AE31D009B9725 /* CreateCocktailsViewModel.swift */,
 				61E3401A2A0BFC77009B9725 /* ImagePicker.swift */,
@@ -488,6 +491,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6176DC0C2CAF27E800387E5A /* EditcookingMethodViewModelProtocol.swift in Sources */,
+				61784E5D2CCBE5F600F7B325 /* SelectImageOptionsView.swift in Sources */,
 				61F399562A4B127D0058DA30 /* CyberpunkTextField.swift in Sources */,
 				61784E502CC6C65E00F7B325 /* CocktailViewModel.swift in Sources */,
 				61E3401B2A0BFC77009B9725 /* ImagePicker.swift in Sources */,

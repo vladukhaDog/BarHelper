@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import Vision
-
 
 struct CreateCocktailView: View {
     @EnvironmentObject private var router: Router
@@ -48,11 +46,12 @@ struct CreateCocktailView: View {
             vm.setup(router: router)
         }
         .sheet(isPresented: $showSheet) {
-            ImagePicker(sourceType: .photoLibrary, selectedImage: .init(get: {
-                UIImage()
-            }, set: { image in
-                vm.image = image
-            }))
+            SelectImageOptionsView(imageBinding: $vm.image)
+//            ImagePicker(sourceType: .photoLibrary, selectedImage: .init(get: {
+//                UIImage()
+//            }, set: { image in
+//                vm.image = image
+//            }))
         }
     }
     
@@ -101,12 +100,12 @@ struct CreateCocktailView: View {
             .frame(height: 80)
             HStack{
                 Spacer()
-                Group{
+                Group {
                     if let image = vm.image{
                         Image(uiImage: image)
                             .resizable()
                             .scaledToFit()
-                    }else{
+                    } else {
                         Image(vm.imagePlaceholer)
                             .resizable()
                             .scaledToFit()
@@ -116,27 +115,6 @@ struct CreateCocktailView: View {
                 .clipShape(Rectangle())
                 .onTapGesture {
                     self.showSheet.toggle()
-                }
-                .onLongPressGesture {
-                    guard let cgImage = UIPasteboard.general.image?.cgImage else {
-                            return
-                        }
-                    let request = VNGenerateForegroundInstanceMaskRequest()
-                    let handler = VNImageRequestHandler(cgImage: cgImage)
-                    try? handler.perform([request])
-                    guard let result = request.results?.first else {return}
-                    guard let maskedImage = try? result.generateMaskedImage(
-                        ofInstances: result.allInstances,
-                                from: handler,
-                                croppedToInstancesExtent: true
-                    ) else {return}
-                            
-                    
-                    let img = UIImage(ciImage: CIImage(cvPixelBuffer: maskedImage))
-                    guard let data = img.pngData(), let uiImage = UIImage(data: data) else {return}
-                    DispatchQueue.main.async {
-                        self.vm.image = uiImage
-                    }
                 }
                 Spacer()
             }
