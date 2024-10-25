@@ -12,5 +12,6 @@ import Combine
 protocol SelectIngredientsViewModelProtocol: ObservableObject {
     var selectingIngredients: [DBIngredient: Int] {get set}
     var originalSelectIngredients: [DBIngredient: Int] {get set}
+    var addingIngredient: DBIngredient? {get set}
     func save()
 }

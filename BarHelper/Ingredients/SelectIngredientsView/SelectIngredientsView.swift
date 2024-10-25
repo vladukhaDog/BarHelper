@@ -35,30 +35,90 @@ struct SelectIngredientsView<ViewModel>: View where ViewModel: IngredientsViewMo
         .navigationTitle("Ingredients")
         .environmentObject(vm)
         .customToolBar(id: "SaveSelectIngredients",
-                       text: "Save",
+                       text: "New",
                        router: router,
                        action: {
-            vm.save()
-            router.back()
+            vm.addingIngredient = nil
+            amount = nil
+            router.push(.CreateIngredientView(nil))
         })
+        .overlay {
+            amountInput
+                .animation(.default, value: vm.addingIngredient == nil)
+        }
+    }
+    
+    @State private var amount: Int? = nil
+    @FocusState private var amountFocus: Bool
+    @ViewBuilder
+    private var amountInput: some View {
+        if let addingIngredient = vm.addingIngredient {
+        ZStack {
+            Color.black.opacity(0.8)
+            VStack(alignment: .leading) {
+                Text(addingIngredient.name ?? "")
+                    .cyberpunkFont()
+                HStack {
+                    TextField("", text: .init(get: {
+                        amount?.description ?? ""
+                    }, set: { newVal in
+                        amount = Int(newVal)
+                    }), onCommit: {
+                        vm.selectingIngredients[addingIngredient] = amount ?? 0
+                        amount = nil
+                        self.vm.addingIngredient = nil
+                    } )
+                    .cyberpunkStyle(focusState: $amountFocus)
+                    .keyboardType(.numberPad)
+                    .frame(width: 150)
+                    Text(addingIngredient.metric ?? "")
+                        .cyberpunkFont(20)
+                    Button("Cancel") {
+                        self.vm.addingIngredient = nil
+                        amount = nil
+                    }
+                    .cyberpunkFont(25)
+                }
+            }
+            .padding()
+            .background(Color.darkPurple)
+            .depthBorderUp()
+            .task {
+                amount = nil
+                amountFocus = true
+            }
+        }
+        .id(addingIngredient.id)
+        .compositingGroup()
+        .transition(.opacity)
+        }
     }
     
     private var list: some View {
         ScrollView {
             VStack(spacing: 15) {
                 ForEach(vm.ingredients, id: \.id) { ingredient in
-                    Button {
-                        if vm.selectingIngredients[ingredient] == nil {
-                            vm.selectingIngredients[ingredient] = 0
-                        } else {
-                            vm.selectingIngredients.removeValue(forKey: ingredient)
+                    let ingredientsSet = ingredient.alternatives
+                    let ingredients = ingredientsSet as? Set<DBIngredient>
+                    let ingredientsSorted = ingredients?.sorted { l, r in
+                        ( l.name ?? "") < (r.name ?? "")
+                    }
+                    let children = ingredientsSorted ?? []
+                    
+                    VStack(spacing: 10) {
+                        HStack {
+                            cell(ingredient, child: false)
+                            Button {
+                                router.push(.CreateIngredientView(ingredient))
+                            } label: {
+                                Text("add child")
+                                    .cyberpunkFont(20)
+                                    .foregroundStyle(Color.white)
+                            }
                         }
-                     } label: {
-                        Text(ingredient.name ?? "No name")
-                            .cyberpunkFont(30)
-                            .multilineTextAlignment(.leading)
-                            .foregroundStyle(vm.selectingIngredients[ingredient] == nil ? Color.white : Color.tintedOrange)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        ForEach(children, id: \.id) { child in
+                            cell(child, child: true)
+                        }
                     }
                 }
             }
@@ -70,6 +130,30 @@ struct SelectIngredientsView<ViewModel>: View where ViewModel: IngredientsViewMo
         .padding(5)
         .depthBorder()
         .padding(.horizontal, 5)
+    }
+    
+    private func cell(_ ingredient: DBIngredient, child: Bool) -> some View {
+        Button {
+            if vm.selectingIngredients[ingredient] == nil {
+                vm.addingIngredient = ingredient
+            } else {
+                vm.selectingIngredients.removeValue(forKey: ingredient)
+            }
+        } label: {
+            HStack(spacing: 0) {
+                if let value = vm.selectingIngredients[ingredient] {
+                    Text("\(value.description) \(ingredient.metric ?? "ml")\(child ? "" : "-")")
+                        .cyberpunkFont(child ? 25 : 30)
+                        .foregroundStyle(Color.tintedOrange)
+                }
+                
+                Text("\(child ? "-" : "")\(ingredient.name ?? "No name")")
+                    .cyberpunkFont(child ? 25 : 30)
+                    .multilineTextAlignment(.leading)
+                    .foregroundStyle(vm.selectingIngredients[ingredient] == nil ? Color.white : Color.tintedOrange)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
     }
     
     
@@ -96,8 +180,9 @@ struct SelectIngredientsView<ViewModel>: View where ViewModel: IngredientsViewMo
     }
     
     private var addButton: some View {
-        Button("New Ingredient") {
-            router.push(.CreateIngredientView(nil))
+        Button("Save") {
+            vm.save()
+            router.back()
         }
         .cyberpunkStyle(.green)
         .padding(8)
@@ -110,6 +195,8 @@ struct SelectIngredientsView<ViewModel>: View where ViewModel: IngredientsViewMo
 
 
 fileprivate final class MockIngredientsViewModel: IngredientsViewModelProtocol & SelectIngredientsViewModelProtocol {
+    @Published var addingIngredient: DBIngredient?
+    
     @Published var selectingIngredients: [DBIngredient : Int] = [:]
     
     @Published var originalSelectIngredients: [DBIngredient : Int] = [:]

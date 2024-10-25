@@ -15,6 +15,7 @@ final class SelectIngredientsViewModel: IngredientsViewModelProtocol, SelectIngr
     @Binding var originalSelectIngredients: [DBIngredient: Int]
     @Published var isEditing: Bool = false
     @Published var search: String = ""
+    @Published var addingIngredient: DBIngredient?
     
     private let ingredientsRepository: IngredientsRepository = .init()
     private var cancellable = Set<AnyCancellable>()
@@ -65,7 +66,7 @@ final class SelectIngredientsViewModel: IngredientsViewModelProtocol, SelectIngr
     
     private func fetchIngredients(_ search: String? = nil) async {
         do{
-            let ingredients = try await ingredientsRepository.fetchIngredients(search: search, all: true)
+            let ingredients = try await ingredientsRepository.fetchIngredients(search: search)
             await MainActor.run {
                 self.ingredients = ingredients
             }
@@ -88,6 +89,8 @@ final class SelectIngredientsViewModel: IngredientsViewModelProtocol, SelectIngr
                 case .deleted(let ingredient):
                     self.ingredients.removeAll(where: {$0.id == ingredient.id})
                 case .added(let ingredient):
+                    self.addingIngredient = ingredient
+                    guard ingredient.parentIngredient == nil else {return}
                     let index = self.ingredients.map({$0.name ?? ""})
                         .findAlphabeticalOrderIndex(for: ingredient.name ?? "")
                     self.ingredients.insert(ingredient, at: index)

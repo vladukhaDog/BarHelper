@@ -35,6 +35,7 @@ final class MockData {
         ingredient.id = UUID()
         ingredient.name = name
         ingredient.parentIngredient = parent
+        ingredient.metric = "ml"
         return ingredient
     }
     
